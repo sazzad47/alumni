@@ -40,7 +40,7 @@ const Navbar = () => {
     boxCheckingClassSubMenu.push("");
   }
   return (
-    <header className="header_section bg-gray-200 dark:bg-[var(--hero)]">
+    <header className="text-black dark:text-white header_section bg-gray-200 dark:bg-[var(--hero)]">
       <div className="header_content">
         <div className="relative flex items-center justify-center bg-[#364863] w-[40px] h-[40px] rounded-full">
           <Link href="/">
@@ -145,27 +145,27 @@ const Navbar = () => {
           )} */}
         </div>
         {isMenu === true ? (
-          <div className="hidden menubar__button">
+          <div style={{display: "none"}} className="menubar__button">
             <div className="flex items-center gap-4">
               <IconButton className="text-black dark:text-white" onClick={()=> {
                 currentTheme==="dark"? setTheme('light') : setTheme('dark')
               }}>
               <Brightness4Icon />
               </IconButton>
-              <div onClick={()=> setisMenu(!isMenu)} className="text-white">
-                <AiOutlineCloseCircle />
+              <div onClick={()=> setisMenu(!isMenu)} className="text-black dark:text-white">
+                <AiOutlineCloseCircle className="" />
               </div>
             </div>
           </div>
         ) : (
-          <div className="hidden menubar__button">
+          <div style={{display: "none"}} className="menubar__button">
             <div className="flex items-center gap-4">
             <IconButton className="text-black dark:text-white" onClick={()=> {
                 currentTheme==="dark"? setTheme('light') : setTheme('dark')
               }}>
               <Brightness4Icon />
               </IconButton>
-              <div onClick={()=> setisMenu(!isMenu)}>
+              <div onClick={()=> setisMenu(!isMenu)} className="text-black dark:text-white">
                 <FiAlignRight />
               </div>
             </div>
