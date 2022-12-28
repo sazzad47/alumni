@@ -14,11 +14,6 @@ const Navbar = () => {
   // const { state } = useContext(DataContext);
   // const { auth } = state;
   const [isMenu, setisMenu] = useState(false);
-  const [isResponsiveclose, setResponsiveclose] = useState(false);
-  const toggleClass = () => {
-    setisMenu(isMenu === false ? true : false);
-    setResponsiveclose(isResponsiveclose === false ? true : false);
-  };
   let boxClass = ["main-menu menu-right menuq1"];
   if (isMenu) {
     boxClass.push("menuq2");
@@ -57,18 +52,17 @@ const Navbar = () => {
         </div>
         <nav className="main-nav d-block">
           <ul className={boxClass.join(" ")}>
-            <li className="menu-item">
+            <li onClick={()=> setisMenu(false)} className="menu-item">
               <NavLink
                 href="/"
                 exact
-                onClick={toggleClass}
                 className="nav-item nav-link"
               >
                 Home
               </NavLink>
             </li>
             <li
-              onClick={toggleApplySubmenu}
+              onClick={()=> setisMenu(false)}
               className="menu-item sub__menus__arrows"
             >
               <NavLink href="/activities" className="nav-item nav-link">
@@ -76,63 +70,57 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li
-              onClick={toggleCheckingSubmenu}
+              onClick={()=> setisMenu(false)}
               className="menu-item sub__menus__arrows"
             >
               <NavLink href="/news" className="nav-item nav-link">
                 News
               </NavLink>
             </li>
-            <li className="menu-item ">
+            <li onClick={()=> setisMenu(false)} className="menu-item ">
               <NavLink
                 href="/events"
-                onClick={toggleClass}
                 className="nav-item nav-link"
               >
                 Events
               </NavLink>
             </li>
-            <li className="menu-item ">
+            <li onClick={()=> setisMenu(false)} className="menu-item ">
               <NavLink
                 href="/members"
-                onClick={toggleClass}
                 className="nav-item nav-link"
               >
                 Members
               </NavLink>
             </li>
-            <li className="menu-item ">
+            <li onClick={()=> setisMenu(false)} className="menu-item ">
               <NavLink
                 href="/gallery"
-                onClick={toggleClass}
                 className="nav-item nav-link"
               >
                 Gallery
               </NavLink>
             </li>
-            <li className="menu-item ">
+            <li onClick={()=> setisMenu(false)} className="menu-item ">
               <NavLink
                 href="/about"
-                onClick={toggleClass}
                 className="nav-item nav-link"
               >
                 About
               </NavLink>
             </li>
-            <li className="menu-item ">
+            <li onClick={()=> setisMenu(false)} className="menu-item ">
               <NavLink
                 href="/contact"
-                onClick={toggleClass}
                 className="nav-item nav-link"
               >
                 Contact
               </NavLink>
             </li>
-            <li className="menu-item nav-auth-btn">
+            <li onClick={()=> setisMenu(false)} className="menu-item nav-auth-btn">
               {/* {Object.values(auth).length === 0 ? ( */}
               <NavLink
                 href="/auth"
-                onClick={toggleClass}
                 className="nav-item nav-link"
               >
                 Login
@@ -155,11 +143,11 @@ const Navbar = () => {
             <LoggedRouter boxClass={boxClass} toggleClass={toggleClass} />
           )} */}
         </div>
-        {isResponsiveclose === true ? (
+        {isMenu === true ? (
           <div className="hidden menubar__button">
             <div className="flex items-center gap-4">
               <Brightness4Icon />
-              <div onClick={toggleClass} className="text-white">
+              <div onClick={()=> setisMenu(!isMenu)} className="text-white">
                 <AiOutlineCloseCircle />
               </div>
             </div>
@@ -168,7 +156,7 @@ const Navbar = () => {
           <div className="hidden menubar__button">
             <div className="flex items-center gap-4">
               <Brightness4Icon />
-              <div onClick={toggleClass}>
+              <div onClick={()=> setisMenu(!isMenu)}>
                 <FiAlignRight />
               </div>
             </div>
