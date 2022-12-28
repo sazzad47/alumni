@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="footer py-5 bg-gray-200 dark:bg-[var(--hero)] text-black dark:text-white">
       <div className="footer_container p-3 pb-0">
-        <div className="flex">
+        <div className="md:flex">
           <div className="footer-col">
             <h4>website</h4>
             <ul>
