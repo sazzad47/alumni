@@ -8,6 +8,24 @@ import "swiper/css/scrollbar";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y, Autoplay } from "swiper";
 
+const coverPhotos = [
+  {
+   id: 1, 
+   url: "/home/cover3.jpg"
+  },
+  {
+   id: 2, 
+   url: "/home/cover4.jpg"
+  },
+  {
+   id: 3, 
+   url: "/home/cover2.jpg"
+  },
+  {
+   id: 4, 
+   url: "/home/cover1.jpg"
+  },
+]
 const Hero = () => {
   return (
     <React.Fragment>
@@ -33,18 +51,12 @@ const Hero = () => {
             autoplay={{ delay: 3000 }}
             className="w-full h-full absolute z-[-1]"
           >
-            <SwiperSlide>
-              <Image src="/home/cover3.jpg" alt="" fill />
+            {coverPhotos.map((photo, i)=> (
+              <SwiperSlide key={i}>
+              <Image src={photo.url} alt="" fill />
             </SwiperSlide>
-            <SwiperSlide>
-              <Image src="/home/cover4.jpg" alt="" fill />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image src="/home/cover2.jpg" alt="" fill />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image src="/home/cover1.jpg" alt="" fill />
-            </SwiperSlide>
+            ))}
+            
           </Swiper>
         </div>
       </div>
