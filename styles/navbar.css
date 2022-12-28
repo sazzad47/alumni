@@ -23,7 +23,6 @@ ul.main-menu {
     line-height: 30px;
     position: relative;
     display: block;
-    color: #fff;
     margin: 10px 0;
     text-decoration: none;
     cursor: pointer;
@@ -42,7 +41,6 @@ ul.main-menu {
     border-bottom: 1px dashed lavender;
     position: relative;
     padding: 0 2rem;
-    background-color: var(--hero);
     margin-top: 0;
   }
   .header_content {
@@ -57,7 +55,6 @@ ul.main-menu {
     padding: 0.5rem 1rem;
     background: radial-gradient(520px, #5385f08c, transparent 50%);
     border-radius: 25px;
-    color: #fff;
   }
   .classic_btn:hover {
     background: radial-gradient(520px, #9eadce8c, transparent 50%);
@@ -121,11 +118,7 @@ ul.main-menu {
   .auth_computer_menu {
     display: block;
   }
-  @media (max-width: 767px) {
-    .header .active {
-      color: #ff3d00 !important;
-    }
-  }
+  
   @media (min-width: 992px) {
     .sub__menus__arrows:hover .sub__menus {
       display: flex;
@@ -141,21 +134,10 @@ ul.main-menu {
   .menu-item .sub__menus a {
     padding: 7px 0 0px 0;
     margin: 7px 27px;
-    color: #fff !important;
   }
   .menu-item .auth_sub__menus a {
     padding: 7px 0 0px 0;
     margin: 7px 27px;
-    color: #fff !important;
-  }
-  .menu-item:hover > a {
-    color: #07a8ff !important;
-  }
-  .menu-item .sub__menus li:hover a {
-    color: #07a8ff !important;
-  }
-  .menu-item .auth_sub__menus li:hover a {
-    color: #07a8ff !important;
   }
   .header__logo img {
     max-width: 207px;
@@ -168,15 +150,11 @@ ul.main-menu {
     .header__menus {
       width: 20%;
     }
-    .main-nav .menu-item:hover > a {
-      color: #07a8ff !important;
-    }
     .menubar__button {
       font-size: 25px;
       font-weight: 600;
       line-height: 30px;
       display: block !important;
-      color: #fff;
       margin: 10px 0;
       padding: 5px 10px;
       border-radius: 7px;
@@ -212,7 +190,6 @@ ul.main-menu {
     .main-nav .menu-item a {
       margin: 10px 17px;
       text-align: center;
-      color: #000000;
     }
     .main-nav ul.main-menu {
       display: none;
@@ -252,4 +229,3 @@ ul.main-menu {
       text-align: left;
     }
   }
-  

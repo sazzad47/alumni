@@ -1,18 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
-import { FiAlignRight, FiXCircle } from "react-icons/fi";
+import { FiAlignRight } from "react-icons/fi";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 // import logo from "../../public/logo.png";
 // import { DataContext } from "../../store/GlobalState";
 import LoggedRouter from "./LoggedRouter";
 import { NavLink } from "./NavLink";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
-import CloseIcon from "@mui/icons-material/Close";
+import { useTheme } from "next-themes";
+import { IconButton } from "@mui/material";
+
 
 const Navbar = () => {
   // const { state } = useContext(DataContext);
   // const { auth } = state;
+  const { theme, setTheme, systemTheme } = useTheme();
+  const currentTheme = theme === "system"? systemTheme: theme;
   const [isMenu, setisMenu] = useState(false);
   let boxClass = ["main-menu menu-right menuq1"];
   if (isMenu) {
@@ -22,14 +26,7 @@ const Navbar = () => {
   }
   const [isApplyMenuSubMenu, setApplyMenuSubMenu] = useState(false);
   const [isCheckingMenuSubMenu, setCheckingMenuSubMenu] = useState(false);
-  const toggleApplySubmenu = () => {
-    setApplyMenuSubMenu(isApplyMenuSubMenu === false ? true : false);
-    setCheckingMenuSubMenu(false);
-  };
-  const toggleCheckingSubmenu = () => {
-    setCheckingMenuSubMenu(isCheckingMenuSubMenu === false ? true : false);
-    setApplyMenuSubMenu(false);
-  };
+ 
   let boxApplyClassSubMenu = ["sub__menus"];
   if (isApplyMenuSubMenu) {
     boxApplyClassSubMenu.push("sub__menus__Active");
@@ -43,11 +40,11 @@ const Navbar = () => {
     boxCheckingClassSubMenu.push("");
   }
   return (
-    <header className="header_section">
+    <header className="header_section bg-gray-200 dark:bg-[var(--hero)]">
       <div className="header_content">
-        <div className="">
+        <div className="relative flex items-center justify-center bg-[#364863] w-[40px] h-[40px] rounded-full">
           <Link href="/">
-            <Image src="/logo.png" alt="" width={25} height={25} />
+            <Image src="/logo.png" alt="" width={20} height={20} />
           </Link>
         </div>
         <nav className="main-nav d-block">
@@ -134,7 +131,11 @@ const Navbar = () => {
         <div className="auth-segment">
           {/* {Object.values(auth).length === 0 ? ( */}
           <div className="flex items-center gap-4">
-            <Brightness4Icon />
+          <IconButton className="text-black dark:text-white" onClick={()=> {
+                currentTheme==="dark"? setTheme('light') : setTheme('dark')
+              }}>
+              <Brightness4Icon />
+              </IconButton>
             <Link href="/auth">
               <button className="classic_btn">Login</button>
             </Link>
@@ -146,7 +147,11 @@ const Navbar = () => {
         {isMenu === true ? (
           <div className="hidden menubar__button">
             <div className="flex items-center gap-4">
+              <IconButton className="text-black dark:text-white" onClick={()=> {
+                currentTheme==="dark"? setTheme('light') : setTheme('dark')
+              }}>
               <Brightness4Icon />
+              </IconButton>
               <div onClick={()=> setisMenu(!isMenu)} className="text-white">
                 <AiOutlineCloseCircle />
               </div>
@@ -155,7 +160,11 @@ const Navbar = () => {
         ) : (
           <div className="hidden menubar__button">
             <div className="flex items-center gap-4">
+            <IconButton className="text-black dark:text-white" onClick={()=> {
+                currentTheme==="dark"? setTheme('light') : setTheme('dark')
+              }}>
               <Brightness4Icon />
+              </IconButton>
               <div onClick={()=> setisMenu(!isMenu)}>
                 <FiAlignRight />
               </div>
