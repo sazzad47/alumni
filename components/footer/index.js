@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="footer py-5">
+    <footer className="footer py-5 bg-gray-200 dark:bg-[var(--hero)] text-black dark:text-white">
       <div className="footer_container p-3 pb-0">
         <div className="flex">
           <div className="footer-col">
@@ -63,34 +63,38 @@ const Footer = () => {
             <h4>follow us</h4>
             <div className="social-links">
               <a
+                className="bg-cyan-500 dark:bg-sky-900 hover:bg-cyan-700 dark:hover:bg-sky-700"
                 href="https://www.facebook.com/groups/btrischoolalumni"
                 target="blank"
               >
-                <i className="fab fa-facebook-f"></i>
+                <i className="text-black dark:text-white fab fa-facebook-f"></i>
               </a>
               <a
+                className="bg-cyan-500 dark:bg-sky-900 hover:bg-cyan-700 dark:hover:bg-sky-700"
                 href="https://www.facebook.com/groups/btrischoolalumni"
                 target="blank"
               >
-                <i className="fab fa-twitter"></i>
+                <i className="text-black dark:text-white fab fa-twitter"></i>
               </a>
               <a
+                className="bg-cyan-500 dark:bg-sky-900 hover:bg-cyan-700 dark:hover:bg-sky-700"
                 href="https://www.facebook.com/groups/btrischoolalumni"
                 target="blank"
               >
-                <i className="fab fa-instagram"></i>
+                <i className="text-black dark:text-white fab fa-instagram"></i>
               </a>
               <a
+                className="bg-cyan-500 dark:bg-sky-900 hover:bg-cyan-700 dark:hover:bg-sky-700"
                 href="https://www.facebook.com/groups/btrischoolalumni"
                 target="blank"
               >
-                <i className="fab fa-linkedin-in"></i>
+                <i className="text-black dark:text-white fab fa-linkedin-in"></i>
               </a>
             </div>
           </div>
         </div>
-        <hr className="w-full text-white my-5"/>
-        <div className="w-full flex justify-center mt-5 text-white text-sm">{'Copyright © '}{new Date().getFullYear()} BTRI School Alumni Association </div>
+        <hr className="w-full my-5"/>
+        <div className="w-full flex justify-center mt-5 text-sm">{'Copyright © '}{new Date().getFullYear()} BTRI School Alumni Association </div>
       </div>
     </footer>
   );
