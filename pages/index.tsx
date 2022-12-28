@@ -1,7 +1,8 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Typography } from '@mui/material'
+import Hero from '../components/home/Hero'
+
 
 
 const Page: NextPage = () => {
@@ -14,11 +15,8 @@ const Page: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-          <div className='p-5 pt-[10vh] min-h-[90vh] flex items-start justify-center'>
-             <Typography>
-              Home Page
-             </Typography>
-          </div>
+       
+         <Hero/>
       </main>
     </React.Fragment>
   )

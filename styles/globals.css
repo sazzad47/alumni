@@ -35,6 +35,9 @@ body {
 /* ----------- Navbar ------------- */
 @import url("./navbar.css");
 
+/* ----------- Home ------------- */
+@import url("./home.css");
+
 /* ----------- Footer ------------- */
 @import url("./footer.css");
 
