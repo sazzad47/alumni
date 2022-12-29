@@ -2,6 +2,7 @@ import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Hero from '../components/home/Hero'
+import Gallery from '../components/home/Gallery'
 
 
 
@@ -17,6 +18,7 @@ const Page: NextPage = () => {
       <main>
        
          <Hero/>
+         <Gallery/>
       </main>
     </React.Fragment>
   )
