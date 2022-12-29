@@ -3,14 +3,14 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="footer py-5 bg-gray-200 dark:bg-[var(--hero)] text-black dark:text-white">
+    <footer className="footer py-5 bg-gray-200 dark:bg-green-900 text-black dark:text-white">
       <div className="footer_container p-3 pb-0">
         <div className="md:flex">
           <div className="footer-col">
             <h4>website</h4>
             <ul>
               <li>
-                <Link href="/about">about us</Link>
+                <Link href="/about/association">about us</Link>
               </li>
               <li>
                 <Link href="/terms-&-conditions">Terms & Conditions</Link>
@@ -33,7 +33,7 @@ const Footer = () => {
                 <Link href="/news">News</Link>
               </li>
               <li>
-                <Link href="/events">Events</Link>
+                <Link href="/events/past">Events</Link>
               </li>
               <li>
                 <Link href="/gallery">

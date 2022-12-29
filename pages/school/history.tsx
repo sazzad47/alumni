@@ -8,7 +8,7 @@ const Page: NextPage = () => {
   return (
     <React.Fragment>
       <Head>
-        <title>About</title>
+        <title>History</title>
         <meta name="description" content="Under development by Sazzad Hossen" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -16,7 +16,7 @@ const Page: NextPage = () => {
       <main>
           <div className='p-5 pt-[10vh] min-h-[90vh] flex items-start justify-center'>
              <Typography>
-              About Page
+              History Page
              </Typography>
           </div>
       </main>

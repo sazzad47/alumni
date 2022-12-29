@@ -63,7 +63,7 @@ const Hero = () => {
             ))}
           </Swiper>
         </div>
-        <div className="w-full h-[50%] px-5 dark:bg-[var(--card-primary-color)]">
+        <div className="w-full h-[50%] px-5 bg-slate-300 dark:bg-emerald-800">
           <div className="w-full h-full relative">
             <div className="absolute z-[2] top-[-4rem] right-0 left-0 grid grid-cols-3 gap-5">
               <div className="h-[25rem] max-h-[25rem] w-full flex flex-col bg-gray-600 dark:bg-[var(--card-secondary-color)]">

@@ -20,31 +20,72 @@ const Navbar = () => {
   const [isMenu, setisMenu] = useState(false);
   let boxClass = ["main-menu menu-right menuq1"];
   if (isMenu) {
-    boxClass.push("menuq2");
+    boxClass.push("menuq2 bg-gray-300 dark:bg-green-700");
   } else {
     boxClass.push("");
   }
-  const [isApplyMenuSubMenu, setApplyMenuSubMenu] = useState(false);
-  const [isCheckingMenuSubMenu, setCheckingMenuSubMenu] = useState(false);
+  const [isAboutSubMenu, setAboutSubMenu] = useState(false);
+  const [isMembersSubMenu, setMembersSubMenu] = useState(false);
+  const [isEventSubMenu, setEventSubMenu] = useState(false);
+  const [isSchoolSubMenu, setSchoolSubMenu] = useState(false);
+
+  const toggleAboutSubMenu = () => {
+    setAboutSubMenu(!isAboutSubMenu);
+    setMembersSubMenu(false);
+    setEventSubMenu(false);
+    setSchoolSubMenu(false);
+  };
+  const toggleMembersSubMenu = () => {
+    setMembersSubMenu(!isMembersSubMenu);
+    setAboutSubMenu(false);
+    setEventSubMenu(false);
+    setSchoolSubMenu(false);
+  };
+  const toggleEventSubMenu = () => {
+    setEventSubMenu(!isEventSubMenu);
+    setMembersSubMenu(false);
+    setAboutSubMenu(false);
+    setSchoolSubMenu(false);
+  };
+  const toggleSchoolSubMenu = () => {
+    setSchoolSubMenu(!isSchoolSubMenu);
+    setAboutSubMenu(false);
+    setEventSubMenu(false);
+    setMembersSubMenu(false);
+  };
  
-  let boxApplyClassSubMenu = ["sub__menus"];
-  if (isApplyMenuSubMenu) {
-    boxApplyClassSubMenu.push("sub__menus__Active");
+  let aboutSubMenuClass = ["sub__menus bg-gray-200 dark:bg-green-900 text-black dark:text-white ml-[-1rem]"];
+  if (isAboutSubMenu) {
+    aboutSubMenuClass.push("sub__menus__Active");
   } else {
-    boxApplyClassSubMenu.push("");
+    aboutSubMenuClass.push("");
   }
-  let boxCheckingClassSubMenu = ["sub__menus"];
-  if (isCheckingMenuSubMenu) {
-    boxCheckingClassSubMenu.push("sub__menus__Active");
+  
+  let membersSubMenuClass = ["sub__menus bg-gray-200 dark:bg-green-900 text-black dark:text-white"];
+  if (isMembersSubMenu) {
+    membersSubMenuClass.push("sub__menus__Active");
   } else {
-    boxCheckingClassSubMenu.push("");
+    membersSubMenuClass.push("");
+  }
+  let eventSubMenuClass = ["sub__menus bg-gray-200 dark:bg-green-900 text-black dark:text-white"];
+  if (isEventSubMenu) {
+    eventSubMenuClass.push("sub__menus__Active");
+  } else {
+    eventSubMenuClass.push("");
+  }
+
+  let schoolSubMenuClass = ["sub__menus bg-gray-200 dark:bg-green-900 text-black dark:text-white"];
+  if (isSchoolSubMenu) {
+    schoolSubMenuClass.push("sub__menus__Active");
+  } else {
+    schoolSubMenuClass.push("");
   }
   return (
-    <header className="text-black dark:text-white header_section bg-gray-200 dark:bg-[var(--hero)]">
+    <header className="text-black dark:text-white header_section bg-gray-200 dark:bg-green-900">
       <div className="header_content">
-        <div className="relative flex items-center justify-center bg-[#364863] w-[40px] h-[40px] rounded-full">
-          <Link href="/">
-            <Image src="/logo.png" alt="" width={20} height={20} />
+        <div className="relative flex items-center justify-center w-[40px] h-[40px] rounded-full">
+          <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/">
+          <Image src="/logo.png" alt="" width={40} height={40} />
           </Link>
         </div>
         <nav className="main-nav d-block">
@@ -59,52 +100,97 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li
-              onClick={()=> setisMenu(false)}
+              onClick={toggleAboutSubMenu}
               className="menu-item sub__menus__arrows"
             >
-              <NavLink href="/activities" className="nav-item nav-link">
-                Activities
+              <NavLink href="#" className="nav-item nav-link">
+                About
               </NavLink>
+              <ul className={aboutSubMenuClass.join(" ")}>
+                <li onClick={()=> setisMenu(false)}>
+                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/about/association">
+                    Association
+                  </Link>
+                </li>
+                <li onClick={()=> setisMenu(false)}>
+                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/about/constitution">
+                   Constitution
+                  </Link>
+                </li>
+                <li onClick={()=> setisMenu(false)}>
+                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/about/plan">
+                    Plan
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li
-              onClick={()=> setisMenu(false)}
+              onClick={toggleMembersSubMenu}
               className="menu-item sub__menus__arrows"
             >
-              <NavLink href="/news" className="nav-item nav-link">
-                News
+              <NavLink href="#" className="nav-item nav-link">
+                Members
               </NavLink>
+              <ul className={membersSubMenuClass.join(" ")}>
+                <li onClick={()=> setisMenu(false)}>
+                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/members/database">
+                    Database
+                  </Link>
+                </li>
+                <li onClick={()=> setisMenu(false)}>
+                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/members/register">
+                   Register
+                  </Link>
+                </li>
+              </ul>
             </li>
-            <li onClick={()=> setisMenu(false)} className="menu-item ">
+            <li onClick={toggleEventSubMenu} className="menu-item sub__menus__arrows">
               <NavLink
-                href="/events"
+                href="#"
                 className="nav-item nav-link"
               >
                 Events
               </NavLink>
+              <ul className={eventSubMenuClass.join(" ")}>
+                <li onClick={()=> setisMenu(false)}>
+                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/events/upcoming">
+                    Upcoming
+                  </Link>
+                </li>
+                <li onClick={()=> setisMenu(false)}>
+                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/events/past">
+                   Past
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li onClick={()=> setisMenu(false)} className="menu-item ">
               <NavLink
-                href="/members"
+                href="/activities"
                 className="nav-item nav-link"
               >
-                Members
+                Activities
               </NavLink>
             </li>
-            <li onClick={()=> setisMenu(false)} className="menu-item ">
+            <li onClick={toggleSchoolSubMenu} className="menu-item sub__menus__arrows">
               <NavLink
-                href="/gallery"
+                href="#"
                 className="nav-item nav-link"
               >
-                Gallery
+                School
               </NavLink>
-            </li>
-            <li onClick={()=> setisMenu(false)} className="menu-item ">
-              <NavLink
-                href="/about"
-                className="nav-item nav-link"
-              >
-                About
-              </NavLink>
+              <ul className={schoolSubMenuClass.join(" ")}>
+                <li onClick={()=> setisMenu(false)}>
+                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/school/history">
+                    History
+                  </Link>
+                </li>
+                <li onClick={()=> setisMenu(false)}>
+                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/school/current">
+                   Current
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li onClick={()=> setisMenu(false)} className="menu-item ">
               <NavLink
@@ -136,7 +222,7 @@ const Navbar = () => {
               }}>
               <Brightness4Icon />
               </IconButton>
-            <Link href="/auth">
+            <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/auth">
               <button className="classic_btn">Login</button>
             </Link>
           </div>
