@@ -57,7 +57,7 @@ const Contents = () => {
         animate={controls}
         className="absolute z-10 top-0 right-0 left-0 bottom-0 flex justify-center items-center bg-[rgba(0,0,0,0.8)]"
       >
-        <Typography className="px-5 text-xs">
+        <Typography className="px-5 text-slate-200">
           Nullam volutpat porta velit consectetur pellentesque
         </Typography>
       </motion.div>
