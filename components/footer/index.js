@@ -19,7 +19,7 @@ const Footer = () => {
                 <Link href="/cookies">Cookies</Link>
               </li>
               <li>
-                <Link href="/privacy-policy">privacy policy</Link>
+                <Link href="/privacy-policy">Privacy policy</Link>
               </li>
             </ul>
           </div>

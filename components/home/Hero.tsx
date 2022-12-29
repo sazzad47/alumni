@@ -36,16 +36,6 @@ const Hero = () => {
     <React.Fragment>
       <div className="text-white w-full h-[120vh] flex flex-col">
         <div className="w-full h-[50%] relative">
-          <div className="absolute bg-[rgba(0,0,0,0.4)] z-[1] top-0 right-0 left-0 bottom-0 flex items-center justify-center">
-            <div className="w-full items-center justify-center flex flex-col gap-4">
-              <Typography className="hero_heading capitalize text-white text-[30px]">
-                BTRI School Alumni Association
-              </Typography>
-              <Typography className="text-[20px] text-white">
-                MEETING THE MOMENT, TOGETHER
-              </Typography>
-            </div>
-          </div>
           <Swiper
             modules={[Navigation, A11y, Autoplay]}
             spaceBetween={0}
@@ -54,11 +44,21 @@ const Hero = () => {
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
             autoplay={{ delay: 3000 }}
-            className="w-full h-full absolute z-[-1]"
+            className="w-full h-full"
           >
             {coverPhotos.map((photo, i) => (
               <SwiperSlide key={i}>
                 <Image src={photo.url} alt="" fill />
+                <div className="absolute bg-[rgba(0,0,0,0.4)] z-[1] top-0 right-0 left-0 bottom-0 flex items-center justify-center">
+                  <div className="w-full items-center justify-center flex flex-col gap-4">
+                    <Typography className="hero_heading capitalize text-white text-[30px]">
+                      BTRI School Alumni Association
+                    </Typography>
+                    <Typography className="text-[20px] text-white">
+                      MEETING THE MOMENT, TOGETHER
+                    </Typography>
+                  </div>
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
