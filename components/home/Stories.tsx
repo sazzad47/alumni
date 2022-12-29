@@ -19,7 +19,7 @@ const Stories = () => {
               <Grid className="w-full h-[40%] relative">
                 <Image src="/home/cover4.jpg" alt="" fill />
               </Grid>
-              <Grid className="h-[60%] flex flex-col gap-2 p-3 text-white">
+              <Grid className="h-[60%] flex flex-col justify-between gap-2 p-3 text-white">
                 <Typography className="text-lg">Nullam volutpat porta velit</Typography>
                 <Typography className="break-words text-sm">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
