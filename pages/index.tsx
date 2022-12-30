@@ -4,6 +4,9 @@ import Head from 'next/head'
 import Hero from '../components/home/Hero'
 import Gallery from '../components/home/Gallery'
 import Stories from '../components/home/Stories'
+import Statistics from '../components/home/Statistics'
+import Feedback from '../components/home/Feedback'
+import ContactInfo from '../components/home/ContactInfo'
 
 
 
@@ -20,7 +23,10 @@ const Page: NextPage = () => {
        
          <Hero/>
          <Gallery/>
-         <Stories/>
+         <Statistics/>
+         <Feedback/>
+         <ContactInfo/>
+         {/* <Stories/> */}
       </main>
     </React.Fragment>
   )

@@ -30,3 +30,101 @@
   margin-left: -50%;
   text-align: right;
 }
+
+
+/*.........Feedback.....*/
+
+
+.board{
+  text-align: center;
+  border-radius: 8px;
+  padding: 4em 0;
+}
+
+.text-light{
+  color: var(--color-light);
+}
+
+.swiper-review {
+  min-width: 100%;
+  height: auto;
+}
+
+.swiper-review .swiper-slide .content{
+  margin: 3em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.swiper-review .swiper-slide .comments{
+  background-color: rgb(15 23 42);
+  padding: 1.5em 2em;
+  width: 50%;
+  border-radius: 5px;
+  font-size: .9em;
+  position: relative;
+}
+
+
+.swiper-review .profile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.swiper-review .profile .img{
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border: 5px solid rgb(15 23 42);
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+.swiper-review .profile > a{
+  text-decoration: none;
+  color: var(--color-light);
+}
+
+.swiper-review .profile > span{
+  color: var(--color-text);
+  font-size: .8em;
+}
+
+.swiper-review .swiper-button-prev, .swiper-button-next{
+  color: var(--color-text);
+  display: none;
+} 
+
+@media (min-width: 320px) {
+  .board{
+      width: auto;
+  }
+
+  .swiper-review {
+      width: 320px;
+    }
+
+    .board > h1, p{
+        padding: 0 2em;
+    }
+}
+
+@media (min-width: 768px) {
+  .board{
+      width: 100%;
+  }
+
+  .swiper-review {
+      width: 600px;
+    }
+
+  .swiper-review .swiper-button-prev, .swiper-button-next{
+      display: initial;
+  }
+
+}
