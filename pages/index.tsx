@@ -20,7 +20,7 @@ const Page: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className='max-w-full bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200'>
        
          <Hero/>
          <Statistics/>

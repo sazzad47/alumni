@@ -9,7 +9,11 @@
   opacity: 0;
   transition: 0.5s ease-in-out;
 }
-
+@media (max-width: 768px) {
+  .swiper-button-next, .swiper-button-prev {
+  visibility: hidden;
+  }
+}
 .hero_heading {
   position: relative;
   z-index: 1;

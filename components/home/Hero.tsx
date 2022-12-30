@@ -34,12 +34,13 @@ const coverPhotos = [
 const Hero = () => {
   return (
     <React.Fragment>
-      <div className="text-white w-full h-[120vh] flex flex-col">
-        <div className="w-full h-[50%] relative">
+      <div className="text-white w-full flex flex-col">
+        <div className="w-full h-[40vh] md:h-[50vh] relative">
           <Swiper
             modules={[Navigation, A11y, Autoplay]}
             spaceBetween={0}
             slidesPerView={1}
+            draggable
             navigation
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
@@ -51,10 +52,10 @@ const Hero = () => {
                 <Image src={photo.url} alt="" fill />
                 <div className="absolute bg-[rgba(0,0,0,0.4)] z-[1] top-0 right-0 left-0 bottom-0 flex items-center justify-center">
                   <div className="w-full items-center justify-center flex flex-col gap-4">
-                    <Typography className="hero_heading capitalize text-white text-[30px]">
+                    <Typography className="capitalize text-white text-xl md:text-[30px]">
                       BTRI School Alumni Association
                     </Typography>
-                    <Typography className="text-[20px] text-white">
+                    <Typography className="text-lg md:text-[20px] text-white">
                       MEETING THE MOMENT, TOGETHER
                     </Typography>
                   </div>
@@ -63,11 +64,11 @@ const Hero = () => {
             ))}
           </Swiper>
         </div>
-        <div className="w-full h-[50%] px-5 bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
+        <div className="w-full px-5 bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
           <div className="w-full h-full relative">
-            <div className="absolute z-[2] top-[-4rem] right-0 left-0 grid grid-cols-3 gap-5">
+            <div className="absolute z-[2] top-[3rem] md:top-[-4rem] right-0 left-0 grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="h-[25rem] max-h-[25rem] w-full flex flex-col text-slate-200 bg-green-900 dark:bg-zinc-700">
-                <div className="w-full text-white flex justify-center items-center gap-4 p-5 bg-green-800 dark:bg-zinc-600">
+                <div className="w-full text-white flex justify-center items-center gap-4 p-5 bg-green-800 dark:bg-zinc-900">
                   <TfiAnnouncement className="text-white" />
                   <Typography className="p-0">Announcements</Typography>
                 </div>
@@ -108,7 +109,7 @@ const Hero = () => {
                 </div>
               </div>
               <div className="h-[25rem] max-h-[25rem] w-full flex flex-col text-slate-200 bg-green-900 dark:bg-zinc-700">
-                <div className="w-full flex justify-center items-center gap-4 p-5 bg-green-800 dark:bg-zinc-600">
+                <div className="w-full flex justify-center items-center gap-4 p-5 bg-green-800 dark:bg-zinc-900">
                   <BsCalendar2Event />
                   <Typography className="p-0">Upcoming Event</Typography>
                 </div>
@@ -145,7 +146,7 @@ const Hero = () => {
                 </div>
               </div>
               <div className="h-[25rem] max-h-[25rem] w-full flex flex-col text-slate-200 bg-green-900 dark:bg-zinc-700">
-                <div className="w-full text-white flex justify-center items-center gap-4 p-5 bg-green-800 dark:bg-zinc-600">
+                <div className="w-full text-white flex justify-center items-center gap-4 p-5 bg-green-800 dark:bg-zinc-900">
                   <IoNewspaper className="text-white" />
                   <Typography className="p-0">News</Typography>
                 </div>

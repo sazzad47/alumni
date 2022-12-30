@@ -20,14 +20,14 @@ const Counter: React.FC = () => {
   const TriggerCounter = ScrollTrigger as unknown as React.FC<Props>;
   return (
     <React.Fragment>
-      <Grid className="w-full p-5 min-h-[20vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
+      <Grid className="w-full pt-[83rem] md:pt-[25rem] p-5 min-h-[20vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
         <TriggerCounter
           onEnter={() => setCounterOn(true)}
           onExit={() => setCounterOn(false)}
           className="w-full"
         >
           <Grid
-            className="w-full grid grid-cols-4 gap-2 text-slate-900 dark:text-slate-50"
+            className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 text-slate-900 dark:text-slate-50"
           >
            
             {items.map((item) => (

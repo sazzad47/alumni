@@ -17,7 +17,7 @@ const Subscription = () => {
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
         </Grid>
       </Grid>
-      <Grid className="w-full grid grid-cols-3 gap-3">
+      <Grid className="w-full grid grid-cols-1 md:grid-cols-3 gap-3">
         {items.map((item, i) => (
           <Grid key={i} className="w-full bg-green-900 dark:bg-zinc-700 text-slate-200">
            <Contents item={item}/>

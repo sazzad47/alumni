@@ -20,7 +20,7 @@ const Navbar = () => {
   const [isMenu, setisMenu] = useState(false);
   let boxClass = ["main-menu menu-right menuq1"];
   if (isMenu) {
-    boxClass.push("menuq2 bg-gray-300 dark:bg-green-700");
+    boxClass.push("menuq2 bg-green-800 dark:bg-zinc-800 text-slate-200");
   } else {
     boxClass.push("");
   }
@@ -54,27 +54,27 @@ const Navbar = () => {
     setMembersSubMenu(false);
   };
  
-  let aboutSubMenuClass = ["sub__menus bg-gray-200 dark:bg-green-900 text-black dark:text-white ml-[-1rem]"];
+  let aboutSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200 ml-[-1rem]"];
   if (isAboutSubMenu) {
     aboutSubMenuClass.push("sub__menus__Active");
   } else {
     aboutSubMenuClass.push("");
   }
   
-  let membersSubMenuClass = ["sub__menus bg-gray-200 dark:bg-green-900 text-black dark:text-white"];
+  let membersSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200"];
   if (isMembersSubMenu) {
     membersSubMenuClass.push("sub__menus__Active");
   } else {
     membersSubMenuClass.push("");
   }
-  let eventSubMenuClass = ["sub__menus bg-gray-200 dark:bg-green-900 text-black dark:text-white"];
+  let eventSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200"];
   if (isEventSubMenu) {
     eventSubMenuClass.push("sub__menus__Active");
   } else {
     eventSubMenuClass.push("");
   }
 
-  let schoolSubMenuClass = ["sub__menus bg-gray-200 dark:bg-green-900 text-black dark:text-white"];
+  let schoolSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200"];
   if (isSchoolSubMenu) {
     schoolSubMenuClass.push("sub__menus__Active");
   } else {
