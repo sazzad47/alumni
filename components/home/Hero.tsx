@@ -63,11 +63,11 @@ const Hero = () => {
             ))}
           </Swiper>
         </div>
-        <div className="w-full h-[50%] px-5 bg-slate-300 dark:bg-emerald-800">
+        <div className="w-full h-[50%] px-5 bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
           <div className="w-full h-full relative">
             <div className="absolute z-[2] top-[-4rem] right-0 left-0 grid grid-cols-3 gap-5">
-              <div className="h-[25rem] max-h-[25rem] w-full flex flex-col bg-gray-600 dark:bg-[var(--card-secondary-color)]">
-                <div className="w-full text-white flex justify-center items-center gap-4 p-5 bg-sky-600 dark:bg-[var(--block-bg-color)]">
+              <div className="h-[25rem] max-h-[25rem] w-full flex flex-col text-slate-200 bg-green-900 dark:bg-zinc-700">
+                <div className="w-full text-white flex justify-center items-center gap-4 p-5 bg-green-800 dark:bg-zinc-600">
                   <TfiAnnouncement className="text-white" />
                   <Typography className="p-0">Announcements</Typography>
                 </div>
@@ -101,14 +101,14 @@ const Hero = () => {
                     </ReadMore>
                   </div>
                   <div className="w-full flex items-center justify-center py-5">
-                    <Button className="normal-case text-white bg-cyan-900 px-4 hover:bg-cyan-800">
+                    <Button className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">
                       View all
                     </Button>
                   </div>
                 </div>
               </div>
-              <div className="h-[25rem] max-h-[25rem] w-full flex flex-col bg-gray-600 dark:bg-[var(--card-secondary-color)]">
-                <div className="w-full flex justify-center items-center gap-4 p-5 bg-sky-600 dark:bg-[var(--block-bg-color)]">
+              <div className="h-[25rem] max-h-[25rem] w-full flex flex-col text-slate-200 bg-green-900 dark:bg-zinc-700">
+                <div className="w-full flex justify-center items-center gap-4 p-5 bg-green-800 dark:bg-zinc-600">
                   <BsCalendar2Event />
                   <Typography className="p-0">Upcoming Event</Typography>
                 </div>
@@ -138,14 +138,14 @@ const Hero = () => {
                     </Typography>
                   </div>
                   <div className="w-full flex items-center justify-center py-5">
-                    <Button className="normal-case text-white bg-cyan-900 px-4 hover:bg-cyan-800">
+                    <Button className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">
                       Join
                     </Button>
                   </div>
                 </div>
               </div>
-              <div className="h-[25rem] max-h-[25rem] w-full flex flex-col bg-gray-600 dark:bg-[var(--card-secondary-color)]">
-                <div className="w-full text-white flex justify-center items-center gap-4 p-5 bg-sky-600 dark:bg-[var(--block-bg-color)]">
+              <div className="h-[25rem] max-h-[25rem] w-full flex flex-col text-slate-200 bg-green-900 dark:bg-zinc-700">
+                <div className="w-full text-white flex justify-center items-center gap-4 p-5 bg-green-800 dark:bg-zinc-600">
                   <IoNewspaper className="text-white" />
                   <Typography className="p-0">News</Typography>
                 </div>
@@ -179,7 +179,7 @@ const Hero = () => {
                     </ReadMore>
                   </div>
                   <div className="w-full flex items-center justify-center py-5">
-                    <Button className="normal-case text-white bg-cyan-900 px-4 hover:bg-cyan-800">
+                    <Button className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">
                       View all
                     </Button>
                   </div>

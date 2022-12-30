@@ -52,12 +52,9 @@ ul.main-menu {
     outline: none;
     border: none;
     padding: 0.5rem 1rem;
-    background: radial-gradient(520px, #5385f08c, transparent 50%);
     border-radius: 25px;
   }
-  .classic_btn:hover {
-    background: radial-gradient(520px, #9eadce8c, transparent 50%);
-  }
+
   .nav-auth-btn {
     display: none;
   }

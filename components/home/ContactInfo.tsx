@@ -7,7 +7,7 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 const ContactInfo = () => {
   return (
-    <Grid className="w-full p-5 min-h-[50vh] bg-slate-300 dark:bg-emerald-800 text-slate-900 dark:text-slate-200">
+    <Grid className="w-full p-5 min-h-[50vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
       <Grid className="w-full flex items-center justify-center py-3">
         <Grid className="flex items-center">
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
@@ -17,7 +17,7 @@ const ContactInfo = () => {
       </Grid>
       <Grid className="grid grid-cols-4 gap-3">
         {items.map((item, i) => (
-          <Grid key={i} className="w-full h-[10rem] relative bg-gray-400 dark:bg-green-900">
+          <Grid key={i} className="w-full h-[10rem] relative bg-green-900 dark:bg-zinc-700 text-slate-200">
               <Content item={item} />
           </Grid>
         ))}

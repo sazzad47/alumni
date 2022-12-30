@@ -12,7 +12,7 @@ import {Grid, Typography} from '@mui/material'
 const Feedback: React.FC = () => {
   return (
     <>
-          <Grid className="w-full p-5 min-h-[50vh] bg-slate-300 dark:bg-emerald-800 text-slate-900 dark:text-slate-200">
+          <Grid className="w-full p-5 min-h-[50vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
       <Grid className="w-full flex items-center justify-center py-3">
         <Grid className="flex items-center">
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
@@ -60,7 +60,7 @@ interface BannerProps {
 const Banner = (props: BannerProps) => {
   return (
     <div className="content text-white ">
-      <div className="comments bg-gray-400 dark:bg-green-900">
+      <div className="comments bg-green-900 dark:bg-zinc-700 text-slate-200">
         Animi sunt, ipsa error? Lorem ipsum dolor sit amet, consectetur
         adipisicing elit. Non, placeat quisquam? dignissimos est sit reiciendis
         iste

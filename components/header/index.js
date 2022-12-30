@@ -81,7 +81,7 @@ const Navbar = () => {
     schoolSubMenuClass.push("");
   }
   return (
-    <header className="text-black dark:text-white header_section bg-gray-200 dark:bg-green-900">
+    <header className="header_section text-slate-200 bg-green-900 dark:bg-zinc-700">
       <div className="header_content">
         <div className="relative flex items-center justify-center w-[40px] h-[40px] rounded-full">
           <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/">
@@ -217,13 +217,13 @@ const Navbar = () => {
         <div className="auth-segment">
           {/* {Object.values(auth).length === 0 ? ( */}
           <div className="flex items-center gap-4">
-          <IconButton className="text-black dark:text-white" onClick={()=> {
+          <IconButton className="text-slate-200" onClick={()=> {
                 currentTheme==="dark"? setTheme('light') : setTheme('dark')
               }}>
               <Brightness4Icon />
               </IconButton>
-            <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/auth">
-              <button className="classic_btn">Login</button>
+            <Link className="text-slate-200 " href="/auth">
+              <button className="classic_btn bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">Login</button>
             </Link>
           </div>
           {/* ) : (
