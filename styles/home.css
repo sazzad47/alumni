@@ -42,7 +42,7 @@
 .board{
   text-align: center;
   border-radius: 8px;
-  padding: 4em 0;
+  
 }
 
 .text-light{
@@ -111,6 +111,7 @@
 
   .swiper-review {
       width: 320px;
+      max-width: 100%;
     }
 
     .board > h1, p{
@@ -125,6 +126,7 @@
 
   .swiper-review {
       width: 600px;
+      max-width: 100%;
     }
 
   .swiper-review .swiper-button-prev, .swiper-button-next{

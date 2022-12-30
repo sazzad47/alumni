@@ -11,11 +11,11 @@ const ContactInfo = () => {
       <Grid className="w-full flex items-center justify-center py-3">
         <Grid className="flex items-center">
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
-          <Typography className="px-1 text-2xl uppercase">Contact Info</Typography>
+          <Typography className="px-1 text-lg md:text-xl uppercase">Contact Info</Typography>
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
         </Grid>
       </Grid>
-      <Grid className="grid grid-cols-4 gap-3">
+      <Grid className="grid grid-cols-1 sm:grid-2 md:grid-cols-4 gap-3">
         {items.map((item, i) => (
           <Grid key={i} className="w-full h-[10rem] relative bg-green-900 dark:bg-zinc-700 text-slate-200">
               <Content item={item} />

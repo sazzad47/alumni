@@ -20,11 +20,11 @@ const Gallery = () => {
       <Grid className="w-full flex items-center justify-center py-3">
         <Grid className="flex items-center">
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
-          <Typography className="px-1 text-2xl uppercase">Gallery</Typography>
+          <Typography className="px-1 text-lg md:text-xl uppercase">Gallery</Typography>
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
         </Grid>
       </Grid>
-      <Grid className="grid grid-cols-4 gap-3">
+      <Grid className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
         {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
           <Grid key={i} className="w-full h-[10rem] relative">
             <Contents />

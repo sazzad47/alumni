@@ -81,7 +81,7 @@ const Navbar = () => {
     schoolSubMenuClass.push("");
   }
   return (
-    <header className="header_section text-slate-200 bg-green-900 dark:bg-zinc-700">
+    <header className="header_section w-full max-w-full text-slate-200 bg-green-900 dark:bg-zinc-700">
       <div className="header_content">
         <div className="relative flex items-center justify-center w-[40px] h-[40px] rounded-full">
           <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/">

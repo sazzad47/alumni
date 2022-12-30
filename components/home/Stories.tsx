@@ -8,7 +8,7 @@ const Stories = () => {
       <Grid className="w-full flex items-center justify-center py-3">
         <Grid className="flex items-center">
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
-          <Typography className="px-1 text-2xl uppercase">Memories</Typography>
+          <Typography className="px-1 text-lg md:text-xl uppercase">Memories</Typography>
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
         </Grid>
       </Grid>
