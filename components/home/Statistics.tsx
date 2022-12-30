@@ -6,8 +6,8 @@ import ScrollTrigger from "react-scroll-trigger";
 const items = [
   { id: 1, title: "Total Members", number: 100 },
   { id: 2, title: "Events", number: 100 },
-  { id: 3, title: "Reviews", number: 100 },
-  { id: 4, title: "Awards", number: 100 },
+  { id: 3, title: "Seminars", number: 100 },
+  { id: 4, title: "Reviews", number: 100 },
 ];
 type Props = {
   children?: ReactNode;
@@ -20,14 +20,7 @@ const Counter: React.FC = () => {
   const TriggerCounter = ScrollTrigger as unknown as React.FC<Props>;
   return (
     <React.Fragment>
-      <Grid className="w-full p-5 min-h-[30vh] bg-slate-300 dark:bg-emerald-800 text-slate-900 dark:text-slate-200">
-      <Grid className="w-full flex items-center justify-center py-3">
-        <Grid className="flex items-center">
-          <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
-          <Typography className="px-1 text-2xl uppercase">Statistics</Typography>
-          <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />
-        </Grid>
-      </Grid>
+      <Grid className="w-full p-5 min-h-[20vh] bg-slate-300 dark:bg-emerald-800 text-slate-900 dark:text-slate-200">
         <TriggerCounter
           onEnter={() => setCounterOn(true)}
           onExit={() => setCounterOn(false)}

@@ -7,6 +7,7 @@ import Stories from '../components/home/Stories'
 import Statistics from '../components/home/Statistics'
 import Feedback from '../components/home/Feedback'
 import ContactInfo from '../components/home/ContactInfo'
+import Subscription from '../components/home/Subscription'
 
 
 
@@ -22,8 +23,9 @@ const Page: NextPage = () => {
       <main>
        
          <Hero/>
-         <Gallery/>
          <Statistics/>
+         <Subscription/>
+         <Gallery/>
          <Feedback/>
          <ContactInfo/>
          {/* <Stories/> */}
