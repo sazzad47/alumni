@@ -84,7 +84,7 @@ const Navbar = () => {
     <header className="header_section w-full max-w-full text-slate-200 bg-green-900 dark:bg-zinc-700">
       <div className="header_content">
         <div className="relative flex items-center justify-center w-[40px] h-[40px] rounded-full">
-          <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/">
+          <Link className="text-slate-200 hover:text-slate-300" href="/">
           <Image src="/logo.png" alt="" width={40} height={40} />
           </Link>
         </div>
@@ -108,17 +108,17 @@ const Navbar = () => {
               </NavLink>
               <ul className={aboutSubMenuClass.join(" ")}>
                 <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/about/association">
+                  <Link className="text-slate-200 hover:text-slate-300" href="/about/association">
                     Association
                   </Link>
                 </li>
                 <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/about/constitution">
+                  <Link className="text-slate-200 hover:text-slate-300" href="/about/constitution">
                    Constitution
                   </Link>
                 </li>
                 <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/about/plan">
+                  <Link className="text-slate-200 hover:text-slate-300" href="/about/plan">
                     Plan
                   </Link>
                 </li>
@@ -133,12 +133,12 @@ const Navbar = () => {
               </NavLink>
               <ul className={membersSubMenuClass.join(" ")}>
                 <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/members/database">
+                  <Link className="text-slate-200 hover:text-slate-300" href="/members/database">
                     Database
                   </Link>
                 </li>
                 <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/members/register">
+                  <Link className="text-slate-200 hover:text-slate-300" href="/members/register">
                    Register
                   </Link>
                 </li>
@@ -153,12 +153,12 @@ const Navbar = () => {
               </NavLink>
               <ul className={eventSubMenuClass.join(" ")}>
                 <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/events/upcoming">
+                  <Link className="text-slate-200 hover:text-slate-300" href="/events/upcoming">
                     Upcoming
                   </Link>
                 </li>
                 <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/events/past">
+                  <Link className="text-slate-200 hover:text-slate-300" href="/events/past">
                    Past
                   </Link>
                 </li>
@@ -181,12 +181,12 @@ const Navbar = () => {
               </NavLink>
               <ul className={schoolSubMenuClass.join(" ")}>
                 <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/school/history">
+                  <Link className="text-slate-200 hover:text-slate-300" href="/school/history">
                     History
                   </Link>
                 </li>
                 <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-900 hover:text-slate-800 dark:text-slate-200 dark:hover:text-slate-300" href="/school/current">
+                  <Link className="text-slate-200 hover:text-slate-300" href="/school/current">
                    Current
                   </Link>
                 </li>

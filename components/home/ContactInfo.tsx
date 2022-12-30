@@ -7,7 +7,7 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 
 const ContactInfo = () => {
   return (
-    <Grid className="w-full p-5 min-h-[50vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
+    <Grid className="w-full p-5 min-h-[35vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
       <Grid className="w-full flex items-center justify-center py-3">
         <Grid className="flex items-center">
           <hr className="w-[5rem] h-[2px] text-slate-900 dark:text-slate-200" />

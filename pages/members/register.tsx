@@ -1,7 +1,7 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Typography } from '@mui/material'
+import Register from '../../components/register'
 
 
 const Page: NextPage = () => {
@@ -14,10 +14,8 @@ const Page: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-          <div className='p-5 pt-[10vh] min-h-[90vh] flex items-start justify-center'>
-             <Typography>
-              Register page
-             </Typography>
+          <div className='min-h-[90vh] w-full flex items-center justify-center max-w-full bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200'>
+            <Register/>
           </div>
       </main>
     </React.Fragment>
