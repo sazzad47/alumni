@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,52 +8,64 @@ import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import ErrorIcon from '@mui/icons-material/Error';
+import ErrorIcon from "@mui/icons-material/Error";
 import Container from "@mui/material/Container";
-import { postData } from '../../utils/fetchData'
+import { postData } from "../../utils/fetchData";
 import { useTheme } from "next-themes";
-import validate, { RegisterDataProps } from "../../utils/validate";
-
+import validate from "../../utils/validate";
+import { Context, StoreProps } from "../../store/store";
+import { GlobalTypes } from "../../store/types";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function SignUp() {
+  const { state, dispatch } = useContext(Context) as StoreProps;
+  const { loading } = state;
   const { theme, systemTheme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
   const [checked, setChecked] = useState<boolean>(false);
-  const initState = {firstName: '', lastName: '', ssc_batch: '', email: '', confirm_email: '', password: '', confirm_password: ''};
-  const [formData, setFormData] = useState<RegisterDataProps>(initState);
-  const {firstName, lastName, ssc_batch, email, confirm_email, password, confirm_password} = formData;
+  const {
+    firstName,
+    lastName,
+    ssc_batch,
+    email,
+    confirm_email,
+    password,
+    confirm_password,
+  } = { ...state.register };
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [focused, setFocused] = useState<boolean>(false);
- 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>)=> {
-       const {name, value} = event.target;
-       setFormData({...formData, [name]: value})
-  }
- 
-  useEffect(()=> {
-      if (focused) {
-        setErrorMessage([])
-      }
-  },[focused])
-  
-  const handleSubmit = async (e: React.SyntheticEvent)=> {
-    e.preventDefault()
-    const errMsg = validate({firstName, lastName, ssc_batch, email, confirm_email, password, confirm_password})
-    const showMessage = ()=> {
-      setErrorMessage(errMsg)
+  const registerData = { ...state.register };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    dispatch({ type: GlobalTypes.REGISTER, payload: { name, value } });
+  };
+
+  useEffect(() => {
+    if (focused) {
+      setErrorMessage([]);
+    }
+  }, [focused]);
+
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    dispatch({ type: GlobalTypes.LOADING, payload: true });
+
+    const errMsg = validate(registerData);
+    const showMessage = () => {
+      setErrorMessage(errMsg);
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
-      })
-    }
-    if (errMsg.length !== 0) return showMessage()
-    console.log("formData",formData)
-    const res = await postData("auth/verifyEmail", formData);
+        behavior: "smooth",
+      });
+    };
+    if (errMsg.length !== 0) return showMessage();
 
-    if (res.err)
-      console.log("res", res);
-  }
-
+    const res = await postData("auth/verifyEmail", registerData);
+    if (res.err) console.log("res", res);
+    dispatch({ type: GlobalTypes.LOADING, payload: false });
+  };
+  console.log("store", state.loading);
   return (
     <Container component="main" className="flex items-center justify-center">
       <Box
@@ -64,21 +76,26 @@ export default function SignUp() {
           alignItems: "center",
         }}
       >
-        <Avatar src="/logo.png"/>
+        <Avatar src="/logo.png" />
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        {errorMessage.length !== 0 && <Grid className="w-full p-4 mt-4 bg-stone-400 dark:bg-zinc-500 flex flex-col gap-3">
-          {errorMessage.map((error, i)=> (
-            <Grid key={i} className="flex items-center gap-2">
-              <ErrorIcon/>
-              <Typography className="p-0 text-sm">
-                {error}
-              </Typography>
-            </Grid>
-          ))}
-        </Grid>}
-        <Box component="form" onSubmit={handleSubmit} autoComplete="off" sx={{ mt: 3 }}>
+        {errorMessage.length !== 0 && (
+          <Grid className="w-full p-4 mt-4 bg-stone-400 dark:bg-zinc-500 flex flex-col gap-3">
+            {errorMessage.map((error, i) => (
+              <Grid key={i} className="flex items-center gap-2">
+                <ErrorIcon />
+                <Typography className="p-0 text-sm">{error}</Typography>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          autoComplete="off"
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <InputField
@@ -89,10 +106,9 @@ export default function SignUp() {
                   label: "First Name",
                   value: firstName,
                   onChange: handleChange,
-                  setFocused: setFocused
+                  setFocused: setFocused,
                 }}
               />
-              
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputField
@@ -103,10 +119,9 @@ export default function SignUp() {
                   label: "Last Name",
                   value: lastName,
                   onChange: handleChange,
-                  setFocused: setFocused
+                  setFocused: setFocused,
                 }}
               />
-            
             </Grid>
             <Grid item xs={12}>
               <InputField
@@ -117,10 +132,9 @@ export default function SignUp() {
                   label: "SSC Batch",
                   value: ssc_batch,
                   onChange: handleChange,
-                  setFocused: setFocused
+                  setFocused: setFocused,
                 }}
               />
-             
             </Grid>
             <Grid item xs={12}>
               <InputField
@@ -131,10 +145,9 @@ export default function SignUp() {
                   label: "Email Address",
                   value: email,
                   onChange: handleChange,
-                  setFocused: setFocused
+                  setFocused: setFocused,
                 }}
               />
-             
             </Grid>
             <Grid item xs={12}>
               <InputField
@@ -145,10 +158,9 @@ export default function SignUp() {
                   label: "Confirm your email address",
                   value: confirm_email,
                   onChange: handleChange,
-                  setFocused: setFocused
+                  setFocused: setFocused,
                 }}
               />
-            
             </Grid>
             <Grid item xs={12}>
               <InputField
@@ -159,10 +171,9 @@ export default function SignUp() {
                   label: "Password",
                   value: password,
                   onChange: handleChange,
-                  setFocused: setFocused
+                  setFocused: setFocused,
                 }}
               />
-             
             </Grid>
             <Grid item xs={12}>
               <InputField
@@ -173,17 +184,16 @@ export default function SignUp() {
                   label: "Confirm your password",
                   value: confirm_password,
                   onChange: handleChange,
-                  setFocused: setFocused
+                  setFocused: setFocused,
                 }}
               />
-            
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
                     value={checked}
-                    onChange={()=> setChecked(!checked)}
+                    onChange={() => setChecked(!checked)}
                     checked={checked}
                     sx={{
                       color:
@@ -211,7 +221,20 @@ export default function SignUp() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            {loading ? (
+              <ThreeDots
+                height="30"
+                width="30"
+                radius="9"
+                color="#4fa94d"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+            ) : (
+              <Typography>Sign Up</Typography>
+            )}
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
@@ -235,7 +258,7 @@ interface Props {
     name: string;
     id: string;
     label: string;
-    value: string | number;
+    value?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     setFocused: Function;
   };
@@ -254,9 +277,9 @@ const InputField = ({ inputProps }: Props) => {
       fullWidth
       id={id}
       label={label}
-      onChange = {onChange}
-      onFocus = {()=> setFocused(true)}
-      onBlur = {()=> setFocused(false)}
+      onChange={onChange}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
       sx={{
         label: {
           color: currentTheme === "dark" ? "rgb(214 211 209)" : "",
