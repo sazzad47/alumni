@@ -10,9 +10,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ErrorIcon from '@mui/icons-material/Error';
 import Container from "@mui/material/Container";
+import { postData } from '../../utils/fetchData'
 import { useTheme } from "next-themes";
 import validate, { RegisterDataProps } from "../../utils/validate";
-import { Smooch } from "@next/font/google";
+
 
 export default function SignUp() {
   const { theme, systemTheme } = useTheme();
@@ -28,14 +29,14 @@ export default function SignUp() {
        const {name, value} = event.target;
        setFormData({...formData, [name]: value})
   }
-
+ 
   useEffect(()=> {
       if (focused) {
         setErrorMessage([])
       }
   },[focused])
   
-  const handleSubmit = (e: React.SyntheticEvent)=> {
+  const handleSubmit = async (e: React.SyntheticEvent)=> {
     e.preventDefault()
     const errMsg = validate({firstName, lastName, ssc_batch, email, confirm_email, password, confirm_password})
     const showMessage = ()=> {
@@ -45,8 +46,12 @@ export default function SignUp() {
         behavior: 'smooth'
       })
     }
-    if (errMsg) return showMessage()
-    console.log(formData)
+    if (errMsg.length !== 0) return showMessage()
+    console.log("formData",formData)
+    const res = await postData("auth/verifyEmail", formData);
+
+    if (res.err)
+      console.log("res", res);
   }
 
   return (
@@ -211,7 +216,7 @@ export default function SignUp() {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link
-                href="#"
+                href="/login"
                 className="text-slate-900 dark:text-slate-200"
               >
                 Already have an account? Sign in

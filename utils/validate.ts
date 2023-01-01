@@ -12,7 +12,7 @@ const validate = (data: RegisterDataProps)=> {
     const {firstName, lastName, ssc_batch, email, confirm_email, password, confirm_password} = data;
     
     let errors: Array<string> = [];
-    console.log('validate', errors)
+   
     if (!firstName || !lastName || !ssc_batch || !email || !confirm_email || !password || !confirm_password) {
         errors.push("First name is required",
          "Last name is required",

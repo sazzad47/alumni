@@ -203,7 +203,7 @@ const Navbar = () => {
             <li onClick={()=> setisMenu(false)} className="menu-item nav-auth-btn">
               {/* {Object.values(auth).length === 0 ? ( */}
               <NavLink
-                href="/auth"
+                href="/login"
                 className="nav-item nav-link"
               >
                 Login
@@ -222,7 +222,7 @@ const Navbar = () => {
               }}>
               <Brightness4Icon />
               </IconButton>
-            <Link className="text-slate-200 " href="/auth">
+            <Link className="text-slate-200 " href="/login">
               <button className="classic_btn bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">Login</button>
             </Link>
           </div>
