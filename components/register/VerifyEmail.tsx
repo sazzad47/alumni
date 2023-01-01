@@ -2,9 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -16,6 +13,7 @@ import validate from "../../utils/validate";
 import { Context, StoreProps } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
+import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 
 export default function SignUp() {
@@ -24,23 +22,15 @@ export default function SignUp() {
   const { loading } = state;
   const { theme, systemTheme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
-  const [checked, setChecked] = useState<boolean>(false);
-  const {
-    firstName,
-    lastName,
-    ssc_batch,
-    email,
-    confirm_email,
-    password,
-    confirm_password,
-  } = { ...state.register };
+  const [otp, setOtp] = useState<string>();
+
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [focused, setFocused] = useState<boolean>(false);
   const registerData = { ...state.register };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    dispatch({ type: GlobalTypes.REGISTER, payload: { name, value } });
+    const { value } = event.target;
+    setOtp(value);
   };
 
   useEffect(() => {
@@ -53,23 +43,31 @@ export default function SignUp() {
     e.preventDefault();
     dispatch({ type: GlobalTypes.LOADING, payload: true });
 
-    const errMsg = validate(registerData);
-    const showMessage = () => {
-      setErrorMessage(errMsg);
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    };
-    if (errMsg.length !== 0) return showMessage();
+    const res = await postData("auth/register", { registerData, code: otp });
+    const showError =()=> {
+        setErrorMessage([res.err])
+        dispatch({ type: GlobalTypes.LOADING, payload: false });
+    }
+    if (res.err) return showError();
 
-    const res = await postData("auth/verifyEmail", registerData);
+    dispatch({
+      type: GlobalTypes.AUTH,
+      payload: {
+        token: res.access_token,
+        user: res.user,
+      },
+    });
+
+    Cookie.set("refreshtoken", res.refresh_token, {
+      path: "api/auth/accessToken",
+      expires: 7,
+    });
+    const firstLogin = true;
+    localStorage.setItem("firstLogin", JSON.stringify(firstLogin));
     dispatch({ type: GlobalTypes.LOADING, payload: false });
-    if (res.err) return errMsg.push(res.err) && showMessage();
-    router.push('/members/register/verify_email')
-    
+    router.push("/members/register/verify_info");
   };
-  console.log("store", state.loading);
+  console.log("store", state.auth);
   return (
     <Container component="main" className="flex items-center justify-center">
       <Box
@@ -82,9 +80,9 @@ export default function SignUp() {
       >
         <Avatar src="/logo.png" />
         <Typography component="h1" variant="h5">
-          Register
+          Verify your email address
         </Typography>
-        {errorMessage.length !== 0 && (
+        {errorMessage.length !== 0 ? (
           <Grid className="w-full p-4 mt-4 bg-stone-400 dark:bg-zinc-500 flex flex-col gap-3">
             {errorMessage.map((error, i) => (
               <Grid key={i} className="flex items-center gap-2">
@@ -93,134 +91,40 @@ export default function SignUp() {
               </Grid>
             ))}
           </Grid>
+        ) : (
+          <Grid className="w-full p-5 mt-4 bg-stone-400 dark:bg-zinc-500 flex flex-col">
+            <Typography className="p-0">
+              We sent a 4-digit verification code to your email address. Please
+              enter the code to verify your email address.
+            </Typography>
+          </Grid>
         )}
+
         <Box
           component="form"
           onSubmit={handleSubmit}
           autoComplete="off"
           sx={{ mt: 3 }}
+          className="w-full"
         >
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <InputField
-                inputProps={{
-                  type: "text",
-                  name: "firstName",
-                  id: "firstName",
-                  label: "First Name",
-                  value: firstName,
-                  onChange: handleChange,
-                  setFocused: setFocused,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputField
-                inputProps={{
-                  type: "text",
-                  name: "lastName",
-                  id: "lastName",
-                  label: "Last Name",
-                  value: lastName,
-                  onChange: handleChange,
-                  setFocused: setFocused,
-                }}
-              />
-            </Grid>
             <Grid item xs={12}>
               <InputField
                 inputProps={{
                   type: "text",
-                  name: "ssc_batch",
-                  id: "ssc_batch",
-                  label: "SSC Batch",
-                  value: ssc_batch,
+                  name: "otp",
+                  id: "otp",
+                  label: "Verification Code",
+                  value: otp,
                   onChange: handleChange,
                   setFocused: setFocused,
                 }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputField
-                inputProps={{
-                  type: "text",
-                  name: "email",
-                  id: "email",
-                  label: "Email Address",
-                  value: email,
-                  onChange: handleChange,
-                  setFocused: setFocused,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputField
-                inputProps={{
-                  type: "email",
-                  name: "confirm_email",
-                  id: "confirm_email",
-                  label: "Confirm your email address",
-                  value: confirm_email,
-                  onChange: handleChange,
-                  setFocused: setFocused,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputField
-                inputProps={{
-                  type: "password",
-                  name: "password",
-                  id: "password",
-                  label: "Password",
-                  value: password,
-                  onChange: handleChange,
-                  setFocused: setFocused,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputField
-                inputProps={{
-                  type: "password",
-                  name: "confirm_password",
-                  id: "confirm_password",
-                  label: "Confirm your password",
-                  value: confirm_password,
-                  onChange: handleChange,
-                  setFocused: setFocused,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={checked}
-                    onChange={() => setChecked(!checked)}
-                    checked={checked}
-                    sx={{
-                      color:
-                        currentTheme === "dark"
-                          ? "rgb(120 113 108)"
-                          : "rgb(21 128 61)",
-                      "&.Mui-checked": {
-                        color:
-                          currentTheme === "dark"
-                            ? "rgb(120 113 108)"
-                            : "rgb(21 128 61)",
-                      },
-                    }}
-                  />
-                }
-                label="I agree to the terms & conditions."
               />
             </Grid>
           </Grid>
           <Button
             className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
             type="submit"
-            disabled={!checked}
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
@@ -237,19 +141,9 @@ export default function SignUp() {
                 visible={true}
               />
             ) : (
-              <Typography>Sign Up</Typography>
+              <Typography>Verify</Typography>
             )}
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link
-                href="/login"
-                className="text-slate-900 dark:text-slate-200"
-              >
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
     </Container>

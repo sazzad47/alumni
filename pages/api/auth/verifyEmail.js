@@ -16,7 +16,7 @@ export default async (req, res) => {
 
 const emailSend = async (req, res) => {
   try {
-    console.log('email', req.body)
+   
     let user = await Users.findOne({ email: req.body.email });
     if (user)
       return res.status(400).json({ err: "This email already exists." });

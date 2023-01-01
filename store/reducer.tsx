@@ -20,6 +20,13 @@ const sidebarReducer: Reducer<GlobalProps, GlobalAction> = (state, action) => {
           [payload.name]: payload.value
         },
       };
+    case GlobalTypes.AUTH:
+      return {
+        ...state,
+        auth: {
+          ...payload
+        },
+      };
     default:
       return state;
   }

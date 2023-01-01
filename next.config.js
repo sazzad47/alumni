@@ -6,6 +6,8 @@ const nextConfig = {
      "SENDER_EMAIL_PASSWORD": process.env.SENDER_EMAIL_PASSWORD,
      "EMAIL_SERVICE": process.env.EMAIL_SERVICE,
      "EMAIL_PORT": process.env.EMAIL_PORT,
+     "ACCESS_TOKEN_SECRET": process.env.ACCESS_TOKEN_SECRET,
+     "REFRESH_TOKEN_SECRET": process.env.REFRESH_TOKEN_SECRET,
   }
 }
 

@@ -1,6 +1,5 @@
 import connectDB from "../../../utils/connectDB";
 import Users from "../../../models/userModel";
-import valid from "../../../utils/valid";
 import bcrypt from "bcrypt";
 import {
   createAccessToken,
@@ -20,30 +19,35 @@ export default async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    const { name, email, password, cf_password, code } = req.body;
-    let data = await Otp.findOne({ $and: [{ email }, { code: code }] });
-    console.log("code", data);
+    const { registerData, code } = req.body;
+    const { firstName, lastName, ssc_batch, email, password } = registerData;
+    let data = await Otp.findOne({ $and: [{ email }, { code: parseInt(code) }] });
+    
     if (!data) return res.status(400).json({ err: "Invalid OTP" });
 
     let currentTime = new Date().getTime();
     let diff = data.expireIn - currentTime;
     if (diff < 0) return res.status(400).json({ err: "OTP expired!" });
-    const errMsg = valid(name, email, password, cf_password);
-    if (errMsg) return res.status(400).json({ err: errMsg });
+    
     const user = await Users.findOne({ email });
     if (user)
       return res.status(400).json({ err: "This email already exists." });
     const passwordHash = await bcrypt.hash(password, 12);
+    
     const newUser = new Users({
-      name,
+      firstName,
+      lastName,
+      ssc_batch,
       email,
-      password: passwordHash,
-      cf_password,
+      password: passwordHash
     });
-
+   
+    
     const access_token = createAccessToken({ id: newUser._id });
     const refresh_token = createRefreshToken({ id: newUser._id });
     await newUser.save();
+    console.log("code",  data);
+    
     res.json({
       msg: "Registration Successful!",
       refresh_token,
@@ -53,6 +57,7 @@ const register = async (req, res) => {
         password: "",
       },
     });
+    
   } catch (err) {
     return res.status(500).json({ err: err.message });
   }
