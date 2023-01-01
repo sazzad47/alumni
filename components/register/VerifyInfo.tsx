@@ -15,6 +15,7 @@ import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
 import Cookie from "js-cookie";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import Link from "next/link";
 
 export default function SignUp() {
   const { state, dispatch } = useContext(Context) as StoreProps;
@@ -93,7 +94,7 @@ export default function SignUp() {
           sx={{ mt: 3 }}
           className="w-full"
         >
-         
+         <Link href="/">
           <Button
             className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
             type="submit"
@@ -101,21 +102,9 @@ export default function SignUp() {
             variant="contained"
             sx={{ mt: 1, mb: 1 }}
           >
-            {loading ? (
-              <ThreeDots
-                height="30"
-                width="30"
-                radius="9"
-                color="#4fa94d"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-              />
-            ) : (
-              <Typography>Back to Home</Typography>
-            )}
+            <Typography>Back to Home</Typography>
           </Button>
+         </Link>
          
         </Box>
       </Box>
