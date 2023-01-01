@@ -14,6 +14,7 @@ import { Context, StoreProps } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
 import Cookie from "js-cookie";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 export default function SignUp() {
   const { state, dispatch } = useContext(Context) as StoreProps;
@@ -75,47 +76,30 @@ export default function SignUp() {
         }}
       >
         <Avatar src="/logo.png" />
+        <Grid className="flex items-center gap-2">
+            <CheckCircleOutlineIcon/>
         <Typography component="h1" variant="h5">
-          Verify Information
+          Email verified successfully!
         </Typography>
+        </Grid>
        
           <Grid className="w-full p-5 mt-4 bg-stone-400 dark:bg-zinc-500 flex flex-col">
            <Typography className="p-0">
-           We sent a 4-digit verification code to your email address. Please enter the code to verify your email address.
+           Your membership is pending approval. You will be notified by email within 24 hours if your membership is approved by our review team. Thank you!
            </Typography>
           </Grid>
        
         <Box
-          component="form"
-          onSubmit={handleSubmit}
-          autoComplete="off"
           sx={{ mt: 3 }}
           className="w-full"
         >
-          <Grid container spacing={2}>
-            
-            <Grid item xs={12}>
-              <InputField
-                inputProps={{
-                  type: "text",
-                  name: "otp",
-                  id: "otp",
-                  label: "Verification Code",
-                  value: otp,
-                  onChange: handleChange,
-                  setFocused: setFocused,
-                }}
-              />
-            </Grid>
-           
-            
-          </Grid>
+         
           <Button
             className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 1, mb: 1 }}
           >
             {loading ? (
               <ThreeDots
@@ -129,7 +113,7 @@ export default function SignUp() {
                 visible={true}
               />
             ) : (
-              <Typography>Verify</Typography>
+              <Typography>Back to Home</Typography>
             )}
           </Button>
          
