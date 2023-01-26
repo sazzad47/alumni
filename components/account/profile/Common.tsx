@@ -66,13 +66,14 @@ const Common = () => {
           </IconButton>
         </Grid>
         <Grid className="relative w-full mt-3">
-          <Grid className="w-full flex justify-center gap-2">
+          <Grid className="w-full flex flex-col items-center justify-start gap-2">
             <Grid className="flex gap-2 items-center">
               <Typography className="p-0 text-2xl">Sazzad Hossen</Typography>
               <Tooltip title="Honorary member">
                 <WorkspacePremiumIcon className="text-lg" />
               </Tooltip>
             </Grid>
+            <Grid><Typography className="text-lg text-slate-500">Batch: 2014</Typography> </Grid>
             
             <Button
               variant="contained"

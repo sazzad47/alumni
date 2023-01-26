@@ -26,9 +26,9 @@ const Biography = () => {
           </Grid>
           <Typography className="p-0">
             Your professional bio should be as unique as you are. That said,
-            there are a few items you'll want to include to make sure that your
-            readers get the information they're looking for. Your bio should
-            include important professional roles and achievements. It's also
+            there are a few items you&apos;ll want to include to make sure that your
+            readers get the information they&apos;re looking for. Your bio should
+            include important professional roles and achievements. It&apos;s also
             valuable to add passions, personal interests, and how you bring your
             values to your work. Finally, your bio should give your readers a
             chance to get to know you. So, it should reflect your personality.

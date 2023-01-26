@@ -165,7 +165,7 @@ export default function Login() {
                 href="/members/register"
                 className="text-slate-900 dark:text-slate-200"
               >
-                Don't have an account? Sign up
+                Don&apos;t have an account? Sign up
               </Link>
             </Grid>
           </Grid>
