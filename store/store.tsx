@@ -1,7 +1,9 @@
-import React, { createContext, useMemo, useReducer } from "react";
+import React, { createContext, useEffect, useMemo, useReducer } from "react";
+import { getData } from "../utils/fetchData";
 import { initState } from "./initState";
 import { GlobalProps } from "./props";
 import Reducer from "./reducer";
+import { GlobalTypes } from "./types";
 
 
 export interface StoreProps {
@@ -19,6 +21,24 @@ export const Context = createContext<StoreProps | null>(null);
 
 const StoreProvider = ({children}: ProviderProps) => {
   const [state, dispatch] = useReducer(Reducer, initState);
+
+  useEffect(() => {
+    const firstLogin = localStorage.getItem("firstLogin");
+    if(firstLogin){
+        getData('auth/accessToken').then(res => {
+            if(res.err) return localStorage.removeItem("firstLogin")
+            dispatch({
+              type: GlobalTypes.AUTH,
+              payload: {
+                token: res.access_token,
+                user: res.user,
+              },
+            })
+        })
+    }
+
+    
+},[])
   const store = useMemo(
     () => ({
       state,

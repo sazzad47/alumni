@@ -20,7 +20,7 @@ export default async (req, res) => {
 const register = async (req, res) => {
   try {
     const { registerData, code } = req.body;
-    const { firstName, lastName, ssc_batch, email, password } = registerData;
+    const { firstName, lastName, ssc_batch, email } = registerData;
     let data = await Otp.findOne({ $and: [{ email }, { code: parseInt(code) }] });
     
     if (!data) return res.status(400).json({ err: "Invalid OTP" });
@@ -32,26 +32,24 @@ const register = async (req, res) => {
     const user = await Users.findOne({ email });
     if (user)
       return res.status(400).json({ err: "This email already exists." });
-    const passwordHash = await bcrypt.hash(password, 12);
-    
+      
     const newUser = new Users({
       firstName,
       lastName,
       ssc_batch,
       email,
-      password: passwordHash
     });
    
     
-    const access_token = createAccessToken({ id: newUser._id });
-    const refresh_token = createRefreshToken({ id: newUser._id });
+    // const access_token = createAccessToken({ id: newUser._id });
+    // const refresh_token = createRefreshToken({ id: newUser._id });
     await newUser.save();
     console.log("code",  data);
     
     res.json({
       msg: "Registration Successful!",
-      refresh_token,
-      access_token,
+      // refresh_token,
+      // access_token,
       user: {
         ...newUser._doc,
         password: "",

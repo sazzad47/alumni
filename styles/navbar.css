@@ -95,13 +95,12 @@ ul.main-menu {
   .auth_sub__menus {
     position: absolute;
     display: none;
-    background: rgb(3, 41, 66);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px solid lavender;
     width: 150px;
     left: -40px;
+    top: 8.5vh;
     padding: 2px 0 0 0;
     z-index: 1000;
     box-shadow: 0 10px 12px rgb(22 33 39 / 25%);

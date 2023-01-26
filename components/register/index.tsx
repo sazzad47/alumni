@@ -21,7 +21,7 @@ import { useRouter } from "next/router";
 export default function SignUp() {
   const router = useRouter();
   const { state, dispatch } = useContext(Context) as StoreProps;
-  const { loading } = state;
+  const { auth, loading } = state;
   const { theme, systemTheme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
   const [checked, setChecked] = useState<boolean>(false);
@@ -31,8 +31,6 @@ export default function SignUp() {
     ssc_batch,
     email,
     confirm_email,
-    password,
-    confirm_password,
   } = { ...state.register };
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [focused, setFocused] = useState<boolean>(false);
@@ -69,7 +67,11 @@ export default function SignUp() {
     router.push('/members/register/verify_email')
     
   };
-  console.log("store", state.loading);
+  useEffect(() => {
+    if (auth !== undefined) {
+      if (Object.keys(auth).length !== 0) router.push("/");
+    }
+  }, []);
   return (
     <Container component="main" className="flex items-center justify-center">
       <Box
@@ -143,7 +145,7 @@ export default function SignUp() {
             <Grid item xs={12}>
               <InputField
                 inputProps={{
-                  type: "text",
+                  type: "email",
                   name: "email",
                   id: "email",
                   label: "Email Address",
@@ -166,7 +168,7 @@ export default function SignUp() {
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <InputField
                 inputProps={{
                   type: "password",
@@ -191,7 +193,7 @@ export default function SignUp() {
                   setFocused: setFocused,
                 }}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <FormControlLabel
                 control={

@@ -1,10 +1,10 @@
 import React from "react";
 import UserMenu from "./UserMenu";
 
-const LoggedRouter = ({ boxClass, toggleClass }) => {
+const LoggedRouter = ({ boxClass, setisMenu, toggleAccountSubMenu, isAccountSubMenu }) => {
   return (
     <React.Fragment>
-      <UserMenu boxClass={boxClass} toggleClass={toggleClass} />
+      <UserMenu boxClass={boxClass} setisMenu={setisMenu} toggleAccountSubMenu={toggleAccountSubMenu} isAccountSubMenu={isAccountSubMenu} />
     </React.Fragment>
   );
 };

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
+const otpSchema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -18,5 +18,5 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-let Dataset = mongoose.models.otp || mongoose.model("otp", userSchema);
+let Dataset = mongoose.models.passwordResetOtp || mongoose.model("passwordResetOtp", otpSchema);
 export default Dataset;

@@ -21,9 +21,9 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await Users.findOne({ email });
     if (!user)
-      return res.status(400).json({ err: "This user does not exist." });
+      return res.status(400).json({ err: "Invalid credentials." });
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ err: "Incorrect password." });
+    if (!isMatch) return res.status(400).json({ err: "Invalid credentials." });
     const access_token = createAccessToken({ id: user._id });
     const refresh_token = createRefreshToken({ id: user._id });
 

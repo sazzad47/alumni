@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -9,28 +10,25 @@ import ErrorIcon from "@mui/icons-material/Error";
 import Container from "@mui/material/Container";
 import { postData } from "../../utils/fetchData";
 import { useTheme } from "next-themes";
-import validate from "../../utils/validate";
 import { Context, StoreProps } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
+import { useRouter } from "next/router";
 import Cookie from "js-cookie";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import Link from "next/link";
 
-export default function SignUp() {
+export default function Login() {
+  const router = useRouter();
   const { state, dispatch } = useContext(Context) as StoreProps;
-  const { loading } = state;
-  const { theme, systemTheme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
-  const [otp, setOtp] = useState<number>();
-  
+  const { auth, loading } = state;
+  const initialState = { email: "", password: "" };
+  const [userData, setUserData] = useState(initialState);
+  const { email, password } = userData;
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [focused, setFocused] = useState<boolean>(false);
-  const registerData = { ...state.register };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setOtp(parseInt(value))
+    const { name, value } = event.target;
+    setUserData({ ...userData, [name]: value });
   };
 
   useEffect(() => {
@@ -43,11 +41,16 @@ export default function SignUp() {
     e.preventDefault();
     dispatch({ type: GlobalTypes.LOADING, payload: true });
 
-    const res = await postData("auth/register", { registerData, code: otp });
-    if (res.err) return 
-      
+    const showMessage = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    };
 
-   
+    const res = await postData("auth/login", userData);
+    dispatch({ type: GlobalTypes.LOADING, payload: false });
+    if (res.err) return errorMessage.push(res.err) && showMessage();
     dispatch({
       type: GlobalTypes.AUTH,
       payload: {
@@ -55,17 +58,19 @@ export default function SignUp() {
         user: res.user,
       },
     });
-
     Cookie.set("refreshtoken", res.refresh_token, {
       path: "api/auth/accessToken",
       expires: 7,
     });
     const firstLogin = true;
     localStorage.setItem("firstLogin", JSON.stringify(firstLogin));
-    dispatch({ type: GlobalTypes.LOADING, payload: false });
-    
   };
-  console.log("store", state.auth);
+  useEffect(() => {
+    if (auth !== undefined) {
+      if (Object.keys(auth).length !== 0) router.push("/");
+    }
+  }, [auth]);
+  
   return (
     <Container component="main" className="flex items-center justify-center">
       <Box
@@ -77,35 +82,93 @@ export default function SignUp() {
         }}
       >
         <Avatar src="/logo.png" />
-        <Grid className="flex items-center gap-2">
-            <CheckCircleOutlineIcon/>
         <Typography component="h1" variant="h5">
-          Email verified successfully!
+          Login
         </Typography>
-        </Grid>
-       
-          <Grid className="w-full p-5 mt-4 bg-stone-400 dark:bg-zinc-500 flex flex-col">
-           <Typography className="p-0">
-           Your membership is pending approval. You will be notified by email within 24 hours if your membership is approved by our review team. Thank you!
-           </Typography>
+        {errorMessage.length !== 0 && (
+          <Grid className="w-full p-4 mt-4 bg-stone-400 dark:bg-zinc-500 flex flex-col gap-3">
+            {errorMessage.map((error, i) => (
+              <Grid key={i} className="flex items-center gap-2">
+                <ErrorIcon />
+                <Typography className="p-0 text-sm">{error}</Typography>
+              </Grid>
+            ))}
           </Grid>
-       
+        )}
         <Box
+          component="form"
+          onSubmit={handleSubmit}
+          autoComplete="off"
           sx={{ mt: 3 }}
-          className="w-full"
         >
-         <Link href="/">
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <InputField
+                inputProps={{
+                  type: "email",
+                  name: "email",
+                  id: "email",
+                  label: "Email Address",
+                  value: email,
+                  onChange: handleChange,
+                  setFocused: setFocused,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputField
+                inputProps={{
+                  type: "password",
+                  name: "password",
+                  id: "password",
+                  label: "Password",
+                  value: password,
+                  onChange: handleChange,
+                  setFocused: setFocused,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+            <Link
+                href="/login/forgot-password"
+                className="text-slate-900 dark:text-slate-200"
+              >
+                Forgot your password?
+              </Link>
+            </Grid>
+          </Grid>
           <Button
             className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 1, mb: 1 }}
+            sx={{ mt: 3, mb: 2 }}
           >
-            <Typography>Back to Home</Typography>
+            {loading ? (
+              <ThreeDots
+                height="30"
+                width="30"
+                radius="9"
+                color="#4fa94d"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+            ) : (
+              <Typography>Login</Typography>
+            )}
           </Button>
-         </Link>
-         
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link
+                href="/members/register"
+                className="text-slate-900 dark:text-slate-200"
+              >
+                Don't have an account? Sign up
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>
@@ -118,7 +181,7 @@ interface Props {
     name: string;
     id: string;
     label: string;
-    value?: number;
+    value?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     setFocused: Function;
   };

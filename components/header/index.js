@@ -3,21 +3,21 @@ import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { FiAlignRight } from "react-icons/fi";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-// import logo from "../../public/logo.png";
-// import { DataContext } from "../../store/GlobalState";
 import LoggedRouter from "./LoggedRouter";
 import { NavLink } from "./NavLink";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import { useTheme } from "next-themes";
 import { IconButton } from "@mui/material";
+import { Context } from "../../store/store";
 
 
 const Navbar = () => {
-  // const { state } = useContext(DataContext);
-  // const { auth } = state;
+  const { state } = useContext(Context);
+  const { auth } = state;
   const { theme, setTheme, systemTheme } = useTheme();
   const currentTheme = theme === "system"? systemTheme: theme;
   const [isMenu, setisMenu] = useState(false);
+ 
   let boxClass = ["main-menu menu-right menuq1"];
   if (isMenu) {
     boxClass.push("menuq2 bg-green-800 dark:bg-zinc-800 text-slate-200");
@@ -28,33 +28,45 @@ const Navbar = () => {
   const [isMembersSubMenu, setMembersSubMenu] = useState(false);
   const [isEventSubMenu, setEventSubMenu] = useState(false);
   const [isSchoolSubMenu, setSchoolSubMenu] = useState(false);
+  const [isAccountSubMenu, setAccountSubMenu] = useState(false);
 
   const toggleAboutSubMenu = () => {
     setAboutSubMenu(!isAboutSubMenu);
     setMembersSubMenu(false);
     setEventSubMenu(false);
     setSchoolSubMenu(false);
+    setAccountSubMenu(false);
   };
   const toggleMembersSubMenu = () => {
     setMembersSubMenu(!isMembersSubMenu);
     setAboutSubMenu(false);
     setEventSubMenu(false);
     setSchoolSubMenu(false);
+    setAccountSubMenu(false);
   };
   const toggleEventSubMenu = () => {
     setEventSubMenu(!isEventSubMenu);
     setMembersSubMenu(false);
     setAboutSubMenu(false);
     setSchoolSubMenu(false);
+    setAccountSubMenu(false);
   };
   const toggleSchoolSubMenu = () => {
     setSchoolSubMenu(!isSchoolSubMenu);
     setAboutSubMenu(false);
     setEventSubMenu(false);
     setMembersSubMenu(false);
+    setAccountSubMenu(false);
+  };
+  const toggleAccountSubMenu = () => {
+    setAccountSubMenu(!isAccountSubMenu);
+    setSchoolSubMenu(false);
+    setAboutSubMenu(false);
+    setEventSubMenu(false);
+    setMembersSubMenu(false);
   };
  
-  let aboutSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200 ml-[-1rem]"];
+  let aboutSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200"];
   if (isAboutSubMenu) {
     aboutSubMenuClass.push("sub__menus__Active");
   } else {
@@ -99,6 +111,7 @@ const Navbar = () => {
                 Home
               </NavLink>
             </li>
+           
             <li
               onClick={toggleAboutSubMenu}
               className="menu-item sub__menus__arrows"
@@ -137,11 +150,11 @@ const Navbar = () => {
                     Database
                   </Link>
                 </li>
-                <li onClick={()=> setisMenu(false)}>
+                {Object.keys(auth).length === 0 && <li onClick={()=> setisMenu(false)}>
                   <Link className="text-slate-200 hover:text-slate-300" href="/members/register">
                    Register
                   </Link>
-                </li>
+                </li>}
               </ul>
             </li>
             <li onClick={toggleEventSubMenu} className="menu-item sub__menus__arrows">
@@ -200,22 +213,23 @@ const Navbar = () => {
                 Contact
               </NavLink>
             </li>
-            <li onClick={()=> setisMenu(false)} className="menu-item nav-auth-btn">
-              {/* {Object.values(auth).length === 0 ? ( */}
+            <li className="menu-item nav-auth-btn">
+              {Object.values(auth).length === 0 ? (
               <NavLink
+                onClick={()=> setisMenu(false)}
                 href="/login"
                 className="nav-item nav-link"
               >
                 Login
               </NavLink>
-              {/* ) : (
-                <LoggedRouter boxClass={boxClass} toggleClass={toggleClass} />
-              )} */}
+              ) : (
+                <LoggedRouter boxClass={boxClass} setisMenu={setisMenu} toggleAccountSubMenu={toggleAccountSubMenu} isAccountSubMenu={isAccountSubMenu} />
+              )}
             </li>
           </ul>
         </nav>
         <div className="auth-segment">
-          {/* {Object.values(auth).length === 0 ? ( */}
+          {Object.values(auth).length === 0 ? (
           <div className="flex items-center gap-4">
           <IconButton className="text-slate-200" onClick={()=> {
                 currentTheme==="dark"? setTheme('light') : setTheme('dark')
@@ -226,9 +240,16 @@ const Navbar = () => {
               <button className="classic_btn bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">Login</button>
             </Link>
           </div>
-          {/* ) : (
-            <LoggedRouter boxClass={boxClass} toggleClass={toggleClass} />
-          )} */}
+           ) : (
+            <div className="flex items-center gap-4">
+          <IconButton className="text-slate-200" onClick={()=> {
+                currentTheme==="dark"? setTheme('light') : setTheme('dark')
+              }}>
+              <Brightness4Icon />
+              </IconButton>
+              <LoggedRouter boxClass={boxClass} setisMenu={setisMenu} />
+          </div>
+          )}
         </div>
         {isMenu === true ? (
           <div style={{display: "none"}} className="menubar__button">

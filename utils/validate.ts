@@ -14,8 +14,6 @@ const validate = (registerData: Props) => {
     ssc_batch,
     email,
     confirm_email,
-    password,
-    confirm_password,
   } = registerData;
 
   let errors: Array<string> = [];
@@ -25,9 +23,7 @@ const validate = (registerData: Props) => {
     !lastName ||
     !ssc_batch ||
     !email ||
-    !confirm_email ||
-    !password ||
-    !confirm_password
+    !confirm_email
   ) {
     errors.push(
       "First name is required",
@@ -35,7 +31,6 @@ const validate = (registerData: Props) => {
       "SSC Batch is required",
       "Email is required",
       "Please re-enter your email address",
-      "Password is required"
     );
   }
 
@@ -43,15 +38,15 @@ const validate = (registerData: Props) => {
     errors.push("Email did not match");
   }
 
-  if (password !== undefined) {
-    if (password.length < 6) {
-      errors.push("Password should include atleast 6 characters");
-    }
-  }
+  // if (password !== undefined) {
+  //   if (password.length < 6) {
+  //     errors.push("Password should include atleast 6 characters");
+  //   }
+  // }
 
-  if (password !== confirm_password) {
-    errors.push("Password did not match");
-  }
+  // if (password !== confirm_password) {
+  //   errors.push("Password did not match");
+  // }
   return errors;
 };
 

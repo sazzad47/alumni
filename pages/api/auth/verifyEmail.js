@@ -1,6 +1,6 @@
 import connectDB from "../../../utils/connectDB";
 import Users from "../../../models/userModel";
-import Otp from "../../../models/passwordResetOtp";
+import Otp from "../../../models/membershipOtp";
 import bcrypt from "bcrypt";
 import sendEmail from "../../../utils/mail";
 

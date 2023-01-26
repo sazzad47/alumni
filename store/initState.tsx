@@ -11,6 +11,26 @@ export const initState: GlobalProps = {
        password: "",
        confirm_password: ""
     },
-    auth: {},
+    auth: {
+      // user: {
+      //   firstName: "",
+      //   lastName: "",
+      //   ssc_batch: "",
+      //   placeOfBirth: "",
+      //   currentLocation: "",
+      //   education: "",
+      //   profession: "",
+      //   expertise: "",
+      //   biography: "",
+      //   socialMedia: "",
+      //   status: "",
+      //   subscription: "",
+      //   email: "",
+      //   role: "",
+      //   avatar: "",
+      //   root: "",
+      // },
+      // token: ""
+    },
     users: [],
   };

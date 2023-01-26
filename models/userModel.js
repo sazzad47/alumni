@@ -23,9 +23,36 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
     },
-
+    placeOfBirth: {
+      type: String,
+    },
+    currentLocation: {
+      type: String,
+    },
+    education: {
+      type: String,
+    },
+    profession: {
+      type: String,
+    },
+    expertise: {
+      type: String,
+    },
+    biography: {
+      type: String,
+    },
+    socialMedia: {
+      type: String,
+    },
+    status: {
+      type: String,
+      default: "pending"
+    },
+    subscription: {
+      type: String,
+      default: "None"
+    },
     role: {
       type: String,
       default: "user",
@@ -37,6 +64,10 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String,
     },
+    deleted: {
+      type: Boolean,
+      default: false,
+    }
   },
   {
     timestamps: true,

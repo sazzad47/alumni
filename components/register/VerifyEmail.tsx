@@ -9,19 +9,16 @@ import ErrorIcon from "@mui/icons-material/Error";
 import Container from "@mui/material/Container";
 import { postData } from "../../utils/fetchData";
 import { useTheme } from "next-themes";
-import validate from "../../utils/validate";
 import { Context, StoreProps } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
-import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 
-export default function SignUp() {
+export default function VerifyEmail() {
   const router = useRouter();
   const { state, dispatch } = useContext(Context) as StoreProps;
   const { loading } = state;
-  const { theme, systemTheme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  
   const [otp, setOtp] = useState<string>();
 
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
@@ -49,25 +46,10 @@ export default function SignUp() {
         dispatch({ type: GlobalTypes.LOADING, payload: false });
     }
     if (res.err) return showError();
-
-    dispatch({
-      type: GlobalTypes.AUTH,
-      payload: {
-        token: res.access_token,
-        user: res.user,
-      },
-    });
-
-    Cookie.set("refreshtoken", res.refresh_token, {
-      path: "api/auth/accessToken",
-      expires: 7,
-    });
-    const firstLogin = true;
-    localStorage.setItem("firstLogin", JSON.stringify(firstLogin));
+    router.push("/members/register/verification-success");
     dispatch({ type: GlobalTypes.LOADING, payload: false });
-    router.push("/members/register/verify_info");
   };
-  console.log("store", state.auth);
+ 
   return (
     <Container component="main" className="flex items-center justify-center">
       <Box
