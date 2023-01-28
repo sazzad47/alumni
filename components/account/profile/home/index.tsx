@@ -8,7 +8,7 @@ import WorkEdu from "./WorkEdu";
 
 const Home = () => {
   return (
-    <Grid className="my-5 flex flex-col gap-5 w-full">
+    <Grid className="mt-0 mb-5 flex flex-col w-full gap-3 bg-slate-300 dark:bg-zinc-700 p-4">
         <Intro />
         <WorkEdu/>
         <Expertise/>

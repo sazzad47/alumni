@@ -93,7 +93,7 @@ const Navbar = () => {
     schoolSubMenuClass.push("");
   }
   return (
-    <header className="header_section w-full max-w-full text-slate-200 bg-green-900 dark:bg-zinc-700">
+    <header className="header_section z-[1000] w-full max-w-full text-slate-200 bg-green-900 dark:bg-zinc-700">
       <div className="header_content">
         <div className="relative flex items-center justify-center w-[40px] h-[40px] rounded-full">
           <Link className="text-slate-200 hover:text-slate-300" href="/">
@@ -254,12 +254,12 @@ const Navbar = () => {
         {isMenu === true ? (
           <div style={{display: "none"}} className="menubar__button">
             <div className="flex items-center gap-4">
-              <IconButton className="text-black dark:text-white" onClick={()=> {
+              <IconButton className="text-white" onClick={()=> {
                 currentTheme==="dark"? setTheme('light') : setTheme('dark')
               }}>
               <Brightness4Icon />
               </IconButton>
-              <div onClick={()=> setisMenu(!isMenu)} className="text-black dark:text-white">
+              <div onClick={()=> setisMenu(!isMenu)} className="text-white">
                 <AiOutlineCloseCircle className="" />
               </div>
             </div>
@@ -267,12 +267,12 @@ const Navbar = () => {
         ) : (
           <div style={{display: "none"}} className="menubar__button">
             <div className="flex items-center gap-4">
-            <IconButton className="text-black dark:text-white" onClick={()=> {
+            <IconButton className="text-white" onClick={()=> {
                 currentTheme==="dark"? setTheme('light') : setTheme('dark')
               }}>
               <Brightness4Icon />
               </IconButton>
-              <div onClick={()=> setisMenu(!isMenu)} className="text-black dark:text-white">
+              <div onClick={()=> setisMenu(!isMenu)} className="text-white">
                 <FiAlignRight />
               </div>
             </div>

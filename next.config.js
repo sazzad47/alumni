@@ -8,6 +8,9 @@ const nextConfig = {
      "EMAIL_PORT": process.env.EMAIL_PORT,
      "ACCESS_TOKEN_SECRET": process.env.ACCESS_TOKEN_SECRET,
      "REFRESH_TOKEN_SECRET": process.env.REFRESH_TOKEN_SECRET,
+     "CLOUD_NAME": process.env.CLOUD_NAME,
+     "CLOUD_API": process.env.CLOUD_API,
+     "CLOUD_UPDATE_PRESET": process.env.CLOUD_UPDATE_PRESET,
   }
 }
 

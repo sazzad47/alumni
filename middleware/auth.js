@@ -11,10 +11,21 @@ const auth = async (req, res) => {
     id: user._id,
     email: user.email,
     userId: user.userId,
-    role: user.role,
-    root: user.root,
     firstName: user.firstName,
-    lastName: user.lastName
+    lastName: user.lastName,
+    ssc_batch: user.ssc_batch,
+    placeOfBirth: user.placeOfBirth,
+    currentLocation: user.currentLocation,
+    education: user.education,
+    profession: user.profession,
+    expertise: user.expertise,
+    biography: user.biography,
+    socialLinks: user.socialLinks,
+    status: user.status,
+    subscription: user.subscription,
+    role: user.role,
+    avatar: user.avatar,
+    root: user.root,
   };
 };
 

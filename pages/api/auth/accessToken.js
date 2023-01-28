@@ -29,7 +29,7 @@ export default async (req, res) => {
         profession: user.profession,
         expertise: user.expertise,
         biography: user.biography,
-        socialMedia: user.socialMedia,
+        socialLinks: user.socialLinks,
         status: user.status,
         subscription: user.subscription,
         email: user.email,

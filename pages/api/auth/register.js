@@ -1,11 +1,6 @@
 import connectDB from "../../../utils/connectDB";
 import Users from "../../../models/userModel";
-import bcrypt from "bcrypt";
-import {
-  createAccessToken,
-  createRefreshToken,
-} from "../../../utils/generateToken";
-import Otp from "../../../models/passwordResetOtp";
+import Otp from "../../../models/membershipOtp";
 
 connectDB();
 

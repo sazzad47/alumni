@@ -11,7 +11,7 @@ import { patchData } from "../../../utils/fetchData";
 import { useTheme } from "next-themes";
 import { Context, StoreProps } from "../../../store/store";
 import { GlobalTypes } from "../../../store/types";
-import { BallTriangle, ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useRouter } from "next/router";
 import validatePassword from "./validatePassword";
@@ -20,7 +20,6 @@ import validatePassword from "./validatePassword";
 export default function ResetPassword() {
   const router = useRouter();
   const { state, dispatch } = useContext(Context) as StoreProps;
-  const [mounted, setMounted] = useState<boolean>(false);
   const { auth, loading } = state;
   const email = auth?.user?.email;
   const initialState = { password: "", confirm_password: "" };
@@ -58,29 +57,6 @@ export default function ResetPassword() {
     dispatch({ type: GlobalTypes.LOADING, payload: false });
   };
 
-  useEffect(() => {
-    const firstLogin = localStorage.getItem("firstLogin");
-    if (firstLogin) {
-      setMounted(true);
-    } else {
-      router.push("/");
-    }
-  }, [auth]);
-
-  if (!mounted) {
-    return (
-      <Container component="main" className="flex items-center justify-center">
-        <BallTriangle
-          height={100}
-          width={100}
-          radius={5}
-          color="#4fa94d"
-          ariaLabel="ball-triangle-loading"
-          visible={true}
-        />
-      </Container>
-    );
-  }
   const { password_change } = router.query;
   if (password_change === "successful") {
     return <SuccessMessage />;
@@ -260,9 +236,9 @@ const SuccessMessage = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 1, mb: 1 }}
-            onClick={() => router.back()}
+            onClick={() => router.push('/')}
           >
-            <Typography>Back</Typography>
+            <Typography>Home</Typography>
           </Button>
         </Box>
       </Box>

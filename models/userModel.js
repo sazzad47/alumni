@@ -42,8 +42,8 @@ const userSchema = new mongoose.Schema(
     biography: {
       type: String,
     },
-    socialMedia: {
-      type: String,
+    socialLinks: {
+      type: Array,
     },
     status: {
       type: String,

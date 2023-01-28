@@ -20,7 +20,7 @@ export interface GlobalProps {
         profession?: string,
         expertise?: string,
         biography?: string,
-        socialMedia?: string,
+        socialLinks?: {username: string, domain: string}[],
         status?: string,
         subscription?: string,
         email: string,

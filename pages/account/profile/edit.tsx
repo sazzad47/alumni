@@ -1,7 +1,7 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import Profile from '../../../components/account/profile/Common'
+import Profile from '../../../components/account/profile'
 
 
 const Page: NextPage = () => {

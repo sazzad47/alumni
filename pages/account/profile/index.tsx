@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import Profile from '../../../components/account/profile/Common'
+import Profile from '../../../components/account/profile'
+import { Container } from '@mui/material'
+import { BallTriangle } from 'react-loader-spinner'
+import { Context, StoreProps } from '../../../store/store'
 
 
 const Page: NextPage = () => {
+  const { state } = useContext(Context) as StoreProps;
+  const { auth } = state;
+
+  if (!auth?.token) {
+    return (
+      <Container component="main" className="min-h-[100vh] flex items-center justify-center">
+        <BallTriangle
+          height={100}
+          width={100}
+          radius={5}
+          color="#4fa94d"
+          ariaLabel="ball-triangle-loading"
+          visible={true}
+        />
+      </Container>
+    );
+  }
+
   return (
     <React.Fragment>
       <Head>
