@@ -15,6 +15,7 @@ const auth = async (req, res) => {
     lastName: user.lastName,
     ssc_batch: user.ssc_batch,
     placeOfBirth: user.placeOfBirth,
+    dateOfBirth: user.dateOfBirth,
     currentLocation: user.currentLocation,
     education: user.education,
     profession: user.profession,

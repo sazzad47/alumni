@@ -7,31 +7,28 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ErrorIcon from "@mui/icons-material/Error";
 import Container from "@mui/material/Container";
-import { postData } from "../../../utils/fetchData";
+import { postData } from "../../utils/fetchData";
 import { useTheme } from "next-themes";
-import { Context, StoreProps } from "../../../store/store";
-import { GlobalTypes } from "../../../store/types";
+import { Context, StoreProps } from "../../store/store";
+import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/router";
 
-
-export default function ForgotPassword() {
+export default function VerifyEmail() {
   const router = useRouter();
   const { state, dispatch } = useContext(Context) as StoreProps;
   const { loading } = state;
   
-  const {
-    email
-  } = { ...state.register };
+  const [otp, setOtp] = useState<string>();
 
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [focused, setFocused] = useState<boolean>(false);
+  const registerData = { ...state.register };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    dispatch({ type: GlobalTypes.REGISTER, payload: { name, value } });
+    const { value } = event.target;
+    setOtp(value);
   };
-
 
   useEffect(() => {
     if (focused) {
@@ -43,21 +40,20 @@ export default function ForgotPassword() {
     e.preventDefault();
     dispatch({ type: GlobalTypes.LOADING, payload: true });
 
-    const res = await postData("auth/password/verifyEmail", { email });
+    const res = await postData("auth/register", { registerData, code: otp });
     const showError =()=> {
         setErrorMessage([res.err])
         dispatch({ type: GlobalTypes.LOADING, payload: false });
     }
     if (res.err) return showError();
-
-    router.push(`/login/forgot-password/verification/${res.token}`);
+    router.push("/members/register/verification-success");
     dispatch({ type: GlobalTypes.LOADING, payload: false });
   };
-  
+ 
   return (
-    <Container component="main" className="bg-slate-300 dark:bg-zinc-700 w-full md:w-[30rem] p-5 flex items-center justify-center">
+    <Container component="main" className="flex items-center justify-center">
       <Box
-        className=""
+        className="bg-slate-300 dark:bg-zinc-700 w-[30rem] max-w-full p-5"
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -66,7 +62,7 @@ export default function ForgotPassword() {
       >
         <Avatar src="/logo.png" />
         <Typography component="h1" variant="h5">
-          Forgot your password?
+          Verify your email address
         </Typography>
         {errorMessage.length !== 0 ? (
           <Grid className="w-full p-4 mt-4 bg-stone-400 dark:bg-zinc-500 flex flex-col gap-3">
@@ -79,8 +75,10 @@ export default function ForgotPassword() {
           </Grid>
         ) : (
           <Grid className="w-full p-5 mt-4 bg-stone-400 dark:bg-zinc-500 flex flex-col">
-            
-            <Typography className="p-0">Please enter your registered email address.</Typography>
+            <Typography className="p-0">
+              We sent a 4-digit verification code to your email address. Please
+              enter the code to verify your email address.
+            </Typography>
           </Grid>
         )}
 
@@ -95,11 +93,11 @@ export default function ForgotPassword() {
             <Grid item xs={12}>
               <InputField
                 inputProps={{
-                  type: "email",
-                  name: "email",
-                  id: "email",
-                  label: "Email",
-                  value: email,
+                  type: "text",
+                  name: "otp",
+                  id: "otp",
+                  label: "Verification Code",
+                  value: otp,
                   onChange: handleChange,
                   setFocused: setFocused,
                 }}
@@ -125,7 +123,7 @@ export default function ForgotPassword() {
                 visible={true}
               />
             ) : (
-              <Typography>Submit</Typography>
+              <Typography>Verify</Typography>
             )}
           </Button>
         </Box>

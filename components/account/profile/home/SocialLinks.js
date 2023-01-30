@@ -60,7 +60,7 @@ const SocialLinksInfo = () => {
   };
   
   useMemo(() => {
-    if (!focused && !inputForm && !prevData) {
+    if (!focused && !inputForm && !prevData.length) {
       setErrorMessage(["Please add your social links."]);
     } else if (focused) {
       setErrorMessage([]);
@@ -174,7 +174,7 @@ const Form = ({
   
 
   useEffect(() => {
-    if (auth?.user?.socialLinks) setData(prevData);
+    if (auth?.user?.socialLinks.length) setData(prevData);
   }, [auth?.user]);
 
   return (

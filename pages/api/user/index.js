@@ -37,6 +37,7 @@ const updateInfo = async (req, res) => {
       lastName,
       ssc_batch,
       placeOfBirth,
+      dateOfBirth,
       currentLocation,
       profession,
       education,
@@ -45,7 +46,8 @@ const updateInfo = async (req, res) => {
       socialLinks,
       avatar,
     } = req.body;
-   
+
+    
     const newUser = await Users.findOneAndUpdate(
       { _id: result.id },
       {
@@ -53,6 +55,7 @@ const updateInfo = async (req, res) => {
         lastName,
         ssc_batch,
         placeOfBirth,
+        dateOfBirth,
         currentLocation,
         profession,
         education,
@@ -61,7 +64,8 @@ const updateInfo = async (req, res) => {
         socialLinks,
         avatar,
       }
-    );
+      );
+      console.log('userData', req.body)
     res.json({
       msg: "Update Success!",
       user: {
@@ -69,6 +73,7 @@ const updateInfo = async (req, res) => {
         lastName: lastName? lastName: result.lastName,
         ssc_batch: ssc_batch? ssc_batch: result.ssc_batch,
         placeOfBirth: placeOfBirth? placeOfBirth: result.placeOfBirth,
+        dateOfBirth: dateOfBirth? dateOfBirth: result.dateOfBirth,
         currentLocation: currentLocation? currentLocation: result.currentLocation,
         profession: profession? profession: result.profession,
         education: education? education: result.education,

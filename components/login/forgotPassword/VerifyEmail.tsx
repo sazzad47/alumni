@@ -55,9 +55,9 @@ export default function VerifyEmail() {
   };
  
   return (
-    <Container component="main" className="flex items-center justify-center">
+    <Container component="main" className="bg-slate-300 dark:bg-zinc-700 w-full md:w-[30rem] p-5 flex items-center justify-center">
       <Box
-        className="bg-slate-300 dark:bg-zinc-700 w-[30rem] max-w-full p-5"
+        className=""
         sx={{
           display: "flex",
           flexDirection: "column",

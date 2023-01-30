@@ -4,13 +4,15 @@ import Biography from "./Biography";
 import Expertise from "./Expertise";
 import Intro from "./Intro";
 import SocialLinks from "./SocialLinks";
-import WorkEdu from "./WorkEdu";
+import Education from "./Education";
+import Profession from './Profession';
 
 const Home = () => {
   return (
-    <Grid className="mt-0 mb-5 flex flex-col w-full gap-3 bg-slate-300 dark:bg-zinc-700 p-4">
+    <Grid className="mt-0 mb-5 grid grid-cols-1 md:grid-cols-2 w-full gap-5 bg-slate-300 dark:bg-zinc-700 p-4">
         <Intro />
-        <WorkEdu/>
+        <Education/>
+        <Profession/>
         <Expertise/>
         <Biography/>
         <SocialLinks/>

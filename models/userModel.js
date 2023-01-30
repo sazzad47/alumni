@@ -27,14 +27,17 @@ const userSchema = new mongoose.Schema(
     placeOfBirth: {
       type: String,
     },
+    dateOfBirth: {
+      type: String,
+    },
     currentLocation: {
       type: String,
     },
     education: {
-      type: String,
+      type: Array,
     },
     profession: {
-      type: String,
+      type: Array,
     },
     expertise: {
       type: String,
