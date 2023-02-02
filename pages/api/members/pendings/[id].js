@@ -19,19 +19,19 @@ export default async (req, res) => {
 
 const updateStatus = async (req, res) => {
   try {
-    // const result = await auth(req, res);
-    //   if (result.role !== "admin" || !result.root)
-    //     return res.status(400).json({ err: "Authentication is not valid" });
+    const result = await auth(req, res);
+      if (result.role !== "admin" || !result.root)
+        return res.status(400).json({ err: "Authentication is not valid" });
     const { id } = req.query;
     const { status } = req.body;
     const password = Math.floor(100000 + Math.random() * 900000)
     const passwordHash = await bcrypt.hash(`btri${password}`, 12);
-    console.log('password', passwordHash)
+    
     const member = await Users.findOneAndUpdate(
       { userId: id },
       { password: passwordHash, status }
       )
-      console.log('query', member)
+    
     if (status === "approved") {
       await sendEmail({
         to: member.email,

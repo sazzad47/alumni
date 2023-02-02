@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Grid, useMediaQuery } from "@mui/material";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "../../theme";
@@ -37,8 +37,12 @@ const Layout = ({ children }) => {
             user={data || {}}
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
+            isNonMobile={isNonMobile}
           />
+          <Grid className="mt-[4rem] max-h-[88vh] overflow-y-auto">
+
           {children}
+          </Grid>
         </Box>
       </Box>
     </ThemeProvider>

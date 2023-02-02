@@ -15,7 +15,6 @@ export default async (req, res) => {
     try {
       // sort should look like this: { "field": "userId", "sort": "desc"}
       const { page = 1, pageSize = 20, sort = null } = req.query;
-      console.log('getdata', req.query)
       // formatted sort should look like { userId: -1 }
       const generateSort = () => {
         const sortParsed = JSON.parse(sort);

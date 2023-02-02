@@ -1,45 +1,52 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   LightModeOutlined,
   DarkModeOutlined,
   Menu as MenuIcon,
-  Search,
-  SettingsOutlined,
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
 import FlexBetween from "../components/FlexBetween";
 import { useDispatch } from "react-redux";
 import { setMode } from "../state";
+import Cookie from "js-cookie";
 
 import {
   AppBar,
   Button,
   Box,
-  Typography,
   IconButton,
-  InputBase,
   Toolbar,
   Menu,
   MenuItem,
-  useTheme,
-  Avatar
+  useTheme
 } from "@mui/material";
+import { GlobalTypes } from "../../../store/types";
+import { Context } from "../../../store/store";
+import { useRouter } from "next/router";
 
-const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
-  const dispatch = useDispatch();
+const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen, isNonMobile }) => {
   const theme = useTheme();
-
+  const router = useRouter();
+  const { state, dispatch } = useContext(Context);
+  const { auth } = state;
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
-
+  const handleLogout = () => {
+    Cookie.remove("refreshtoken", { path: "api/auth/accessToken" });
+    localStorage.removeItem("firstLogin");
+    dispatch({ type: GlobalTypes.AUTH, payload: {} });
+    return router.push("/login");
+  };
   return (
     <AppBar
       sx={{
-        position: "static",
+        // position: "static",
         backgroundColor: theme.palette.background.alt,
         boxShadow: "none",
+        width: !isNonMobile? "100%" : isSidebarOpen? "calc(100% - 250px)" : "100%",
+        
       }}
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -48,32 +55,10 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
           <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <MenuIcon />
           </IconButton>
-          <FlexBetween
-            backgroundColor={theme.palette.background.alt}
-            borderRadius="9px"
-            gap="3rem"
-            p="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
         </FlexBetween>
 
         {/* RIGHT SIDE */}
         <FlexBetween gap="1.5rem">
-          <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === "dark" ? (
-              <DarkModeOutlined sx={{ fontSize: "25px" }} />
-            ) : (
-              <LightModeOutlined sx={{ fontSize: "25px" }} />
-            )}
-          </IconButton>
-          <IconButton>
-            <SettingsOutlined sx={{ fontSize: "25px" }} />
-          </IconButton>
-
           <FlexBetween>
             <Button
               onClick={handleClick}
@@ -85,31 +70,15 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 gap: "1rem",
               }}
             >
-              <Avatar sx={{width: '32px', height: '32px'}} />
-              {/* <Box
+              <Box
                 component="img"
                 alt="profile"
-                src={profileImage}
+                src="/user.jpg"
                 height="32px"
                 width="32px"
                 borderRadius="50%"
                 sx={{ objectFit: "cover" }}
-              /> */}
-              <Box textAlign="left">
-                <Typography
-                  fontWeight="bold"
-                  fontSize="0.85rem"
-                  sx={{ color: theme.palette.secondary[100] }}
-                >
-                  {user.name}
-                </Typography>
-                <Typography
-                  fontSize="0.75rem"
-                  sx={{ color: theme.palette.secondary[200] }}
-                >
-                  {user.occupation}
-                </Typography>
-              </Box>
+              />
               <ArrowDropDownOutlined
                 sx={{ color: theme.palette.secondary[300], fontSize: "25px" }}
               />
@@ -120,7 +89,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               onClose={handleClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-              <MenuItem onClick={handleClose}>Log Out</MenuItem>
+              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
             </Menu>
           </FlexBetween>
         </FlexBetween>

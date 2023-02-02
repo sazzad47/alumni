@@ -1,6 +1,7 @@
 import { GlobalProps } from "./props";
 
 export const initState: GlobalProps = {
+  searchTerm: "",
   loading: false,
   register: {
     firstName: "",

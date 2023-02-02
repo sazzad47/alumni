@@ -47,7 +47,25 @@ const Pendings = () => {
     },
     {
       field: "userId",
-      headerName: "ID",
+      headerName: "User ID",
+      sortable: false,
+      flex: 1,
+    },
+    {
+      field: "_id",
+      headerName: "MongoID",
+      sortable: false,
+      flex: 1,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      sortable: false,
+      flex: 1,
+    },
+    {
+      field: "subscription",
+      headerName: "Membership",
       sortable: false,
       flex: 1,
     },

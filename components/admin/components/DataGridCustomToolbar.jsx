@@ -7,7 +7,7 @@ import {
   GridToolbarColumnsButton,
 } from "@mui/x-data-grid";
 import FlexBetween from "./FlexBetween";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 const DataGridCustomToolbar = ({setGetData}) => {
   return (
@@ -18,8 +18,13 @@ const DataGridCustomToolbar = ({setGetData}) => {
           <GridToolbarDensitySelector />
           <GridToolbarExport />
         </FlexBetween>
+        <Grid className="hidden md:block">
         <Button onClick={()=> setGetData(prevState=> !prevState)} startIcon={<RefreshIcon/>}>Refresh</Button>
+        </Grid>
       </FlexBetween>
+      <Grid className="block md:hidden mb-2">
+        <Button onClick={()=> setGetData(prevState=> !prevState)} startIcon={<RefreshIcon/>}>Refresh</Button>
+        </Grid>
     </GridToolbarContainer>
   );
 };

@@ -10,14 +10,13 @@ import { useTheme } from "next-themes";
 import { IconButton } from "@mui/material";
 import { Context } from "../../store/store";
 
-
 const Navbar = () => {
   const { state } = useContext(Context);
   const { auth } = state;
   const { theme, setTheme, systemTheme } = useTheme();
-  const currentTheme = theme === "system"? systemTheme: theme;
+  const currentTheme = theme === "system" ? systemTheme : theme;
   const [isMenu, setisMenu] = useState(false);
- 
+
   let boxClass = ["main-menu menu-right menuq1"];
   if (isMenu) {
     boxClass.push("menuq2 bg-green-800 dark:bg-zinc-800 text-slate-200");
@@ -65,53 +64,96 @@ const Navbar = () => {
     setEventSubMenu(false);
     setMembersSubMenu(false);
   };
- 
-  let aboutSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200"];
+
+  let aboutSubMenuClass = [
+    "sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200",
+  ];
   if (isAboutSubMenu) {
     aboutSubMenuClass.push("sub__menus__Active");
   } else {
     aboutSubMenuClass.push("");
   }
-  
-  let membersSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200"];
+
+  let membersSubMenuClass = [
+    "sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200",
+  ];
   if (isMembersSubMenu) {
     membersSubMenuClass.push("sub__menus__Active");
   } else {
     membersSubMenuClass.push("");
   }
-  let eventSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200"];
+  let eventSubMenuClass = [
+    "sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200",
+  ];
   if (isEventSubMenu) {
     eventSubMenuClass.push("sub__menus__Active");
   } else {
     eventSubMenuClass.push("");
   }
 
-  let schoolSubMenuClass = ["sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200"];
+  let schoolSubMenuClass = [
+    "sub__menus bg-green-900 dark:bg-zinc-700 text-slate-200",
+  ];
   if (isSchoolSubMenu) {
     schoolSubMenuClass.push("sub__menus__Active");
   } else {
     schoolSubMenuClass.push("");
   }
   return (
-    <header className="header_section z-[1000] w-full max-w-full text-slate-200 bg-green-900 dark:bg-zinc-700">
-      <div className="header_content">
-        <div className="relative flex items-center justify-center w-[40px] h-[40px] rounded-full">
-          <Link className="text-slate-200 hover:text-slate-300" href="/">
-          <Image src="/logo.png" alt="" width={40} height={40} />
-          </Link>
+    <header className="header_section px-2 md:px-4 z-[100] w-full max-w-full text-slate-200 bg-green-900 dark:bg-zinc-700">
+      <div className="relative flex items-center justify-between w-full h-full">
+        {isMenu === true ? (
+          <div style={{ display: "none" }} className="z-[1000] menubar__button">
+            <div className="flex items-center gap-3 theme_changer_mobile">
+              <div onClick={() => setisMenu(!isMenu)} className="text-white">
+                <AiOutlineCloseCircle className="" />
+              </div>
+              <IconButton
+                className="text-slate-200"
+                onClick={() => {
+                  currentTheme === "dark"
+                    ? setTheme("light")
+                    : setTheme("dark");
+                }}
+              >
+                <Brightness4Icon />
+              </IconButton>
+            </div>
+          </div>
+        ) : (
+          <div style={{ display: "none" }} className="z-[1000] menubar__button">
+            <div className="flex items-center gap-3 theme_changer_mobile">
+              <div onClick={() => setisMenu(!isMenu)} className="text-white">
+                <FiAlignRight />
+              </div>
+              <IconButton
+                className="text-slate-200"
+                onClick={() => {
+                  currentTheme === "dark"
+                    ? setTheme("light")
+                    : setTheme("dark");
+                }}
+              >
+                <Brightness4Icon />
+              </IconButton>
+            </div>
+          </div>
+        )}
+        <div className="logo_section">
+          <div className="relative flex items-center justify-center w-[40px] h-[40px] rounded-full">
+            <Link className="text-slate-200 hover:text-slate-300" href="/">
+              <Image src="/logo.png" alt="" width={40} height={40} />
+            </Link>
+          </div>
         </div>
         <nav className="main-nav d-block">
           <ul className={boxClass.join(" ")}>
-            <li onClick={()=> setisMenu(false)} className="menu-item">
-              <NavLink
-                href="/"
-                exact
-                className="nav-item nav-link"
-              >
+            <li onClick={() => setisMenu(false)} className="menu-item">
+              <NavLink href="/" exact className="nav-item nav-link">
                 Home
               </NavLink>
             </li>
-           
+
             <li
               onClick={toggleAboutSubMenu}
               className="menu-item sub__menus__arrows"
@@ -120,18 +162,27 @@ const Navbar = () => {
                 About
               </NavLink>
               <ul className={aboutSubMenuClass.join(" ")}>
-                <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-200 hover:text-slate-300" href="/about/association">
+                <li onClick={() => setisMenu(false)}>
+                  <Link
+                    className="text-slate-200 hover:text-slate-300"
+                    href="/about/association"
+                  >
                     Association
                   </Link>
                 </li>
-                <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-200 hover:text-slate-300" href="/about/constitution">
-                   Constitution
+                <li onClick={() => setisMenu(false)}>
+                  <Link
+                    className="text-slate-200 hover:text-slate-300"
+                    href="/about/constitution"
+                  >
+                    Constitution
                   </Link>
                 </li>
-                <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-200 hover:text-slate-300" href="/about/plan">
+                <li onClick={() => setisMenu(false)}>
+                  <Link
+                    className="text-slate-200 hover:text-slate-300"
+                    href="/about/plan"
+                  >
                     Plan
                   </Link>
                 </li>
@@ -145,139 +196,126 @@ const Navbar = () => {
                 Members
               </NavLink>
               <ul className={membersSubMenuClass.join(" ")}>
-                <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-200 hover:text-slate-300" href="/members/database">
+                <li onClick={() => setisMenu(false)}>
+                  <Link
+                    className="text-slate-200 hover:text-slate-300"
+                    href="/members/database"
+                  >
                     Database
                   </Link>
                 </li>
-                {Object.keys(auth).length === 0 && <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-200 hover:text-slate-300" href="/members/register">
-                   Register
-                  </Link>
-                </li>}
+                {Object.keys(auth).length === 0 && (
+                  <li onClick={() => setisMenu(false)}>
+                    <Link
+                      className="text-slate-200 hover:text-slate-300"
+                      href="/members/register"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                )}
               </ul>
             </li>
-            <li onClick={toggleEventSubMenu} className="menu-item sub__menus__arrows">
-              <NavLink
-                href="#"
-                className="nav-item nav-link"
-              >
+            <li
+              onClick={toggleEventSubMenu}
+              className="menu-item sub__menus__arrows"
+            >
+              <NavLink href="#" className="nav-item nav-link">
                 Events
               </NavLink>
               <ul className={eventSubMenuClass.join(" ")}>
-                <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-200 hover:text-slate-300" href="/events/upcoming">
+                <li onClick={() => setisMenu(false)}>
+                  <Link
+                    className="text-slate-200 hover:text-slate-300"
+                    href="/events/upcoming"
+                  >
                     Upcoming
                   </Link>
                 </li>
-                <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-200 hover:text-slate-300" href="/events/past">
-                   Past
+                <li onClick={() => setisMenu(false)}>
+                  <Link
+                    className="text-slate-200 hover:text-slate-300"
+                    href="/events/past"
+                  >
+                    Past
                   </Link>
                 </li>
               </ul>
             </li>
-            <li onClick={()=> setisMenu(false)} className="menu-item ">
-              <NavLink
-                href="/activities"
-                className="nav-item nav-link"
-              >
+            <li onClick={() => setisMenu(false)} className="menu-item ">
+              <NavLink href="/activities" className="nav-item nav-link">
                 Activities
               </NavLink>
             </li>
-            <li onClick={toggleSchoolSubMenu} className="menu-item sub__menus__arrows">
-              <NavLink
-                href="#"
-                className="nav-item nav-link"
-              >
+            <li
+              onClick={toggleSchoolSubMenu}
+              className="menu-item sub__menus__arrows"
+            >
+              <NavLink href="#" className="nav-item nav-link">
                 School
               </NavLink>
               <ul className={schoolSubMenuClass.join(" ")}>
-                <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-200 hover:text-slate-300" href="/school/history">
+                <li onClick={() => setisMenu(false)}>
+                  <Link
+                    className="text-slate-200 hover:text-slate-300"
+                    href="/school/history"
+                  >
                     History
                   </Link>
                 </li>
-                <li onClick={()=> setisMenu(false)}>
-                  <Link className="text-slate-200 hover:text-slate-300" href="/school/current">
-                   Current
+                <li onClick={() => setisMenu(false)}>
+                  <Link
+                    className="text-slate-200 hover:text-slate-300"
+                    href="/school/current"
+                  >
+                    Current
                   </Link>
                 </li>
               </ul>
             </li>
-            <li onClick={()=> setisMenu(false)} className="menu-item ">
-              <NavLink
-                href="/contact"
-                className="nav-item nav-link"
-              >
+            <li onClick={() => setisMenu(false)} className="menu-item ">
+              <NavLink href="/contact" className="nav-item nav-link">
                 Contact
               </NavLink>
             </li>
-            <li className="menu-item nav-auth-btn">
-              {Object.values(auth).length === 0 ? (
-              <NavLink
-                onClick={()=> setisMenu(false)}
-                href="/login"
-                className="nav-item nav-link"
-              >
-                Login
-              </NavLink>
-              ) : (
-                <LoggedRouter boxClass={boxClass} setisMenu={setisMenu} toggleAccountSubMenu={toggleAccountSubMenu} isAccountSubMenu={isAccountSubMenu} />
-              )}
-            </li>
           </ul>
         </nav>
-        <div className="auth-segment">
+        <div className="z-[1000]">
           {Object.values(auth).length === 0 ? (
-          <div className="flex items-center gap-4">
-          <IconButton className="text-slate-200" onClick={()=> {
-                currentTheme==="dark"? setTheme('light') : setTheme('dark')
-              }}>
-              <Brightness4Icon />
-              </IconButton>
-            <Link className="text-slate-200 " href="/login">
-              <button className="classic_btn bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">Login</button>
-            </Link>
-          </div>
-           ) : (
             <div className="flex items-center gap-4">
-          <IconButton className="text-slate-200" onClick={()=> {
-                currentTheme==="dark"? setTheme('light') : setTheme('dark')
-              }}>
-              <Brightness4Icon />
+              <IconButton
+                className="text-slate-200 theme_changer_computer"
+                onClick={() => {
+                  currentTheme === "dark"
+                    ? setTheme("light")
+                    : setTheme("dark");
+                }}
+              >
+                <Brightness4Icon />
               </IconButton>
+              <Link className="text-slate-200 " href="/login">
+                <button className="classic_btn bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">
+                  Login
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              <IconButton
+                className="text-slate-200 theme_changer_computer"
+                onClick={() => {
+                  currentTheme === "dark"
+                    ? setTheme("light")
+                    : setTheme("dark");
+                }}
+              >
+                <Brightness4Icon />
+              </IconButton>
+              
               <LoggedRouter boxClass={boxClass} setisMenu={setisMenu} />
-          </div>
+            </div>
           )}
         </div>
-        {isMenu === true ? (
-          <div style={{display: "none"}} className="menubar__button">
-            <div className="flex items-center gap-4">
-              <IconButton className="text-white" onClick={()=> {
-                currentTheme==="dark"? setTheme('light') : setTheme('dark')
-              }}>
-              <Brightness4Icon />
-              </IconButton>
-              <div onClick={()=> setisMenu(!isMenu)} className="text-white">
-                <AiOutlineCloseCircle className="" />
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div style={{display: "none"}} className="menubar__button">
-            <div className="flex items-center gap-4">
-            <IconButton className="text-white" onClick={()=> {
-                currentTheme==="dark"? setTheme('light') : setTheme('dark')
-              }}>
-              <Brightness4Icon />
-              </IconButton>
-              <div onClick={()=> setisMenu(!isMenu)} className="text-white">
-                <FiAlignRight />
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </header>
   );

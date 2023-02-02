@@ -9,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ErrorIcon from "@mui/icons-material/Error";
+import CloseIcon from '@mui/icons-material/Close';
 import Container from "@mui/material/Container";
 import { postData } from "../../utils/fetchData";
 import { useTheme } from "next-themes";
@@ -17,6 +18,7 @@ import { Context, StoreProps } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/router";
+import { IconButton, Snackbar } from "@mui/material";
 
 export default function Contact() {
   const router = useRouter();
@@ -24,21 +26,27 @@ export default function Contact() {
   const { auth, loading } = state;
   const { theme, systemTheme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
-  const [checked, setChecked] = useState<boolean>(false);
-  const {
-    firstName,
-    lastName,
-    ssc_batch,
-    email,
-    confirm_email,
-  } = { ...state.register };
+  const initState = { fullName: "", email: "", message: "" };
+  const [userData, setUserData] = useState<{
+    fullName: string;
+    email: string;
+    message: string;
+  }>(initState);
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [focused, setFocused] = useState<boolean>(false);
-  const registerData = { ...state.register };
+  const [openToast, setOpenToast] = React.useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    dispatch({ type: GlobalTypes.REGISTER, payload: { name, value } });
+  
+  const handleOpenToast = () => {
+    setOpenToast(true);
+  };
+
+  const handleCloseToast = (event: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenToast(false);
   };
 
   useEffect(() => {
@@ -51,27 +59,27 @@ export default function Contact() {
     e.preventDefault();
     dispatch({ type: GlobalTypes.LOADING, payload: true });
 
-    const errMsg = validate(registerData);
-    const showMessage = () => {
-      setErrorMessage(errMsg);
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    };
-    if (errMsg.length !== 0) return showMessage();
-
-    const res = await postData("auth/verifyEmail", registerData);
+    const res = await postData("contact/sendMessage", userData);
     dispatch({ type: GlobalTypes.LOADING, payload: false });
-    if (res.err) return errMsg.push(res.err) && showMessage();
-    router.push('/members/register/verify_email')
+    if (res.err) return setErrorMessage([res.err]);
+    handleOpenToast();
+    setUserData(initState);
     
   };
-  useEffect(() => {
-    if (auth !== undefined) {
-      if (Object.keys(auth).length !== 0) router.push("/");
-    }
-  }, []);
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseToast}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+ 
   return (
     <Container component="main" className="bg-slate-300 dark:bg-zinc-700 w-full md:w-[30rem] p-5 flex items-center justify-center">
       <Box
@@ -108,11 +116,11 @@ export default function Contact() {
               <InputField
                 inputProps={{
                   type: "text",
-                  name: "ssc_batch",
-                  id: "ssc_batch",
+                  name: "fullname",
+                  id: "fullname",
                   label: "Full Name",
-                  value: ssc_batch,
-                  onChange: handleChange,
+                  value: userData.fullName,
+                  onChange: (e)=> setUserData({...userData, fullName: e.target.value}),
                   setFocused: setFocused,
                 }}
               />
@@ -124,8 +132,8 @@ export default function Contact() {
                   name: "email",
                   id: "email",
                   label: "Email Address",
-                  value: email,
-                  onChange: handleChange,
+                  value: userData.email,
+                  onChange: (e)=> setUserData({...userData, email: e.target.value}),
                   setFocused: setFocused,
                 }}
               />
@@ -135,12 +143,12 @@ export default function Contact() {
                 inputProps={{
                   multiline: true,
                   minRows: 5,
-                  type: "email",
-                  name: "confirm_email",
-                  id: "confirm_email",
+                  type: "text",
+                  name: "message",
+                  id: "message",
                   label: "Message",
-                  value: confirm_email,
-                  onChange: handleChange,
+                  value: userData.message,
+                  onChange: (e)=> setUserData({...userData, message: e.target.value}),
                   setFocused: setFocused,
                 }}
               />
@@ -149,7 +157,6 @@ export default function Contact() {
           <Button
             className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
             type="submit"
-            disabled={!checked}
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
@@ -171,6 +178,13 @@ export default function Contact() {
           </Button>
         </Box>
       </Box>
+      <Snackbar
+        open={openToast}
+        autoHideDuration={6000}
+        onClose={handleCloseToast}
+        message="Message sent successfully"
+        action={action}
+      />
     </Container>
   );
 }

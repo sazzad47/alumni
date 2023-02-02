@@ -70,7 +70,14 @@ const userSchema = new mongoose.Schema(
     deleted: {
       type: Boolean,
       default: false,
-    }
+    },
+    uploadedByAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    cloud: {
+      type: Array,
+    },
   },
   {
     timestamps: true,

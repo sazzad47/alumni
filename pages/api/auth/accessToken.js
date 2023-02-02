@@ -20,6 +20,7 @@ export default async (req, res) => {
     res.json({
       access_token,
       user: {
+        id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
         ssc_batch: user.ssc_batch,

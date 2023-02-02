@@ -27,6 +27,11 @@ const sidebarReducer: Reducer<GlobalProps, GlobalAction> = (state, action) => {
           ...payload
         },
       };
+    case GlobalTypes.SEARCH:
+      return {
+        ...state,
+        searchTerm: payload,
+      };
     default:
       return state;
   }

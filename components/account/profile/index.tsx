@@ -19,13 +19,10 @@ import { ThreeDots } from "react-loader-spinner";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import GeneralInfo from "./home/GeneralInfo";
-import SendMessage from "./SendMessage";
-import MessageIcon from '@mui/icons-material/Message';
 
 const Profile = () => {
   const { state, dispatch } = useContext(Context) as StoreProps;
   const { auth, loading } = state;
-  const [messageForm, setMessageForm] = useState<boolean>(false);
   const profilePhotoInput = useRef<HTMLInputElement>(null);
   const { systemTheme, theme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
@@ -173,14 +170,7 @@ const Profile = () => {
         </Dialog>
         <Grid className="w-full flex flex-col md:flex-row items-start md:items-center relative">
           <GeneralInfo />
-          <Grid className="hidden md:block absolute right-0 mt-3">
-            <Button onClick={()=> setMessageForm(true)} variant="contained" startIcon={<MessageIcon/>} className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">Message</Button>
-          </Grid>
-          <Grid className="mt-3 w-full flex md:hidden justify-end">
-            <Button onClick={()=> setMessageForm(true)} variant="contained" startIcon={<MessageIcon/>} className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">Message</Button>
-          </Grid>
         </Grid>
-       <SendMessage messageForm = {messageForm} setMessageForm = {setMessageForm} />
       </Grid>
       <Grid item className="w-full px-5">
         <Home />

@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Layout from '../../components/admin/scenes/layout'
 import PendingMembers from '../../components/admin/scenes/pendings'
+import { Context, StoreProps } from '../../store/store'
 
 
 const Page: NextPage = () => {
+  const { state } = useContext(Context) as StoreProps;
+  const { auth } = state;
+  if (auth?.user?.role !== "admin") return null;
   return (
     <React.Fragment>
       <Head>

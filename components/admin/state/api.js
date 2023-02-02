@@ -8,6 +8,8 @@ export const api = createApi({
     "Products",
     "Customers",
     "Pendings",
+    "Approved",
+    "Uploads",
     "Geography",
     "Sales",
     "Admins",
@@ -34,6 +36,21 @@ export const api = createApi({
         params: { page, pageSize, sort, search },
       }),
       providesTags: ["Pendings"],
+    }),
+    getApproved: build.query({
+      query: () => ({
+        url: "/api/members/approved",
+        method: "GET",
+        params: { query: 'all' },
+      }),
+      providesTags: ["Approved"],
+    }),
+    getUploads: build.query({
+      query: () => ({
+        url: "/api/members/uploads",
+        method: "GET",
+      }),
+      providesTags: ["Uploads"],
     }),
     getGeography: build.query({
       query: () => "client/geography",
@@ -63,6 +80,8 @@ export const {
   useGetProductsQuery,
   useGetCustomersQuery,
   useGetPendingsQuery,
+  useGetApprovedQuery,
+  useGetUploadsQuery,
   useGetGeographyQuery,
   useGetSalesQuery,
   useGetAdminsQuery,

@@ -27,6 +27,7 @@ import {
   AdminPanelSettingsOutlined,
   TrendingUpOutlined,
   PieChartOutlined,
+  CloudUpload,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import FlexBetween from "./FlexBetween";
@@ -49,6 +50,10 @@ const navItems = [
   {
     text: "Approved",
     icon: <Groups2Outlined />,
+  },
+  {
+    text: "Uploads",
+    icon: <CloudUpload />,
   },
   {
     text: "Transactions",

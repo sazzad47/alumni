@@ -83,6 +83,7 @@ const updateInfo = async (req, res) => {
         avatar: avatar? avatar: result.avatar,
         email: newUser.email,
         role: newUser.role,
+        id: result.id,
       },
     });
   } catch (err) {

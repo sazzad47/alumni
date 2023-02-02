@@ -101,36 +101,42 @@ const GeneralInfo = () => {
       ) : (
         <Grid className="flex flex-col gap-2">
           <Grid className="w-full md:w-[20rem] flex flex-col gap-5">
-            <Grid className="w-full flex items-start">
-              <Grid className="w-[40%]">
-                <Typography className="p-0">Date of Birth</Typography>
+            {auth?.user?.dateOfBirth && (
+              <Grid className="w-full flex items-start">
+                <Grid className="w-[40%]">
+                  <Typography className="p-0">Date of Birth</Typography>
+                </Grid>
+                <Grid className="w-[60%] flex flex-col gap-2">
+                  <Typography className="p-0 font-bold">
+                    {auth?.user?.dateOfBirth}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid className="w-[60%] flex flex-col gap-2">
-                <Typography className="p-0 font-bold">
-                  {auth?.user?.dateOfBirth}
-                </Typography>
+            )}
+            {auth?.user?.placeOfBirth && (
+              <Grid className="w-full flex items-start">
+                <Grid className="w-[40%]">
+                  <Typography className="p-0">Place of Birth</Typography>
+                </Grid>
+                <Grid className="w-[60%] flex flex-col gap-2">
+                  <Typography className="p-0 font-bold">
+                    {auth?.user?.placeOfBirth}
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid className="w-full flex items-start">
-              <Grid className="w-[40%]">
-                <Typography className="p-0">Place of Birth</Typography>
+            )}
+            {auth?.user?.currentLocation && (
+              <Grid className="w-full flex items-start">
+                <Grid className="w-[40%]">
+                  <Typography className="p-0">Current Location</Typography>
+                </Grid>
+                <Grid className="w-[60%] flex flex-col gap-2">
+                  <Typography className="p-0 font-bold">
+                    {auth?.user?.currentLocation}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid className="w-[60%] flex flex-col gap-2">
-                <Typography className="p-0 font-bold">
-                  {auth?.user?.placeOfBirth}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid className="w-full flex items-start">
-              <Grid className="w-[40%]">
-                <Typography className="p-0">Current Location</Typography>
-              </Grid>
-              <Grid className="w-[60%] flex flex-col gap-2">
-                <Typography className="p-0 font-bold">
-                  {auth?.user?.placeOfBirth}
-                </Typography>
-              </Grid>
-            </Grid>
+            )}
           </Grid>
         </Grid>
       )}

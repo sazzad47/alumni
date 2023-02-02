@@ -3,16 +3,12 @@ import { Avatar, Menu, MenuItem } from "@mui/material";
 import { useRouter } from "next/router";
 import Cookie from "js-cookie";
 import { useContext } from "react";
-import Link from "next/link";
-import { NavLink } from "./NavLink";
 import { Context } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import { useTheme } from "next-themes";
 
 export default function UserMenu({
   boxClass,
-  setisMenu,
-  toggleAccountSubMenu,
   isAccountSubMenu,
 }) {
   const { theme, systemTheme } = useTheme();
@@ -47,7 +43,7 @@ export default function UserMenu({
   };
   return (
     <>
-      <nav className="main-nav auth_computer_menu">
+      <nav className="">
         <ul className={boxClass.join(" ")}>
           <li className="">
             <Avatar
@@ -103,7 +99,7 @@ export default function UserMenu({
         </ul>
       </nav>
 
-      <li
+      {/* <li
         onClick={toggleAccountSubMenu}
         className="menu-item auth_mobile_menu auth_sub__menus__arrows"
       >
@@ -142,7 +138,7 @@ export default function UserMenu({
             </a>{" "}
           </li>
         </ul>
-      </li>
+      </li> */}
     </>
   );
 }

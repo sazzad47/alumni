@@ -1,4 +1,5 @@
 export interface GlobalProps {
+    searchTerm?: string | number,
     loading?: boolean;
     register?: {
       firstName?: string,
@@ -11,6 +12,7 @@ export interface GlobalProps {
     };
     auth?: {
       user?: {
+        id: string,
         firstName?: string,
         lastName?: string,
         ssc_batch?: string,
