@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "../components/admin/state/api";
 
+
 export default function App({ Component, pageProps }: AppProps) {
 
   
@@ -30,3 +31,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </Provider>
   );
 }
+
+

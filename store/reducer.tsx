@@ -7,6 +7,14 @@ const sidebarReducer: Reducer<GlobalProps, GlobalAction> = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case GlobalTypes.NOTIFY:
+      return {
+        ...state,
+        notify: {
+           ...state.notify,
+           ...payload
+        }
+      };
     case GlobalTypes.LOADING:
       return {
         ...state,

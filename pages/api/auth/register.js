@@ -39,7 +39,7 @@ const register = async (req, res) => {
     // const access_token = createAccessToken({ id: newUser._id });
     // const refresh_token = createRefreshToken({ id: newUser._id });
     await newUser.save();
-    console.log("code",  data);
+    
     
     res.json({
       msg: "Registration Successful!",

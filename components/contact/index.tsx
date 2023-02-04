@@ -2,9 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "next/link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,19 +10,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import Container from "@mui/material/Container";
 import { postData } from "../../utils/fetchData";
 import { useTheme } from "next-themes";
-import validate from "../../utils/validate";
 import { Context, StoreProps } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
-import { useRouter } from "next/router";
 import { IconButton, Snackbar } from "@mui/material";
 
 export default function Contact() {
-  const router = useRouter();
   const { state, dispatch } = useContext(Context) as StoreProps;
-  const { auth, loading } = state;
-  const { theme, systemTheme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const { loading } = state;
   const initState = { fullName: "", email: "", message: "" };
   const [userData, setUserData] = useState<{
     fullName: string;

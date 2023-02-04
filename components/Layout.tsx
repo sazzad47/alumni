@@ -4,6 +4,7 @@ import { Inter } from "@next/font/google";
 import { useRouter } from "next/router";
 import Navbar from "./header";
 import Footer from './footer';
+import Toast from "./Toast";
 
 interface Props {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ const Layout = ({ children }: Props) => {
        
         {children}
         {!router.pathname.includes('admin') && <Footer />}
+        <Toast/>
       </div>
     </ThemeProvider>
   );

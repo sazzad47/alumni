@@ -12,7 +12,6 @@ import {
   Checkbox,
 } from "@mui/material";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import WorkIcon from "@mui/icons-material/Work";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SchoolIcon from "@mui/icons-material/School";
 import EditIcon from "@mui/icons-material/Edit";
@@ -94,7 +93,7 @@ const EducationComponent = () => {
         )}
       </Grid>
       {errorMessage.length !== 0 && (
-        <Grid className="w-full md:w-[20rem] p-4 my-4 bg-stone-400 dark:bg-zinc-500 flex flex-col gap-3">
+        <Grid className="w-full p-4 my-4 bg-stone-400 dark:bg-zinc-500 flex flex-col gap-3 text-inherit">
           {errorMessage.map((error, i) => (
             <Grid key={i} className="flex items-center gap-2">
               <ErrorIcon />
@@ -191,7 +190,7 @@ const Form = ({
       <form className="flex flex-col gap-5">
         {data.map((item, index) => (
           <Grid key={index}>
-            <Grid className="w-full md:w-[20rem] flex justify-end">
+            <Grid className="w-full md:w-[20rem] flex justify-end text-black dark:text-white">
               <Tooltip title="Delete">
                 <IconButton
                   onClick={() => deleteField(index)}

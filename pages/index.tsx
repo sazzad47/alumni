@@ -1,17 +1,16 @@
 import React from 'react'
-import { NextPage } from 'next'
 import Head from 'next/head'
 import Hero from '../components/home/Hero'
-import Gallery from '../components/home/Gallery'
-import Stories from '../components/home/Stories'
+import Gallery from '../components/home/gallery'
 import Statistics from '../components/home/Statistics'
-import Feedback from '../components/home/Feedback'
+import Feedback from '../components/home/feedback'
 import ContactInfo from '../components/home/ContactInfo'
 import Subscription from '../components/home/Subscription'
+import { getData } from '../utils/fetchData'
 
 
 
-const Page: NextPage = () => {
+const Page = ({props}: {props: any}) => {
   return (
     <React.Fragment>
       <Head>
@@ -25,14 +24,26 @@ const Page: NextPage = () => {
          <Hero/>
          <Statistics/>
          <Subscription/>
-         <Gallery/>
-         <Feedback/>
-         <ContactInfo/>
-         {/* <Stories/> */}
-         
+         <Gallery contents={props.media} />
+         <Feedback contents={props.reviews} />
+         <ContactInfo contents={props.contact} />
       </main>
     </React.Fragment>
   )
 }
+export async function getServerSideProps() {
+  const contactInfo = await getData(`admin/contactInfo`);
+  const reviews = await getData(`admin/reviews`);
+  const media = await getData(`admin/media`);
 
+  return {
+    props: {
+      props: {
+        contact: contactInfo.content,
+        reviews: reviews.content,
+        media: media.content,
+      },
+    },
+  };
+}
 export default Page

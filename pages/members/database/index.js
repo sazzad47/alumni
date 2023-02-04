@@ -16,7 +16,6 @@ const Page = ({props}) => {
   const currentTheme = theme === "system" ? systemTheme : theme;
   const [data, setData] = useState(props?.data);
   const [currentPage, setCurrentPage] = useState(1);
-  const [mounted, setMounted] = useState(false);
   const handlePageChange = (event, value)=> {
        filterSearch({router, page: value})
        
@@ -27,7 +26,6 @@ const Page = ({props}) => {
     setData(props?.data);
     setTotalPage(props?.pageCount)
     setCurrentPage(Number(props.currentPage));
-    setMounted(true);
   }, [props.data]);
  
   return (

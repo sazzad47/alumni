@@ -1,6 +1,7 @@
 export interface GlobalProps {
     searchTerm?: string | number,
     loading?: boolean;
+    notify?: {notify?: boolean, msg?: string};
     register?: {
       firstName?: string,
       lastName?: string,

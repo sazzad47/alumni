@@ -82,7 +82,7 @@ const Profile = () => {
   useEffect(() => {
     if (auth?.user) setPhotoURL(auth.user.avatar);
   }, [auth?.user]);
-
+  console.log('photourl', photoURL)
   return (
     <Grid container className="w-full flex flex-col">
       <Grid

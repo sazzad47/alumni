@@ -11,7 +11,10 @@ const nextConfig = {
      "CLOUD_NAME": process.env.CLOUD_NAME,
      "CLOUD_API": process.env.CLOUD_API,
      "CLOUD_UPDATE_PRESET": process.env.CLOUD_UPDATE_PRESET,
-  }
+  },
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
 }
 
 module.exports = nextConfig
