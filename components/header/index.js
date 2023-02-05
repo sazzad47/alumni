@@ -1,21 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FiAlignRight } from "react-icons/fi";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import LoggedRouter from "./LoggedRouter";
 import { NavLink } from "./NavLink";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import { useTheme } from "next-themes";
-import { IconButton } from "@mui/material";
+import { Dialog, IconButton } from "@mui/material";
 import { Context } from "../../store/store";
+import { getData } from "../../utils/fetchData";
+import { useRouter } from "next/router";
+import Logo from './Logo';
+
 
 const Navbar = () => {
+  const router = useRouter();
   const { state } = useContext(Context);
   const { auth } = state;
   const { theme, setTheme, systemTheme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
   const [isMenu, setisMenu] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const uploadedLogo = data[0]?.file; 
 
   let boxClass = ["main-menu menu-right menuq1"];
   if (isMenu) {
@@ -27,39 +35,27 @@ const Navbar = () => {
   const [isMembersSubMenu, setMembersSubMenu] = useState(false);
   const [isEventSubMenu, setEventSubMenu] = useState(false);
   const [isSchoolSubMenu, setSchoolSubMenu] = useState(false);
-  const [isAccountSubMenu, setAccountSubMenu] = useState(false);
 
   const toggleAboutSubMenu = () => {
     setAboutSubMenu(!isAboutSubMenu);
     setMembersSubMenu(false);
     setEventSubMenu(false);
     setSchoolSubMenu(false);
-    setAccountSubMenu(false);
   };
   const toggleMembersSubMenu = () => {
     setMembersSubMenu(!isMembersSubMenu);
     setAboutSubMenu(false);
     setEventSubMenu(false);
     setSchoolSubMenu(false);
-    setAccountSubMenu(false);
   };
   const toggleEventSubMenu = () => {
     setEventSubMenu(!isEventSubMenu);
     setMembersSubMenu(false);
     setAboutSubMenu(false);
     setSchoolSubMenu(false);
-    setAccountSubMenu(false);
   };
   const toggleSchoolSubMenu = () => {
     setSchoolSubMenu(!isSchoolSubMenu);
-    setAboutSubMenu(false);
-    setEventSubMenu(false);
-    setMembersSubMenu(false);
-    setAccountSubMenu(false);
-  };
-  const toggleAccountSubMenu = () => {
-    setAccountSubMenu(!isAccountSubMenu);
-    setSchoolSubMenu(false);
     setAboutSubMenu(false);
     setEventSubMenu(false);
     setMembersSubMenu(false);
@@ -99,6 +95,31 @@ const Navbar = () => {
   } else {
     schoolSubMenuClass.push("");
   }
+
+  const handleOpenDialog = () => {
+    auth?.user?.role === "admin"? setOpen(true) : router.push('/')
+  };
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    let isCanceled = false;
+
+    const fetchData = async () => {
+      if (!isCanceled) {
+        const res = await getData("admin/logo");
+        setData(res.content);
+      }
+    };
+    fetchData();
+    return () => {
+      isCanceled = true;
+    };
+  }, []);
+
+  console.log('data', data)
+
   return (
     <header className="header_section px-2 md:px-4 z-[100] w-full max-w-full text-slate-200 bg-green-900 dark:bg-zinc-700">
       <div className="relative flex items-center justify-between w-full h-full">
@@ -141,9 +162,36 @@ const Navbar = () => {
         )}
         <div className="logo_section">
           <div className="relative flex items-center justify-center w-[40px] h-[40px] rounded-full">
-            <Link className="text-slate-200 hover:text-slate-300" href="/">
-              <Image src="/logo.png" alt="" width={40} height={40} />
-            </Link>
+            <div
+              onClick={handleOpenDialog}
+              className="cursor-pointer text-slate-200 hover:text-slate-300"
+            >
+              <Image src={uploadedLogo} alt="" width={40} height={40} />
+            </div>
+            {auth?.user?.role === "admin" && (
+              <Dialog
+                sx={{
+                  "& .MuiDialog-paper": {
+                    backgroundColor:
+                      currentTheme === "dark"
+                        ? "rgb(63 63 70)"
+                        : "rgb(203 213 225)",
+
+                    width: "25rem",
+                    minHeight: "12rem",
+                  },
+                }}
+                onClose={handleCloseDialog}
+                aria-labelledby="customized-dialog-title"
+                open={open}
+              >
+                <Logo
+                      data={uploadedLogo}
+                      setData={setData}
+                      handleCloseDialog={handleCloseDialog}
+                    />
+              </Dialog>
+            )}
           </div>
         </div>
         <nav className="main-nav d-block">
@@ -311,7 +359,7 @@ const Navbar = () => {
               >
                 <Brightness4Icon />
               </IconButton>
-              
+
               <LoggedRouter boxClass={boxClass} setisMenu={setisMenu} />
             </div>
           )}

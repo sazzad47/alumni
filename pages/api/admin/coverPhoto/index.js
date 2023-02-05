@@ -1,5 +1,5 @@
 import connectDB from "../../../../utils/connectDB";
-import Media from "../../../../models/admin/media";
+import CoverPhoto from "../../../../models/admin/coverPhoto";
 import auth from "../../../../middleware/auth";
 
 connectDB();
@@ -20,14 +20,14 @@ const addContent = async (req, res) => {
     const result = await auth(req, res);
     if (result.role !== "admin")
       return res.status(400).json({ err: "Authentication is not valid" });
-    const { file, caption, addToHome } = req.body;
-    const newContent = new Media({
+    const { file, caption, addToGallery } = req.body;
+    const newContent = new CoverPhoto({
       file,
       caption,
-      addToHome
+      addToGallery
     });
     await newContent.save();
-    const content = await Media.find();
+    const content = await CoverPhoto.find();
     res.json({ msg: "Content added successfully", content });
   } catch (err) {
     return res.status(500).json({ err: err.message });
@@ -36,7 +36,7 @@ const addContent = async (req, res) => {
 
 const getContent = async (req, res) => {
   try {
-    const content = await Media.find();
+    const content = await CoverPhoto.find();
     res.json({ content });
   } catch (err) {
     return res.status(500).json({ err: err.message });

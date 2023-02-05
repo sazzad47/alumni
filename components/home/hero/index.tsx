@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -12,6 +12,10 @@ import { TfiAnnouncement } from "react-icons/tfi";
 import { BsCalendar2Event } from "react-icons/bs";
 import { AiFillClockCircle } from "react-icons/ai";
 import { GoLocation } from "react-icons/go";
+import { Context, StoreProps } from "../../../store/store";
+import Upload from "./Upload";
+import Edit from "./Edit";
+import Delete from "./Delete";
 
 const coverPhotos = [
   {
@@ -31,11 +35,27 @@ const coverPhotos = [
     url: "/home/cover1.jpg",
   },
 ];
-const Hero = () => {
+
+interface MediaProps {
+  _id: string;
+  file: string;
+  caption: string;
+  addToGallery: boolean;
+}
+
+const Hero = ({ contents }: { contents: MediaProps[] }) => {
+  const { state } = useContext(Context) as StoreProps;
+  const { auth } = state;
+  const [data, setData] = useState<MediaProps[]>(contents);
   return (
     <React.Fragment>
       <div className="text-white w-full flex flex-col">
         <div className="w-full max-w-full h-[40vh] md:h-[50vh] relative">
+          {auth?.user?.role === "admin" && (
+            <div className="absolute z-[10] right-5 top-5">
+              <Upload setData={setData} data={data} />
+            </div>
+          )}
           <Swiper
             modules={[Navigation, A11y, Autoplay]}
             spaceBetween={0}
@@ -44,19 +64,22 @@ const Hero = () => {
             navigation
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
-            autoplay={{ delay: 3000 }}
+            autoplay={auth?.user?.role === "admin" ? true : false}
             className="w-full h-full max-w-full"
           >
-            {coverPhotos.map((photo, i) => (
+            {data.map((item, i) => (
               <SwiperSlide key={i}>
-                <Image src={photo.url} alt="" fill />
+                <Image src={item.file} alt="" fill />
+                {auth?.user?.role === "admin" && (
+                  <div className="absolute z-[10] right-[10rem] top-5 flex gap-3 items-center justify-end">
+                    <Edit item={item} setData={setData} />
+                    <Delete item={item} setData={setData} />
+                  </div>
+                )}
                 <div className="absolute bg-[rgba(0,0,0,0.4)] z-[1] top-0 right-0 left-0 bottom-0 flex items-center justify-center">
-                  <div className="w-full items-center justify-start md:justify-center flex flex-col gap-4">
+                  <div className="w-full flex items-center justify-center">
                     <Typography className="capitalize text-white text-xl md:text-[30px]">
-                      BTRI School Alumni Association
-                    </Typography>
-                    <Typography className="text-lg md:text-[20px] text-white">
-                      MEETING THE MOMENT, TOGETHER
+                      {item.caption}
                     </Typography>
                   </div>
                 </div>
