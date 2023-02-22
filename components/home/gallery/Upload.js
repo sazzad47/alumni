@@ -115,7 +115,7 @@ const UploadDialog = ({ setData, data, handleClose }) => {
       setErrorMessage([]);
     }
   }, [focused]);
-  console.log("errorMesg", errorMessage);
+  
 
   return (
     <Grid className="w-full h-full flex flex-col p-5">
@@ -160,11 +160,11 @@ const Form = ({
   const { systemTheme, theme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
 
-  const profilePhotoInput = useRef(null);
+  const photoInput = useRef(null);
   const [photoURL, setPhotoURL] = useState(null);
 
-  const handleChooseProfilePhoto = () => {
-    profilePhotoInput.current?.click();
+  const handleChoosePhoto = () => {
+    photoInput.current?.click();
   };
 
   const handleFile = (e) => {
@@ -190,7 +190,7 @@ const Form = ({
           </Tooltip>
         )}
         <Grid
-          onClick={handleChooseProfilePhoto}
+          onClick={handleChoosePhoto}
           className="relative bg-slate-500 dark:bg-zinc-600 z-[10] w-full cursor-pointer h-[10rem] flex items-center justify-center"
         >
           {photoURL !== null && <Image src={photoURL} alt="" fill />}
@@ -200,7 +200,7 @@ const Form = ({
             </Avatar>
           )}
           <input
-            ref={profilePhotoInput}
+            ref={photoInput}
             hidden
             type="file"
             accept="image/*"

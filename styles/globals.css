@@ -32,6 +32,11 @@
 body {
  overflow-x: hidden !important;
 }
+.ql-toolbar {
+  background-color: #fff !important;
+  color: #fff !important;
+}
+
 /* ----------- Navbar ------------- */
 @import url("./navbar.css");
 

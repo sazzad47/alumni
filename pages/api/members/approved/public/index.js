@@ -49,30 +49,25 @@ const getMembers = async (req, res) => {
           { $or: [{ status: "approved" }, { uploadedByAdmin: false }] },
           { root: false },
         ],
-      }),
+      }, {firstName: 1, lastName: 1, avatar: 1, ssc_batch: 1, membership: 1, _id: 1, uploadedByAdmin: 1 }),
       req.query
     ).filtering().paginating();
 
-    const totalDocumentQuery = new APIfeatures(
-      Users.find({
-        $and: [
-          { $or: [{ status: "approved" }, { uploadedByAdmin: false }] },
-          { root: false },
-        ],
-      }),
-      req.query
-    ).filtering();
+    // const totalDocumentQuery = new APIfeatures(
+    //   Users.find({
+    //     $and: [
+    //       { $or: [{ status: "approved" }, { uploadedByAdmin: false }] },
+    //       { root: false },
+    //     ],
+    //   }),
+    //   req.query
+    // ).filtering();
     
     const data = await features.query;
-    const totalDocument = await totalDocumentQuery.query;
+    // const totalDocument = await totalDocumentQuery.query;
 
-    const total = await Users.countDocuments({
-      $and: [
-        { $or: [{ status: "approved" }, { uploadedByAdmin: false }] },
-        { root: false },
-      ],
-    });
-    const pageCount = Math.ceil(totalDocument.length / 12);
+    
+    const pageCount = Math.ceil(data.length / 12);
     const currentPage = req.query.page;
     res.status(200).json({
       data,

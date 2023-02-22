@@ -118,7 +118,6 @@ const Navbar = () => {
     };
   }, []);
 
-  console.log('data', data)
 
   return (
     <header className="header_section px-2 md:px-4 z-[100] w-full max-w-full text-slate-200 bg-green-900 dark:bg-zinc-700">

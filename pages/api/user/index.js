@@ -65,7 +65,7 @@ const updateInfo = async (req, res) => {
         avatar,
       }
       );
-      console.log('userData', req.body)
+     
     res.json({
       msg: "Update Success!",
       user: {

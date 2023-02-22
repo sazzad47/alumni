@@ -1,6 +1,11 @@
 import { GlobalProps } from "./props";
 
 export const initState: GlobalProps = {
+  news: {
+    currentPage: 1,
+    totalPage: 0,
+    searchTerm: ""
+  },
   searchTerm: "",
   loading: false,
   notify: {},
@@ -8,10 +13,14 @@ export const initState: GlobalProps = {
     firstName: "",
     lastName: "",
     ssc_batch: "",
+    phone: "",
     email: "",
     confirm_email: "",
     password: "",
     confirm_password: "",
+    membership: "",
+    currency: "",
+    amount: 0,
   },
   auth: {},
   users: [],

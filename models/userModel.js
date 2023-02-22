@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const AutoIncrement = require("mongoose-sequence")(mongoose);
+const Schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
   {
@@ -20,6 +21,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+    },
+    phone: {
+      type: String,
     },
     password: {
       type: String,
@@ -52,7 +56,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "pending"
     },
-    subscription: {
+    membership: {
       type: String,
       default: "None"
     },
@@ -78,6 +82,7 @@ const userSchema = new mongoose.Schema(
     cloud: {
       type: Array,
     },
+    payment: [{type: Schema.Types.ObjectId, ref: "payment"}]
   },
   {
     timestamps: true,

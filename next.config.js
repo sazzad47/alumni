@@ -11,6 +11,8 @@ const nextConfig = {
      "CLOUD_NAME": process.env.CLOUD_NAME,
      "CLOUD_API": process.env.CLOUD_API,
      "CLOUD_UPDATE_PRESET": process.env.CLOUD_UPDATE_PRESET,
+     "SSL_STORE_ID": process.env.SSL_STORE_ID,
+     "SSL_STORE_PASSWORD": process.env.SSL_STORE_PASSWORD,
   },
   images: {
     domains: ['res.cloudinary.com'],

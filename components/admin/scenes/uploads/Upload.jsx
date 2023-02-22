@@ -34,13 +34,13 @@ const Upload = ({setGetData}) => {
           aria-labelledby="customized-dialog-title"
           open={open}
         >
-          <MessageDialog setGetData={setGetData} handleClose={handleCloseDialog} />
+          <UploadDialog setGetData={setGetData} handleClose={handleCloseDialog} />
         </Dialog>
     </Grid>
   )
 }
 
-const MessageDialog = ({setGetData, handleClose }) => {
+const UploadDialog = ({setGetData, handleClose }) => {
   const { dispatch } = useContext(Context);
   const initState = { avatar: "", firstName: "", lastName: "", ssc_batch: "", email: "" };
   const [userData, setUserData] = useState(initState);

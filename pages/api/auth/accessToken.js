@@ -33,7 +33,7 @@ export default async (req, res) => {
         biography: user.biography,
         socialLinks: user.socialLinks,
         status: user.status,
-        subscription: user.subscription,
+        membership: user.membership,
         email: user.email,
         role: user.role,
         avatar: user.avatar,

@@ -89,13 +89,13 @@ const Footer = () => {
                 <Link href="/donate">Donate</Link>
               </li>
               <li>
-                <Link href="/payment">Payment</Link>
+                <Link href="/renew-membership">Renew Membership</Link>
               </li>
               <li>
                 <Link href="/notice">Notice</Link>
               </li>
               <li>
-                <Link href="/auth">Login</Link>
+                <Link href="/contact">Contact</Link>
               </li>
             </ul>
           </div>

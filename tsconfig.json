@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/validate.ts", "utils/connectDB.js", "pages/_app.tsx", "components/account/profile/home/SocialLinks.js", "components/account/profile/home/Education.js", "pages/api/members/approved/index.js", "components/database/SearchBar.js", "pages/members/database/index.js", "components/home/feedback/Upload.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/validate.ts", "utils/connectDB.js", "pages/_app.tsx", "components/account/profile/home/SocialLinks.js", "components/account/profile/home/Education.js", "pages/api/members/approved/index.js", "components/database/SearchBar.js", "pages/members/database/index.js", "components/home/feedback/Upload.js", "pages/news-ex.js", "components/news/upload/Form.tsx"],
   "exclude": ["node_modules"]
 }

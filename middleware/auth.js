@@ -23,7 +23,7 @@ const auth = async (req, res) => {
     biography: user.biography,
     socialLinks: user.socialLinks,
     status: user.status,
-    subscription: user.subscription,
+    membership: user.membership,
     role: user.role,
     avatar: user.avatar,
     root: user.root,

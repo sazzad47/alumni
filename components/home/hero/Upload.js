@@ -244,7 +244,7 @@ const Form = ({
               },
             }}
           />
-          <Typography className="p-0 pl-2">Add to home gallery</Typography>
+          <Typography className="p-0 pl-2">Add to gallery</Typography>
         </Grid>
         <Grid className="w-full flex justify-end ">
           <Grid className="flex gap-5">

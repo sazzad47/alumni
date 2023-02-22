@@ -40,6 +40,14 @@ const sidebarReducer: Reducer<GlobalProps, GlobalAction> = (state, action) => {
         ...state,
         searchTerm: payload,
       };
+    case GlobalTypes.NEWS_PAGE:
+      return {
+        ...state,
+        news: {
+           ...state.news,
+           ...payload
+        },
+      };
     default:
       return state;
   }

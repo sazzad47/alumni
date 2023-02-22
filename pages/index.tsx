@@ -5,7 +5,7 @@ import Gallery from '../components/home/gallery'
 import Statistics from '../components/home/Statistics'
 import Feedback from '../components/home/feedback'
 import ContactInfo from '../components/home/ContactInfo'
-import Subscription from '../components/home/Subscription'
+import Subscription from '../components/home/subscription'
 import { getData } from '../utils/fetchData'
 
 
@@ -23,7 +23,7 @@ const Page = ({props}: {props: any}) => {
        
          <Hero contents={props.coverPhotos} />
          <Statistics/>
-         <Subscription/>
+         <Subscription contents={props.subscription} />
          <Gallery contents={props.media} />
          <Feedback contents={props.reviews} />
          <ContactInfo contents={props.contact} />
@@ -36,6 +36,7 @@ export async function getServerSideProps() {
   const reviews = await getData(`admin/reviews`);
   const media = await getData(`admin/media`);
   const coverPhotos = await getData(`admin/coverPhoto`);
+  const subscription = await getData(`admin/subscription`);
 
   return {
     props: {
@@ -44,6 +45,7 @@ export async function getServerSideProps() {
         reviews: reviews.content,
         media: media.content,
         coverPhotos: coverPhotos.content,
+        subscription: subscription.content,
       },
     },
   };

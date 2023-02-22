@@ -1,6 +1,4 @@
 import connectDB from "../../../utils/connectDB";
-import Users from "../../../models/userModel";
-import Otp from "../../../models/membershipOtp";
 import sendEmail from "../../../utils/mail";
 
 connectDB();
@@ -17,7 +15,7 @@ const sendMessage = async (req, res) => {
   try {
     const { fullName, email, ssc_batch, message, userEmail } = req.body;
 
-    console.log('message', req.body)
+
     await sendEmail({
         to: userEmail,
         from: process.env.SENDER_EMAIL,

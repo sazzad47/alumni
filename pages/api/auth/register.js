@@ -1,5 +1,4 @@
 import connectDB from "../../../utils/connectDB";
-import Users from "../../../models/userModel";
 import Otp from "../../../models/membershipOtp";
 
 connectDB();
@@ -15,7 +14,7 @@ export default async (req, res) => {
 const register = async (req, res) => {
   try {
     const { registerData, code } = req.body;
-    const { firstName, lastName, ssc_batch, email } = registerData;
+    const { email } = registerData;
     let data = await Otp.findOne({ $and: [{ email }, { code: parseInt(code) }] });
     
     if (!data) return res.status(400).json({ err: "Invalid OTP" });
@@ -24,25 +23,25 @@ const register = async (req, res) => {
     let diff = data.expireIn - currentTime;
     if (diff < 0) return res.status(400).json({ err: "OTP expired!" });
     
-    const user = await Users.findOne({ email });
-    if (user)
-      return res.status(400).json({ err: "This email already exists." });
+    // const user = await Users.findOne({ email });
+    // if (user)
+    //   return res.status(400).json({ err: "This email already exists." });
       
-    const newUser = new Users({
-      firstName,
-      lastName,
-      ssc_batch,
-      email,
-    });
+    // const newUser = new Users({
+    //   firstName,
+    //   lastName,
+    //   ssc_batch,
+    //   email,
+    // });
    
     
     // const access_token = createAccessToken({ id: newUser._id });
     // const refresh_token = createRefreshToken({ id: newUser._id });
-    await newUser.save();
+    // await newUser.save();
     
     
     res.json({
-      msg: "Registration Successful!",
+      msg: "Email verified successfully!",
       // refresh_token,
       // access_token,
       user: {

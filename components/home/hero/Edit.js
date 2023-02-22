@@ -158,7 +158,7 @@ const Form = ({
       setPhotoURL(newPhotoURL);
     }
   };
- console.log('data', data)
+
   return (
     <form className="w-full pt-5">
       <Grid className="w-full flex flex-col md:items-center gap-2">
@@ -241,7 +241,7 @@ const Form = ({
               },
             }}
           />
-          <Typography className="p-0 pl-2">Add to home gallery</Typography>
+          <Typography className="p-0 pl-2">Add to gallery</Typography>
         </Grid>
         <Grid className="w-full flex justify-end ">
           <Grid className="flex gap-5">

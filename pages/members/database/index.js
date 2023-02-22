@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Database from '../../../components/database'
 import Breadcrumb from '../../../components/Breadcrumb'
@@ -21,7 +21,7 @@ const Page = ({props}) => {
        
   }
   
-  
+  console.log('members', props.data)
   useEffect(() => {
     setData(props?.data);
     setTotalPage(props?.pageCount)

@@ -17,21 +17,36 @@ import { Context, StoreProps } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/router";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import Payment from "./payment";
+import Message from "./Message";
+import Overview from "./Overview";
+import VerifyEmail from "./VerifyEmail";
 
-export default function SignUp() {
+interface SubscriptionProps {
+  _id: string;
+  title: string;
+  facilities: { facility: string }[];
+  price: number;
+  per?: string;
+  currency: string;
+}
+
+export default function SignUp({
+  contents,
+}: {
+  contents: SubscriptionProps[];
+}) {
+  const [data, setData] = useState<SubscriptionProps[]>(contents);
   const router = useRouter();
   const { state, dispatch } = useContext(Context) as StoreProps;
   const { auth, loading } = state;
   const { theme, systemTheme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
   const [checked, setChecked] = useState<boolean>(false);
-  const {
-    firstName,
-    lastName,
-    ssc_batch,
-    email,
-    confirm_email,
-  } = { ...state.register };
+  const { firstName, lastName, ssc_batch, phone, email, confirm_email } = {
+    ...state.register,
+  };
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [focused, setFocused] = useState<boolean>(false);
   const registerData = { ...state.register };
@@ -49,31 +64,45 @@ export default function SignUp() {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch({ type: GlobalTypes.LOADING, payload: true });
+    // const errMsg = validate(registerData);
+    // const showMessage = () => {
+    //   setErrorMessage(errMsg);
+    //   window.scrollTo({
+    //     top: 0,
+    //     behavior: "smooth",
+    //   });
+    // };
+    // if (errMsg.length !== 0) return showMessage();
 
-    const errMsg = validate(registerData);
-    const showMessage = () => {
-      setErrorMessage(errMsg);
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    };
-    if (errMsg.length !== 0) return showMessage();
+    // dispatch({ type: GlobalTypes.LOADING, payload: true });
 
-    const res = await postData("auth/verifyEmail", registerData);
-    dispatch({ type: GlobalTypes.LOADING, payload: false });
-    if (res.err) return errMsg.push(res.err) && showMessage();
-    router.push('/members/register/verify_email')
-    
+    // const res = await postData("auth/verifyEmail", registerData);
+    // dispatch({ type: GlobalTypes.LOADING, payload: false });
+    // if (res.err) return errMsg.push(res.err) && showMessage();
+    sessionStorage.setItem("registerData", JSON.stringify(registerData));
+    router.push("/members/register?overview=true", undefined, { shallow: true });
   };
   useEffect(() => {
     if (auth !== undefined) {
       if (Object.keys(auth).length !== 0) router.push("/");
     }
   }, []);
+
+
+  const { overview, payment, verify_email } = router.query;
+  if ( payment ) {
+    return <Message payment= {payment} />;
+  } else if ( overview ) {
+    return <Overview/>
+  } else if ( verify_email ) {
+    return <VerifyEmail/>
+  }
+  
   return (
-    <Container component="main" className="bg-slate-300 dark:bg-zinc-700 w-full md:w-[30rem] p-5 flex items-center justify-center">
+    <Container
+      component="main"
+      className="bg-slate-300 dark:bg-zinc-700 w-full md:w-[30rem] p-5 flex items-center justify-center"
+    >
       <Box
         className=""
         sx={{
@@ -145,6 +174,19 @@ export default function SignUp() {
             <Grid item xs={12}>
               <InputField
                 inputProps={{
+                  type: "number",
+                  name: "phone",
+                  id: "phone",
+                  label: "Phone",
+                  value: phone,
+                  onChange: handleChange,
+                  setFocused: setFocused,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputField
+                inputProps={{
                   type: "email",
                   name: "email",
                   id: "email",
@@ -168,7 +210,12 @@ export default function SignUp() {
                 }}
               />
             </Grid>
-           
+            <Grid item xs={12} className="w-full flex justify-center">
+              <Typography component="h1" variant="h5">
+                Payment
+              </Typography>
+            </Grid>
+            <Payment contents={contents} />
             <Grid item xs={12}>
               <FormControlLabel
                 control={
@@ -201,6 +248,7 @@ export default function SignUp() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleSubmit}
           >
             {loading ? (
               <ThreeDots
@@ -214,7 +262,7 @@ export default function SignUp() {
                 visible={true}
               />
             ) : (
-              <Typography>Sign Up</Typography>
+              <Typography>Submit</Typography>
             )}
           </Button>
           <Grid container justifyContent="flex-end">
@@ -239,7 +287,7 @@ interface Props {
     name: string;
     id: string;
     label: string;
-    value?: string;
+    value?: string | number;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     setFocused: Function;
   };
