@@ -109,20 +109,19 @@ export default function Form({
     e.preventDefault();
     let media;
     dispatch({ type: GlobalTypes.LOADING, payload: { loading: true } });
-
     if (photo) media = await imageUpload([photo]);
     const res = await postData(
-      "admin/news",
+      "admin/notice",
       { ...userData, photo: media ? media[0] : "" },
       auth?.token
     );
 
     const newData = await getData(
-      `admin/news?search=${search}&page=${page}&limit=12`
+      `admin/notice?search=${search}&page=${page}&limit=12`
     );
     setUpdatedData(newData.data);
     dispatch({
-      type: GlobalTypes.NEWS_PAGE,
+      type: GlobalTypes.NOTICE_PAGE,
       payload: {
         totalPage: newData.pageCount,
         currentPage: newData.currentPage,

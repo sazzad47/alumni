@@ -8,7 +8,7 @@ const noticeSchema = new mongoose.Schema(
     shortDescription: {
       type: String,
     },
-    kewords: {
+    keywords: {
       type: String,
     },
     photo: {

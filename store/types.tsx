@@ -5,4 +5,5 @@ export enum GlobalTypes {
     AUTH = "AUTH",
     SEARCH = "SEARCH",
     NEWS_PAGE = "NEWS_PAGE",
+    NOTICE_PAGE = "NOTICE_PAGE",
   }

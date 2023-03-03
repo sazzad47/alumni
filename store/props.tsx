@@ -4,6 +4,11 @@ export interface GlobalProps {
     totalPage: number;
     searchTerm: string | number;
   };
+  notice: {
+    currentPage: number;
+    totalPage: number;
+    searchTerm: string | number;
+  };
   searchTerm?: string | number;
   loading?: boolean;
   notify?: { notify?: boolean; msg?: string };

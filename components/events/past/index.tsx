@@ -1,6 +1,6 @@
 import { Button, Grid, Typography } from "@mui/material";
 import React, { useContext, useState } from "react";
-import { Context, StoreProps } from "../../store/store";
+import { Context, StoreProps } from "../../../store/store";
 import SearchBar from "./SearchBar";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -78,7 +78,7 @@ const ContentCard = ({ data, setUpdatedData }: ContentItem) => {
           <Typography className="p-0 line-clamp-2 text-sm">
             {data.title}
           </Typography>
-          <Link href={`/news/${data._id}`}>
+          <Link href={`/events/past/${data._id}`}>
           <Button fullWidth className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">
             Details
           </Button>

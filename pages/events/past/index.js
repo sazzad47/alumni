@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import Head from "next/head";
-import News from "../../components/news";
-import Breadcrumb from "../../components/Breadcrumb";
-import { getData } from "../../utils/fetchData";
+import Events from "../../../components/events/past";
+import Breadcrumb from "../../../components/Breadcrumb";
+import { getData } from "../../../utils/fetchData";
 import Pagination from "@mui/material/Pagination";
 import { useTheme } from "next-themes";
-import filterSearch from "../../utils/filterSearch";
+import filterSearch from "../../../utils/filterSearch";
 import { useRouter } from "next/router";
-import { Context } from "../../store/store";
-import { GlobalTypes } from "../../store/types";
+import { Context } from "../../../store/store";
+import { GlobalTypes } from "../../../store/types";
 
 const Page = ({ props }) => {
   const { state, dispatch } = useContext(Context);
@@ -32,30 +32,26 @@ const Page = ({ props }) => {
   return (
     <React.Fragment>
       <Head>
-        <title>News</title>
+        <title>Events</title>
         <meta name="description" content="Under development by Sazzad Hossen" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         <div className="p-5 min-h-[90vh] flex flex-col gap-5 items-center justify-start bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
-          <Breadcrumb title="News" />
-          <News data={data} />
-          {data.length === 0 ? (
-            <Typography className="text-2xl">No content found!</Typography>
-          ) : (
-            <Pagination
-              page={Number(currentPage)}
-              onChange={handlePageChange}
-              sx={{
-                "& .MuiPaginationItem-root": {
-                  color: currentTheme === "dark" ? "white" : "black",
-                },
-              }}
-              count={Number(totalPage)}
-              color="standard"
-            />
-          )}
+          <Breadcrumb title="Events" subtitle="Past" />
+          <Events data={data} />
+          <Pagination
+            page={Number(currentPage)}
+            onChange={handlePageChange}
+            sx={{
+              "& .MuiPaginationItem-root": {
+                color: currentTheme === "dark" ? "white" : "black",
+              },
+            }}
+            count={Number(totalPage)}
+            color="standard"
+          />
         </div>
       </main>
     </React.Fragment>

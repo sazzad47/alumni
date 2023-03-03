@@ -117,14 +117,7 @@ export const getContent = async (req, res) => {
       .paginating()
       .sorting();
 
-    // const totalDocumentQuery = new APIfeatures(
-    //   News.find(),
-    //   req.query
-    // ).filtering();
-
     const data = await features.query;
-    // const totalDocument = await totalDocumentQuery.query;
-
     const pageCount = Math.ceil(data.length / 12);
     const currentPage = req.query.page;
     res.status(200).json({

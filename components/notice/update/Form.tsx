@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ErrorIcon from "@mui/icons-material/Error";
 import Container from "@mui/material/Container";
-import { getData, postData } from "../../../utils/fetchData";
+import { getData, patchData } from "../../../utils/fetchData";
 import { useTheme } from "next-themes";
 import { Context, StoreProps } from "../../../store/store";
 import { GlobalTypes } from "../../../store/types";
@@ -14,61 +14,36 @@ import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/router";
 import { CloudUpload } from "@mui/icons-material";
 import Image from "next/image";
-import {
-  Checkbox,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
-
 import TextEditor from "../../TextEditor";
 import { imageUpload } from "../../../utils/imageUpload";
 
 interface UserData {
-  title: string;
-  shortDescription: string;
-  photo: File | null;
-  keywords: string;
-  detailedPage: string;
-  notify: boolean;
-  recipients: string;
+  data: {
+    _id: string;
+    title: string;
+    shortDescription: string;
+    photo: any;
+    keywords: string;
+    detailedPage: string;
+  };
+  setUpdatedData: Function;
+  handleCloseDialog: Function;
 }
 
 export default function Form({
+  data,
   setUpdatedData,
   handleCloseDialog,
-}: {
-  setUpdatedData: Function;
-  handleCloseDialog: Function;
-}) {
-  const { theme, systemTheme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
+}: UserData) {
   const router = useRouter();
   const page = router.query.page || 1;
   const search = router.query.search || "all";
   const { state, dispatch } = useContext(Context) as StoreProps;
   const { auth, loading } = state;
-  const initialState: UserData = {
-    title: "",
-    shortDescription: "",
-    photo: null,
-    keywords: "",
-    detailedPage: "",
-    notify: false,
-    recipients: "",
-  };
-  const [userData, setUserData] = useState(initialState);
-  const [members, setMembers] = useState<{ title: string }[]>([]);
-  const {
-    title,
-    shortDescription,
-    photo,
-    keywords,
-    detailedPage,
-    notify,
-    recipients,
-  } = userData;
+
+  const [userData, setUserData] = useState(data);
+
+  const { title, shortDescription, photo, keywords, detailedPage } = userData;
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [focused, setFocused] = useState<boolean>(false);
 
@@ -83,21 +58,6 @@ export default function Form({
     }
   }, [focused]);
 
-  useEffect(() => {
-    let isCanceled = false;
-
-    const fetchData = async () => {
-      if (!isCanceled) {
-        const res = await getData("admin/subscription");
-        setMembers(res.content);
-      }
-    };
-    fetchData();
-    return () => {
-      isCanceled = true;
-    };
-  }, []);
-
   const showMessage = () => {
     window.scrollTo({
       top: 0,
@@ -107,38 +67,40 @@ export default function Form({
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     let media;
     dispatch({ type: GlobalTypes.LOADING, payload: { loading: true } });
 
-    if (photo) media = await imageUpload([photo]);
-    const res = await postData(
-      "admin/news",
-      { ...userData, photo: media ? media[0] : "" },
+    if (typeof photo === "object") media = await imageUpload([photo]);
+    const res = await patchData(
+      `admin/notice/${data._id}`,
+      { ...userData, photo: media ? media[0] : photo },
       auth?.token
     );
 
     const newData = await getData(
-      `admin/news?search=${search}&page=${page}&limit=12`
+      `admin/notice?search=${search}&page=${page}&limit=12`
     );
     setUpdatedData(newData.data);
     dispatch({
-      type: GlobalTypes.NEWS_PAGE,
+      type: GlobalTypes.NOTICE_PAGE,
       payload: {
         totalPage: newData.pageCount,
         currentPage: newData.currentPage,
       },
     });
     dispatch({ type: GlobalTypes.LOADING, payload: false });
+
     if (res.err) return errorMessage.push(res.err) && showMessage();
     handleCloseDialog();
     dispatch({
       type: GlobalTypes.NOTIFY,
-      payload: { notify: true, msg: "Uploaded successfully" },
+      payload: { notify: true, msg: "Updated successfully" },
     });
   };
 
   const photoInput = useRef<HTMLInputElement>(null);
-  const [photoURL, setPhotoURL] = useState<null | string>(null);
+  const [photoURL, setPhotoURL] = useState(photo);
 
   const handleChoosePhoto = () => {
     photoInput.current?.click();
@@ -264,128 +226,14 @@ export default function Form({
               </label>
               <TextEditor detailedPage={detailedPage} setData={setUserData} />
             </Grid>
-            <Grid item xs={12}>
-              <Grid className="flex items-center mt-2">
-                <Checkbox
-                  onChange={(e) =>
-                    setUserData({ ...userData, notify: e.target.checked })
-                  }
-                  checked={notify}
-                  sx={{
-                    color: currentTheme === "dark" ? "#fff" : "#000",
-                    padding: 0,
-                    "&.Mui-checked": {
-                      color: currentTheme === "dark" ? "#fff" : "#000",
-                    },
-                  }}
-                />
-                <Typography className="p-0 pl-2 text-black dark:text-white">
-                  Notify about this content
-                </Typography>
-              </Grid>
-            </Grid>
-            {notify && (
-              <Grid item xs={12} className="">
-                <FormControl className="w-full">
-                  <InputLabel
-                    id="demo-simple-select-label"
-                    sx={{
-                      color:
-                        currentTheme === "dark"
-                          ? "rgb(214 211 209)"
-                          : "rgb(21 128 61)",
-                      "&.Mui-focused": {
-                        color:
-                          currentTheme === "dark"
-                            ? "rgb(214 211 209)"
-                            : "rgb(21 128 61)",
-                      },
-                    }}
-                  >
-                    Select recipients
-                  </InputLabel>
-                  <Select
-                    fullWidth
-                    required
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    name="recipients"
-                    value={recipients}
-                    onFocus={() => setFocused(true)}
-                    onBlur={() => setFocused(false)}
-                    onChange={(event) =>
-                      setUserData({
-                        ...userData,
-                        recipients: event.target.value,
-                      })
-                    }
-                    sx={{
-                      color: currentTheme === "dark" ? "white" : "black",
-                      label: {
-                        color: "darkred",
-                        "&.Mui-focused": {
-                          color: "darkred",
-                        },
-                      },
-                      ".MuiOutlinedInput-notchedOutline": {
-                        color:
-                          currentTheme === "dark"
-                            ? "rgb(214 211 209)"
-                            : "rgb(21 128 61)",
-                        borderColor:
-                          currentTheme === "dark" ? "rgb(120 113 108)" : "",
-                      },
-                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        color:
-                          currentTheme === "dark"
-                            ? "rgb(214 211 209)"
-                            : "rgb(21 128 61)",
-                        borderColor:
-                          currentTheme === "dark"
-                            ? "rgb(214 211 209)"
-                            : "rgb(21 128 61)",
-                      },
-                      "&:hover .MuiOutlinedInput-notchedOutline": {
-                        color:
-                          currentTheme === "dark"
-                            ? "rgb(214 211 209)"
-                            : "rgb(21 128 61)",
-                        borderColor:
-                          currentTheme === "dark" ? "rgb(168 162 158)" : "",
-                      },
-                      ".MuiSvgIcon-root ": {
-                        fill:
-                          currentTheme === "dark"
-                            ? "rgb(214 211 209)"
-                            : "rgb(21 128 61)",
-                      },
-                    }}
-                    inputProps={{
-                      MenuProps: {
-                        MenuListProps: {
-                          sx: {
-                            backgroundColor:
-                              currentTheme === "dark"
-                                ? "rgb(63 63 70)"
-                                : "rgb(212 212 216)",
-                            color: currentTheme === "dark" ? "white" : "black",
-                          },
-                        },
-                      },
-                    }}
-                    label="Select membership"
-                    className="rounded-md"
-                  >
-                    <MenuItem value="all">All</MenuItem>
-                    {members.map((item, i) => (
-                      <MenuItem key={i} value={item.title}>
-                        {item.title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            )}
+            {/* <Grid item xs={12}>
+              <Link
+                href="/login/forgot-password"
+                className="text-slate-900 dark:text-slate-200"
+              >
+                Forgot your password?
+              </Link>
+            </Grid> */}
           </Grid>
           <Button
             className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
@@ -406,7 +254,7 @@ export default function Form({
                 visible={true}
               />
             ) : (
-              <Typography>Upload</Typography>
+              <Typography>Update</Typography>
             )}
           </Button>
         </Box>

@@ -10,10 +10,10 @@ import React, { useContext, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ErrorIcon from "@mui/icons-material/Error";
 import { ThreeDots } from "react-loader-spinner";
-import { deleteData, getData } from "../../utils/fetchData";
+import { deleteData, getData } from "../../../utils/fetchData";
 import { useTheme } from "next-themes";
-import { Context } from "../../store/store";
-import { GlobalTypes } from "../../store/types";
+import { Context } from "../../../store/store";
+import { GlobalTypes } from "../../../store/types";
 import { useRouter } from "next/router";
 
 const Delete = ({ item, setData }) => {

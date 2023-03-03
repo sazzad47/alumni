@@ -69,8 +69,8 @@ const DeleteDialog = ({ item, setData, handleClose }) => {
   const handleSubmit = async () => {
     setLoading(true);
 
-    const res = await deleteData(`admin/news/${item._id}`, auth.token);
-    const newData = await getData(`admin/news?search=${search}&page=${page}&limit=12`);
+    const res = await deleteData(`admin/notice/${item._id}`, auth.token);
+    const newData = await getData(`admin/notice?search=${search}&page=${page}&limit=12`);
     setData(newData.data)
     dispatch({
       type: GlobalTypes.NEWS_PAGE,

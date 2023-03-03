@@ -67,7 +67,7 @@ export default function Form({
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    
+
     let media;
     dispatch({ type: GlobalTypes.LOADING, payload: { loading: true } });
 
@@ -77,7 +77,7 @@ export default function Form({
       { ...userData, photo: media ? media[0] : photo },
       auth?.token
     );
-    
+
     const newData = await getData(
       `admin/news?search=${search}&page=${page}&limit=12`
     );
@@ -90,7 +90,7 @@ export default function Form({
       },
     });
     dispatch({ type: GlobalTypes.LOADING, payload: false });
-    
+
     if (res.err) return errorMessage.push(res.err) && showMessage();
     handleCloseDialog();
     dispatch({
@@ -110,8 +110,19 @@ export default function Form({
     if (e.target.files) {
       let newPhoto = e.target.files[0];
       const newPhotoURL = URL.createObjectURL(newPhoto);
-      setUserData({ ...userData, photo: newPhoto });
-      setPhotoURL(newPhotoURL);
+      if (newPhoto) {
+        if (newPhoto.size > 10485760) {
+          setErrorMessage((prevError) => [
+            ...prevError,
+            "Image size too large. Maximum size is 10 MB",
+          ]);
+          showMessage();
+        } else {
+          setUserData({ ...userData, photo: newPhoto });
+          setPhotoURL(newPhotoURL);
+          setErrorMessage([]);
+        }
+      }
     }
   };
 

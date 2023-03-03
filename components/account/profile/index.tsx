@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import Home from "./home";
+import Info from "./info";
 import { Context, StoreProps } from "../../../store/store";
 import { GlobalTypes } from "../../../store/types";
 import { patchData } from "../../../utils/fetchData";
@@ -18,7 +18,7 @@ import { imageUpload } from "../../../utils/imageUpload";
 import { ThreeDots } from "react-loader-spinner";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import GeneralInfo from "./home/GeneralInfo";
+import GeneralInfo from "./info/GeneralInfo";
 
 const Profile = () => {
   const { state, dispatch } = useContext(Context) as StoreProps;
@@ -173,7 +173,7 @@ const Profile = () => {
         </Grid>
       </Grid>
       <Grid item className="w-full px-5">
-        <Home />
+        <Info />
       </Grid>
     </Grid>
   );

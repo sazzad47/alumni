@@ -6,10 +6,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ErrorIcon from "@mui/icons-material/Error";
 import Container from "@mui/material/Container";
-import { getData, postData } from "../../../utils/fetchData";
+import { getData, postData } from "../../../../utils/fetchData";
 import { useTheme } from "next-themes";
-import { Context, StoreProps } from "../../../store/store";
-import { GlobalTypes } from "../../../store/types";
+import { Context, StoreProps } from "../../../../store/store";
+import { GlobalTypes } from "../../../../store/types";
 import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/router";
 import { CloudUpload } from "@mui/icons-material";
@@ -22,8 +22,8 @@ import {
   Select,
 } from "@mui/material";
 
-import TextEditor from "../../TextEditor";
-import { imageUpload } from "../../../utils/imageUpload";
+import TextEditor from "../../../TextEditor";
+import { imageUpload } from "../../../../utils/imageUpload";
 
 interface UserData {
   title: string;
@@ -117,6 +117,7 @@ export default function Form({
       auth?.token
     );
 
+    
     const newData = await getData(
       `admin/news?search=${search}&page=${page}&limit=12`
     );
@@ -148,19 +149,8 @@ export default function Form({
     if (e.target.files) {
       let newPhoto = e.target.files[0];
       const newPhotoURL = URL.createObjectURL(newPhoto);
-      if (newPhoto) {
-        if (newPhoto.size > 10485760) {
-          setErrorMessage((prevError) => [
-            ...prevError,
-            "Image size too large. Maximum size is 10 MB",
-          ]);
-          showMessage();
-        } else {
-          setUserData({ ...userData, photo: newPhoto });
-          setPhotoURL(newPhotoURL);
-          setErrorMessage([]);
-        }
-      }
+      setUserData({ ...userData, photo: newPhoto });
+      setPhotoURL(newPhotoURL);
     }
   };
 

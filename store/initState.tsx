@@ -6,6 +6,11 @@ export const initState: GlobalProps = {
     totalPage: 0,
     searchTerm: ""
   },
+  notice: {
+    currentPage: 1,
+    totalPage: 0,
+    searchTerm: ""
+  },
   searchTerm: "",
   loading: false,
   notify: {},
