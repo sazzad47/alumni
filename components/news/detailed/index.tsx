@@ -36,7 +36,7 @@ const News = ({ data }: Content) => {
 
   return (
     <Grid className="w-full flex flex-col gap-5 py-[2rem]">
-      <Grid className="w-full px-[2rem] flex items-center justify-between">
+      <Grid className="w-full px-[2rem] flex items-start justify-between">
         <Grid className="flex flex-col gap-3">
         <Typography className="p-0 bold text-xl md:3xl">{updatedData.title}</Typography>
         <Typography className="p-0">{localDate(data?.createdAt)}</Typography>
