@@ -9,6 +9,7 @@ import filterSearch from "../../utils/filterSearch";
 import { useRouter } from "next/router";
 import { Context } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
+import { Typography } from "@mui/material";
 
 const Page = ({ props }) => {
   const { state, dispatch } = useContext(Context);

@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import React, { useState, ReactNode } from "react";
 import CountUp from "react-countup";
 import ScrollTrigger from "react-scroll-trigger";
@@ -29,7 +29,6 @@ const Counter: React.FC = () => {
           <Grid
             className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 text-slate-900 dark:text-slate-50"
           >
-           
             {items.map((item) => (
               <Grid
                 key={item.id}               

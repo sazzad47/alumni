@@ -1,5 +1,5 @@
 import { Button, Grid, Typography } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context, StoreProps } from "../../store/store";
 import SearchBar from "./SearchBar";
 import dynamic from "next/dynamic";
@@ -37,10 +37,15 @@ export interface ContentItem {
 }
 
 
-const News = ({ data }: Content) => {
+const Notice = ({ data }: Content) => {
   const [updatedData, setUpdatedData] = useState(data);
   const { state } = useContext(Context) as StoreProps;
   const { auth } = state;
+
+  useEffect(()=> {
+    setUpdatedData(data);
+  }, [data])
+
 
   return (
     <Grid className="w-full flex flex-col gap-5">
@@ -89,4 +94,4 @@ const ContentCard = ({ data, setUpdatedData }: ContentItem) => {
   );
 };
 
-export default News;
+export default Notice;

@@ -31,7 +31,7 @@ const Delete = ({ item, setData }) => {
     <Grid className="text-white">
       <Tooltip title="Delete">
         <IconButton onClick={handleOpenDialog} className="">
-          <DeleteIcon className="text-white" />
+          <DeleteIcon className="text-black dark:text-white" />
         </IconButton>
       </Tooltip>
       <Dialog
@@ -69,11 +69,11 @@ const DeleteDialog = ({ item, setData, handleClose }) => {
   const handleSubmit = async () => {
     setLoading(true);
 
-    const res = await deleteData(`admin/news/${item._id}`, auth.token);
-    const newData = await getData(`admin/news?search=${search}&page=${page}&limit=12`);
+    const res = await deleteData(`admin/event/${item._id}`, auth.token);
+    const newData = await getData(`admin/event?search=${search}&page=${page}&limit=12`);
     setData(newData.data)
     dispatch({
-      type: GlobalTypes.NEWS_PAGE,
+      type: GlobalTypes.EVENT_PAGE,
       payload: { totalPage: newData.pageCount, currentPage: newData.currentPage },
     });
     setLoading(false);

@@ -9,6 +9,18 @@ export interface GlobalProps {
     totalPage: number;
     searchTerm: string | number;
   };
+  event: {
+    past: {
+      currentPage: number;
+      totalPage: number;
+      searchTerm: string | number;
+    };
+    upcoming: {
+      currentPage: number;
+      totalPage: number;
+      searchTerm: string | number;
+    };
+  };
   searchTerm?: string | number;
   loading?: boolean;
   notify?: { notify?: boolean; msg?: string };

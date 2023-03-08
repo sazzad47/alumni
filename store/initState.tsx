@@ -11,6 +11,18 @@ export const initState: GlobalProps = {
     totalPage: 0,
     searchTerm: ""
   },
+  event: {
+    past: {
+      currentPage: 1,
+      totalPage: 0,
+      searchTerm: ""  
+    },
+    upcoming: {
+      currentPage: 1,
+      totalPage: 0,
+      searchTerm: ""
+    }
+  },
   searchTerm: "",
   loading: false,
   notify: {},

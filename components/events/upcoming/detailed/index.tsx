@@ -12,8 +12,10 @@ export interface Content {
     _id: string;
     title: string;
     shortDescription: string;
+    time: Date;
+    redirectionLink: string;
     photo: string;
-    keywords: string;
+    place: string;
     detailedPage: string;
     createdAt: string;
   };
@@ -50,7 +52,7 @@ const News = ({ data }: Content) => {
         <Image src={updatedData.photo} alt="photo" fill />
         </Grid>
       </Grid>
-      <Grid className="w-full max-w-full">
+      <Grid className="w-full max-w-full text-black dark:text-white">
         {Parser(updatedData?.detailedPage)}
       </Grid>
     </Grid>

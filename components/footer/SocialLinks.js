@@ -98,8 +98,6 @@ const Form = ({
   handleSubmit,
   loading,
 }) => {
-  const { state } = useContext(Context);
-  const { auth } = state;
   const { systemTheme, theme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
 

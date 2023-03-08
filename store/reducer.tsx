@@ -11,28 +11,28 @@ const sidebarReducer: Reducer<GlobalProps, GlobalAction> = (state, action) => {
       return {
         ...state,
         notify: {
-           ...state.notify,
-           ...payload
-        }
+          ...state.notify,
+          ...payload,
+        },
       };
     case GlobalTypes.LOADING:
       return {
         ...state,
-        loading: payload
+        loading: payload,
       };
     case GlobalTypes.REGISTER:
       return {
         ...state,
         register: {
           ...state.register,
-          [payload.name]: payload.value
+          [payload.name]: payload.value,
         },
       };
     case GlobalTypes.AUTH:
       return {
         ...state,
         auth: {
-          ...payload
+          ...payload,
         },
       };
     case GlobalTypes.SEARCH:
@@ -44,16 +44,31 @@ const sidebarReducer: Reducer<GlobalProps, GlobalAction> = (state, action) => {
       return {
         ...state,
         news: {
-           ...state.news,
-           ...payload
+          ...state.news,
+          ...payload,
         },
       };
     case GlobalTypes.NOTICE_PAGE:
       return {
         ...state,
-        news: {
-           ...state.news,
-           ...payload
+        notice: {
+          ...state.notice,
+          ...payload,
+        },
+      };
+    case GlobalTypes.EVENT_PAGE:
+      return {
+        ...state,
+        event: {
+          ...state.event,
+          past: {
+            ...state.event.past,
+            ...payload,
+          },
+          upcoming: {
+            ...state.event.upcoming,
+            ...payload,
+          },
         },
       };
     default:

@@ -134,7 +134,7 @@ const Contents = ({ item, i, setData }: Props) => {
           <Typography className="p-0 text-xs">/{item.per}</Typography>
         </Grid>
         <Grid className="w-full flex justify-center">
-          <Link href="/members/payment">
+          <Link href={`${auth?.token? "/renew-membership" : "/login"}`}>
             <Button className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">
               Choose
             </Button>

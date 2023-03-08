@@ -5,10 +5,13 @@ import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { Context } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import filterSearch from '../../utils/filterSearch';
+
+
 const SearchBar = () => {
   const router = useRouter();
   const {state, dispatch} = useContext(Context);
-  const {searchTerm} = state.news;
+  const { searchTerm } = state.notice;
+  console.log('state', state.notice)
   const handleSearchTerm = (e) => {
     dispatch({type: GlobalTypes.NOTICE_PAGE, payload: { searchTerm: e.target.value }})
   };

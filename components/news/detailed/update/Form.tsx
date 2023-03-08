@@ -36,8 +36,6 @@ export default function Form({
   handleCloseDialog,
 }: UserData) {
   const router = useRouter();
-  const page = router.query.page || 1;
-  const search = router.query.search || "all";
   const { state, dispatch } = useContext(Context) as StoreProps;
   const { auth, loading } = state;
 

@@ -15,7 +15,6 @@ const Page = ({ props }) => {
       <Head>
         <title>{data.title}</title>
         <meta name="description" content={data.shortDescription} />
-        <meta name="keywords" content={data.keywords} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:title" content={data.title} />
         <meta property="og:description" content={data.shortDescription} />
@@ -32,7 +31,7 @@ const Page = ({ props }) => {
 };
 export async function getServerSideProps({ query }) {
   const id = query.id;
-  const res = await getData(`admin/news/${id}`);
+  const res = await getData(`admin/event/${id}`);
 
   return {
     props: {

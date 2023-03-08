@@ -39,7 +39,7 @@ export default function Update({ data, setUpdatedData }: ContentItem ) {
     <div>
       <Tooltip title="Edit">
         <IconButton onClick={handleOpenDialog} className="">
-          <EditIcon className="text-white" />
+          <EditIcon className="text-black dark:text-white" />
         </IconButton>
       </Tooltip>
       <Dialog

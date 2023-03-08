@@ -1,10 +1,12 @@
 import connectDB from "../../../../utils/connectDB";
-import Content from "../../../../models/admin/notice";
+import Content from "../../../../models/admin/event";
 import Users from "../../../../models/userModel";
 import auth from "../../../../middleware/auth";
 import sendEmail from "../../../../utils/mail";
 
 connectDB();
+// const pastDate = new Date('2022-12-31');
+// const result = await db.collection('myCollection').find({ createdAt: { $lt: pastDate } }).toArray();
 
 export default async (req, res) => {
   switch (req.method) {
@@ -24,7 +26,7 @@ class APIfeatures {
   }
   filtering() {
     const queryObj = { ...this.queryString };
-    const excludeFields = ["page", "sort", "limit"];
+    const excludeFields = ["page", "sort", "limit", "past"];
     excludeFields.forEach((el) => delete queryObj[el]);
     if (queryObj.search !== "all")
       this.query.find({
@@ -60,7 +62,9 @@ const upload = async (req, res) => {
     const {
       title,
       shortDescription,
-      keywords,
+      time,
+      place,
+      redirectionLink,
       photo,
       detailedPage,
       notify,
@@ -69,7 +73,9 @@ const upload = async (req, res) => {
     const newContent = new Content({
       title,
       shortDescription,
-      keywords,
+      time,
+      place,
+      redirectionLink,
       photo,
       detailedPage,
     });
@@ -110,7 +116,15 @@ const upload = async (req, res) => {
 
 export const getContent = async (req, res) => {
   try {
-    const features = new APIfeatures(Content.find(), req.query)
+    const currentTime = new Date();
+    const past = req.query.past === 'true';
+    let timeQuery;
+    if (!past) {
+      timeQuery = { time: { $gt: currentTime } };
+    } else {
+      timeQuery = { time: { $lt: currentTime } };
+    }
+    const features = new APIfeatures(Content.find(timeQuery), req.query)
       .filtering()
       .paginating()
       .sorting();

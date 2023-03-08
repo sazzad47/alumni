@@ -5,12 +5,13 @@ import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { Context } from "../../../store/store";
 import { GlobalTypes } from "../../../store/types";
 import filterSearch from '../../../utils/filterSearch';
+
 const SearchBar = () => {
   const router = useRouter();
   const {state, dispatch} = useContext(Context);
-  const {searchTerm} = state.news;
+  const {searchTerm} = state.event.past;
   const handleSearchTerm = (e) => {
-    dispatch({type: GlobalTypes.NEWS_PAGE, payload: { searchTerm: e.target.value }})
+    dispatch({type: GlobalTypes.EVENT_PAGE, payload: { searchTerm: e.target.value }})
   };
   const handleSearch = () => {
      filterSearch({router, search: searchTerm})
@@ -43,7 +44,7 @@ const SearchBar = () => {
             <Tooltip title="Clear search">
               <IconButton
                 className="focus:outline-none text-zinc-600 dark:text-slate-200"
-                onClick={() =>  dispatch({type: GlobalTypes.NEWS_PAGE, payload: { searchTerm: "" }})}
+                onClick={() =>  dispatch({type: GlobalTypes.EVENT_PAGE, payload: { searchTerm: "" }})}
               >
                 <AiOutlineClose className="mx-1 p-1" />
               </IconButton>

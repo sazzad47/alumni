@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ErrorIcon from "@mui/icons-material/Error";
 import Container from "@mui/material/Container";
-import { patchData } from "../../../../../utils/fetchData";
+import { getData, patchData } from "../../../../../utils/fetchData";
 import { useTheme } from "next-themes";
 import { Context, StoreProps } from "../../../../../store/store";
 import { GlobalTypes } from "../../../../../store/types";
@@ -16,14 +16,20 @@ import { CloudUpload } from "@mui/icons-material";
 import Image from "next/image";
 import TextEditor from "../../../../TextEditor";
 import { imageUpload } from "../../../../../utils/imageUpload";
+import { DateTimePicker, DateTimePickerProps } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from 'dayjs';
 
 interface UserData {
   data: {
     _id: string;
     title: string;
     shortDescription: string;
+    time: Date;
     photo: any;
-    keywords: string;
+    place: string;
+    redirectionLink: string;
     detailedPage: string;
   };
   setUpdatedData: Function;
@@ -35,15 +41,18 @@ export default function Form({
   setUpdatedData,
   handleCloseDialog,
 }: UserData) {
+  const { theme, systemTheme } = useTheme();
+  const currentTheme = theme === "system" ? systemTheme : theme;
   const router = useRouter();
-  const page = router.query.page || 1;
-  const search = router.query.search || "all";
   const { state, dispatch } = useContext(Context) as StoreProps;
   const { auth, loading } = state;
 
   const [userData, setUserData] = useState(data);
+  
+  const { title, shortDescription, time, photo, place, redirectionLink, detailedPage } = userData;
+  
+  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs(time));
 
-  const { title, shortDescription, photo, keywords, detailedPage } = userData;
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [focused, setFocused] = useState<boolean>(false);
 
@@ -52,6 +61,10 @@ export default function Form({
     setUserData({ ...userData, [name]: value });
   };
 
+  const handleDateChange: DateTimePickerProps<Dayjs>['onChange'] = (newDate) => {
+    setSelectedDate(newDate || dayjs());
+  };
+ 
   useEffect(() => {
     if (focused) {
       setErrorMessage([]);
@@ -67,20 +80,20 @@ export default function Form({
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    
+
     let media;
     dispatch({ type: GlobalTypes.LOADING, payload: { loading: true } });
 
     if (typeof photo === "object") media = await imageUpload([photo]);
     const res = await patchData(
-      `admin/news/${data._id}`,
-      { ...userData, photo: media ? media[0] : photo },
+      `admin/event/${data._id}`,
+      { ...userData, photo: media ? media[0] : photo, time: selectedDate },
       auth?.token
     );
-    
+
     setUpdatedData(res.content);
     dispatch({ type: GlobalTypes.LOADING, payload: false });
-    
+
     if (res.err) return errorMessage.push(res.err) && showMessage();
     handleCloseDialog();
     dispatch({
@@ -100,8 +113,19 @@ export default function Form({
     if (e.target.files) {
       let newPhoto = e.target.files[0];
       const newPhotoURL = URL.createObjectURL(newPhoto);
-      setUserData({ ...userData, photo: newPhoto });
-      setPhotoURL(newPhotoURL);
+      if (newPhoto) {
+        if (newPhoto.size > 10485760) {
+          setErrorMessage((prevError) => [
+            ...prevError,
+            "Image size too large. Maximum size is 10 MB",
+          ]);
+          showMessage();
+        } else {
+          setUserData({ ...userData, photo: newPhoto });
+          setPhotoURL(newPhotoURL);
+          setErrorMessage([]);
+        }
+      }
     }
   };
 
@@ -164,15 +188,66 @@ export default function Form({
               />
             </Grid>
             <Grid item xs={12}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  orientation="landscape"
+                  desktopModeMediaQuery="@media (max-width: 768px)"
+                  sx={{
+                    width: "100%",
+                    label: {
+                      color: currentTheme === "dark" ? "rgb(214 211 209)" : "",
+                    },
+                    "& label.Mui-focused": {
+                      color:
+                        currentTheme === "dark"
+                          ? "rgb(214 211 209)"
+                          : "rgb(21 128 61)",
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      color: currentTheme === "dark" ? "white" : "black",
+                      "& fieldset": {
+                        color: "white",
+                        borderColor:
+                          currentTheme === "dark" ? "rgb(120 113 108)" : "",
+                      },
+                      "&:hover fieldset": {
+                        borderColor:
+                          currentTheme === "dark" ? "rgb(168 162 158)" : "",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor:
+                          currentTheme === "dark"
+                            ? "rgb(214 211 209)"
+                            : "rgb(21 128 61)",
+                      },
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            </Grid>
+            <Grid item xs={12}>
               <InputField
                 inputProps={{
-                  multiline: true,
-                  minRows: 3,
                   type: "text",
-                  name: "keywords",
-                  id: "keywords",
-                  label: "Keywords",
-                  value: keywords,
+                  name: "place",
+                  id: "place",
+                  label: "Place",
+                  value: place,
+                  onChange: handleChange,
+                  setFocused: setFocused,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputField
+                inputProps={{
+                  type: "text",
+                  name: "redirectionLink",
+                  id: "redirectionLink",
+                  label: "Redirection link",
+                  value: redirectionLink,
                   onChange: handleChange,
                   setFocused: setFocused,
                 }}
@@ -205,14 +280,6 @@ export default function Form({
               </label>
               <TextEditor detailedPage={detailedPage} setData={setUserData} />
             </Grid>
-            {/* <Grid item xs={12}>
-              <Link
-                href="/login/forgot-password"
-                className="text-slate-900 dark:text-slate-200"
-              >
-                Forgot your password?
-              </Link>
-            </Grid> */}
           </Grid>
           <Button
             className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"

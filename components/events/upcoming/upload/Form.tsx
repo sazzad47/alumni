@@ -13,7 +13,12 @@ import { GlobalTypes } from "../../../../store/types";
 import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/router";
 import { CloudUpload } from "@mui/icons-material";
+import { DateTimePicker, DateTimePickerProps } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from 'dayjs';
 import Image from "next/image";
+
 import {
   Checkbox,
   FormControl,
@@ -29,7 +34,8 @@ interface UserData {
   title: string;
   shortDescription: string;
   photo: File | null;
-  keywords: string;
+  place: string;
+  redirectionLink: string;
   detailedPage: string;
   notify: boolean;
   recipients: string;
@@ -53,18 +59,22 @@ export default function Form({
     title: "",
     shortDescription: "",
     photo: null,
-    keywords: "",
+    place: "",
+    redirectionLink: "",
     detailedPage: "",
     notify: false,
     recipients: "",
   };
   const [userData, setUserData] = useState(initialState);
+  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
+  console.log('selectedate', selectedDate)
   const [members, setMembers] = useState<{ title: string }[]>([]);
   const {
     title,
     shortDescription,
     photo,
-    keywords,
+    place,
+    redirectionLink,
     detailedPage,
     notify,
     recipients,
@@ -76,6 +86,10 @@ export default function Form({
     const { name, value } = event.target;
     setUserData({ ...userData, [name]: value });
   };
+  const handleDateChange: DateTimePickerProps<Dayjs>['onChange'] = (newDate) => {
+    setSelectedDate(newDate || dayjs());
+  };
+  
 
   useEffect(() => {
     if (focused) {
@@ -112,18 +126,17 @@ export default function Form({
 
     if (photo) media = await imageUpload([photo]);
     const res = await postData(
-      "admin/news",
-      { ...userData, photo: media ? media[0] : "" },
+      "admin/event",
+      { ...userData, photo: media ? media[0] : "", time: selectedDate },
       auth?.token
     );
 
-    
     const newData = await getData(
-      `admin/news?search=${search}&page=${page}&limit=12`
+      `admin/event?search=${search}&page=${page}&limit=12`
     );
     setUpdatedData(newData.data);
     dispatch({
-      type: GlobalTypes.NEWS_PAGE,
+      type: GlobalTypes.EVENT_PAGE,
       payload: {
         totalPage: newData.pageCount,
         currentPage: newData.currentPage,
@@ -149,8 +162,19 @@ export default function Form({
     if (e.target.files) {
       let newPhoto = e.target.files[0];
       const newPhotoURL = URL.createObjectURL(newPhoto);
-      setUserData({ ...userData, photo: newPhoto });
-      setPhotoURL(newPhotoURL);
+      if (newPhoto) {
+        if (newPhoto.size > 10485760) {
+          setErrorMessage((prevError) => [
+            ...prevError,
+            "Image size too large. Maximum size is 10 MB",
+          ]);
+          showMessage();
+        } else {
+          setUserData({ ...userData, photo: newPhoto });
+          setPhotoURL(newPhotoURL);
+          setErrorMessage([]);
+        }
+      }
     }
   };
 
@@ -213,15 +237,60 @@ export default function Form({
               />
             </Grid>
             <Grid item xs={12}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  value={selectedDate} 
+                  onChange={handleDateChange}
+                  orientation="landscape"
+                  desktopModeMediaQuery="@media (max-width: 768px)"
+                  sx={{
+                    width: '100%',
+                    label: {
+                      color: currentTheme === "dark" ? "rgb(214 211 209)" : "",
+                    },
+                    "& label.Mui-focused": {
+                      color:
+                        currentTheme === "dark" ? "rgb(214 211 209)" : "rgb(21 128 61)",
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      color: currentTheme === "dark" ? "white" : "black",
+                      "& fieldset": {
+                        color: "white",
+                        borderColor: currentTheme === "dark" ? "rgb(120 113 108)" : "",
+                      },
+                      "&:hover fieldset": {
+                        borderColor: currentTheme === "dark" ? "rgb(168 162 158)" : "",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor:
+                          currentTheme === "dark" ? "rgb(214 211 209)" : "rgb(21 128 61)",
+                      },
+                    },
+                  }}
+                />
+              </LocalizationProvider>
+            </Grid>
+            <Grid item xs={12}>
               <InputField
                 inputProps={{
-                  multiline: true,
-                  minRows: 3,
                   type: "text",
-                  name: "keywords",
-                  id: "keywords",
-                  label: "Keywords",
-                  value: keywords,
+                  name: "place",
+                  id: "place",
+                  label: "Place",
+                  value: place,
+                  onChange: handleChange,
+                  setFocused: setFocused,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputField
+                inputProps={{
+                  type: "text",
+                  name: "redirectionLink",
+                  id: "redirectionLink",
+                  label: "Redirection link",
+                  value: redirectionLink,
                   onChange: handleChange,
                   setFocused: setFocused,
                 }}
