@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -16,25 +16,8 @@ import { Context, StoreProps } from "../../../store/store";
 import Upload from "./Upload";
 import Edit from "./Edit";
 import Delete from "./Delete";
+import { getData } from "../../../utils/fetchData";
 
-const coverPhotos = [
-  {
-    id: 1,
-    url: "/home/cover3.jpg",
-  },
-  {
-    id: 2,
-    url: "/home/cover4.jpg",
-  },
-  {
-    id: 3,
-    url: "/home/cover2.jpg",
-  },
-  {
-    id: 4,
-    url: "/home/cover1.jpg",
-  },
-];
 
 interface MediaProps {
   _id: string;
@@ -43,10 +26,27 @@ interface MediaProps {
   addToGallery: boolean;
 }
 
-const Hero = ({ contents }: { contents: MediaProps[] }) => {
+
+const Hero = () => {
   const { state } = useContext(Context) as StoreProps;
   const { auth } = state;
-  const [data, setData] = useState<MediaProps[]>(contents);
+  const [data, setData] = useState<MediaProps[]>([]);
+
+  useEffect(() => {
+    let isCanceled = false;
+
+    const fetchData = async () => {
+      if (!isCanceled) {
+        const res = await getData("admin/coverPhoto");
+        setData(res.content);
+      }
+    };
+    fetchData();
+    return () => {
+      isCanceled = true;
+    };
+  }, []);
+
   return (
     <React.Fragment>
       <div className="text-white w-full flex flex-col">
@@ -64,12 +64,12 @@ const Hero = ({ contents }: { contents: MediaProps[] }) => {
             navigation
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
-            autoplay={auth?.user?.role === "admin" ? true : false}
+            autoplay={auth?.user?.role === "admin" ? false : true}
             className="w-full h-full max-w-full"
           >
-            {data.map((item, i) => (
+            {data?.map((item, i) => (
               <SwiperSlide key={i}>
-                <Image src={item.file} alt="" fill />
+                <Image src={item.file} alt="" fill loading="lazy" />
                 {auth?.user?.role === "admin" && (
                   <div className="absolute z-[10] right-[10rem] top-5 flex gap-3 items-center justify-end">
                     <Edit item={item} setData={setData} />

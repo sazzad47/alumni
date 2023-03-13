@@ -16,15 +16,29 @@ import EditIcon from "@mui/icons-material/Edit";
 import ErrorIcon from "@mui/icons-material/Error";
 import { useTheme } from "next-themes";
 import { GlobalTypes } from "../../store/types";
-import { patchData } from "../../utils/fetchData";
+import { getData, patchData } from "../../utils/fetchData";
 import { Context, StoreProps } from "../../store/store";
 import { ThreeDots } from "react-loader-spinner";
 
-const ContactInfo = ({
-  contents,
-}: {
-  contents: { _id: string; description: string }[];
-}) => {
+const ContactInfo = () => {
+
+  const [data, setData] = useState<{ _id: string; description: string }[]>([]);
+
+  useEffect(() => {
+    let isCanceled = false;
+
+    const fetchData = async () => {
+      if (!isCanceled) {
+        const res = await getData("admin/contactInfo");
+        setData(res.content);
+      }
+    };
+    fetchData();
+    return () => {
+      isCanceled = true;
+    };
+  }, []);
+
   return (
     <Grid className="w-full p-5 min-h-[35vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
       <Grid className="w-full flex items-center justify-center py-3">
@@ -37,7 +51,7 @@ const ContactInfo = ({
         </Grid>
       </Grid>
       <Grid className="grid grid-cols-1 sm:grid-2 md:grid-cols-4 gap-3">
-        {contents.map((item, i) => (
+        {data?.map((item, i) => (
           <Grid
             key={i}
             className="w-full h-[10rem] relative bg-green-900 dark:bg-zinc-700 text-slate-200"

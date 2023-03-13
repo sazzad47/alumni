@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
@@ -7,7 +7,7 @@ import Upload from "./Upload";
 import Edit from "./Edit";
 import Delete from "./Delete";
 import { useIsSmall } from '../../../utils/mediaQueries';
-import { Props } from "../../../pages/gallery";
+import { getData } from "../../../utils/fetchData";
 
 const variantsSmallDevice = {
   hover: {
@@ -36,25 +36,39 @@ interface MediaProps {
   caption: string;
   addToHome: boolean;
 }
-const Gallery: React.FC<Props> = ({ data }) => {
+const Gallery: React.FC = () => {
   const { state } = useContext(Context) as StoreProps;
   const { auth } = state;
-  const [updatedData, setUpdatedData] = useState<MediaProps[]>(data);
+  const [data, setData] = useState<MediaProps[]>([]);
   
-  
+  useEffect(() => {
+    let isCanceled = false;
+
+    const fetchData = async () => {
+      if (!isCanceled) {
+        const res = await getData("admin/media");
+        setData(res.content);
+      }
+    };
+    fetchData();
+    return () => {
+      isCanceled = true;
+    };
+  }, []);
+
 
   return (
     <Grid className="w-full min-h-[50vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
       <Grid className="flex flex-col gap-5">
         {auth?.user?.role === "admin" && (
           <Grid className="z-[100] block ml-auto">
-            <Upload setData={setUpdatedData} data={updatedData} />
+            <Upload setData={setData} data={data} />
           </Grid>
         )}
       <Grid className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-        {updatedData.map((item, i) => (
+        {data?.map((item, i) => (
           <Grid key={i} className="w-full h-[10rem] relative">
-            <Contents item={item} setData={setUpdatedData} />
+            <Contents item={item} setData={setData} />
           </Grid>
         ))}
       </Grid>
@@ -88,7 +102,7 @@ const Contents = ({
       onMouseEnter={handleMouseEnterControls}
       onMouseLeave={handleMouseLeaveControls}
     >
-      <Image src={item.file} alt="" fill />
+      <Image src={item.file} alt="" fill loading="lazy" />
       <motion.div
         initial="initial"
         variants={isSmall? variantsLargeDevice: variantsSmallDevice}

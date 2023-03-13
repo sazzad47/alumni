@@ -269,7 +269,7 @@ export default function SignUp({
             <Grid item>
               <Link
                 href="/login"
-                className="text-slate-900 dark:text-slate-200"
+                className="no-underline text-slate-900 dark:text-slate-200"
               >
                 Already have an account? Sign in
               </Link>

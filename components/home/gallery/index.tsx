@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
@@ -7,6 +7,7 @@ import Upload from "./Upload";
 import Edit from "./Edit";
 import Delete from "./Delete";
 import { useIsSmall } from '../../../utils/mediaQueries';
+import { getData } from "../../../utils/fetchData";
 
 const variantsSmallDevice = {
   hover: {
@@ -35,12 +36,25 @@ interface MediaProps {
   caption: string;
   addToHome: boolean;
 }
-const Gallery = ({ contents }: { contents: MediaProps[] }) => {
+const Gallery = () => {
   const { state } = useContext(Context) as StoreProps;
   const { auth } = state;
-  const [data, setData] = useState<MediaProps[]>(contents);
+  const [data, setData] = useState<MediaProps[]>([]);
   
-  
+  useEffect(() => {
+    let isCanceled = false;
+
+    const fetchData = async () => {
+      if (!isCanceled) {
+        const res = await getData("admin/media");
+        setData(res.content);
+      }
+    };
+    fetchData();
+    return () => {
+      isCanceled = true;
+    };
+  }, []);
 
   return (
     <Grid className="w-full p-5 min-h-[50vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
@@ -59,7 +73,7 @@ const Gallery = ({ contents }: { contents: MediaProps[] }) => {
         )}
       </Grid>
       <Grid className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-        {data.filter((item) => item.addToHome === true).map((item, i) => (
+        {data?.filter((item) => item.addToHome === true).map((item, i) => (
           <Grid key={i} className="w-full h-[10rem] relative">
             <Contents item={item} setData={setData} />
           </Grid>
@@ -94,7 +108,7 @@ const Contents = ({
       onMouseEnter={handleMouseEnterControls}
       onMouseLeave={handleMouseLeaveControls}
     >
-      <Image src={item.file} alt="" fill />
+      <Image src={item.file} alt="" fill loading="lazy" />
       <motion.div
         initial="initial"
         variants={isSmall? variantsLargeDevice: variantsSmallDevice}

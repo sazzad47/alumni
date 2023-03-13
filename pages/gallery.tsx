@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { GetServerSideProps } from "next";
+import React from "react";
 import Head from "next/head";
-import { getData } from "../utils/fetchData";
 import Gallery from "../components/pages/gallery";
 import Breadcrumb from "../components/Breadcrumb";
 
@@ -15,12 +13,7 @@ export interface MediaProps {
 export interface Props {
   data: MediaProps[];
 }
-const Page: React.FC<Props> = ({ data }) => {
-  const [acceptedData, setAcceptedData] = useState(data);
-
-  useEffect(() => {
-    setAcceptedData(data);
-  }, [data]);
+const Page: React.FC = () => {
 
   return (
     <React.Fragment>
@@ -33,19 +26,11 @@ const Page: React.FC<Props> = ({ data }) => {
       <main>
         <div className="p-5 min-h-[90vh] flex flex-col gap-5 items-center justify-start bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
           <Breadcrumb title="Gallery" />
-          <Gallery data={acceptedData} />
+          <Gallery />
         </div>
       </main>
     </React.Fragment>
   );
 };
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const media = await getData(`admin/media`);
 
-  return {
-    props: {
-      data: media.content,
-    },
-  };
-};
 export default Page;

@@ -131,7 +131,7 @@ export default function Login() {
             <Grid item xs={12}>
             <Link
                 href="/login/forgot-password"
-                className="text-slate-900 dark:text-slate-200"
+                className="no-underline text-slate-900 dark:text-slate-200"
               >
                 Forgot your password?
               </Link>
@@ -163,7 +163,7 @@ export default function Login() {
             <Grid item>
               <Link
                 href="/members/register"
-                className="text-slate-900 dark:text-slate-200"
+                className="no-underline text-slate-900 dark:text-slate-200"
               >
                 Don&apos;t have an account? Sign up
               </Link>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -10,6 +10,7 @@ import Upload from "./Upload";
 import Edit from "./Edit";
 import Delete from "./Delete";
 import { Context, StoreProps } from "../../../store/store";
+import { getData } from "../../../utils/fetchData";
 
 interface ReviewProps {
   _id: string;
@@ -18,10 +19,26 @@ interface ReviewProps {
   comment: string;
   avatar: string;
 }
-const Feedback = ({ contents }: { contents: ReviewProps[] }) => {
+const Feedback = () => {
   const { state } = useContext(Context) as StoreProps;
   const { auth } = state;
-  const [data, setData] = useState<ReviewProps[]>(contents);
+  const [data, setData] = useState<ReviewProps[]>([]);
+
+  useEffect(() => {
+    let isCanceled = false;
+
+    const fetchData = async () => {
+      if (!isCanceled) {
+        const res = await getData("admin/reviews");
+        setData(res.content);
+      }
+    };
+    fetchData();
+    return () => {
+      isCanceled = true;
+    };
+  }, []);
+
 
   return (
     <>
@@ -53,7 +70,7 @@ const Feedback = ({ contents }: { contents: ReviewProps[] }) => {
           autoplay={{ delay: 4000 }}
           className="swiper-review"
         >
-          {data.map((item, index) => {
+          {data?.map((item, index) => {
             return (
               <SwiperSlide key={index}>
                 <Banner item={item} setData={setData} />{" "}

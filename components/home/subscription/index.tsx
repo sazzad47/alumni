@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Avatar,
   Grid,
@@ -17,6 +17,7 @@ import { Context, StoreProps } from "../../../store/store";
 import { useTheme } from "next-themes";
 import Edit from "./Edit";
 import Link from "next/link";
+import { getData } from "../../../utils/fetchData";
 
 interface SubscriptionProps {
   _id: string;
@@ -27,8 +28,23 @@ interface SubscriptionProps {
   currency: string;
 }
 
-const Subscription = ({ contents }: { contents: SubscriptionProps[] }) => {
-  const [data, setData] = useState<SubscriptionProps[]>(contents);
+const Subscription = () => {
+  const [data, setData] = useState<SubscriptionProps[]>([]);
+
+  useEffect(() => {
+    let isCanceled = false;
+
+    const fetchData = async () => {
+      if (!isCanceled) {
+        const res = await getData("admin/subscription");
+        setData(res.content);
+      }
+    };
+    fetchData();
+    return () => {
+      isCanceled = true;
+    };
+  }, []);
 
   return (
     <Grid className="w-full p-5 min-h-[50vh] bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200">
@@ -42,7 +58,7 @@ const Subscription = ({ contents }: { contents: SubscriptionProps[] }) => {
         </Grid>
       </Grid>
       <Grid className="w-full grid grid-cols-1 md:grid-cols-2 gap-5">
-        {data.map((item, i) => (
+        {data?.map((item, i) => (
           <Grid
             key={i}
             className="w-full px-5 bg-green-900 dark:bg-zinc-700 text-slate-200"
@@ -134,7 +150,7 @@ const Contents = ({ item, i, setData }: Props) => {
           <Typography className="p-0 text-xs">/{item.per}</Typography>
         </Grid>
         <Grid className="w-full flex justify-center">
-          <Link href={`${auth?.token? "/renew-membership" : "/login"}`}>
+          <Link className="no-underline" href={`${auth?.token? "/renew-membership" : "/login"}`}>
             <Button className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">
               Choose
             </Button>
