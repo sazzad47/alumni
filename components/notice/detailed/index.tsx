@@ -35,8 +35,8 @@ const News = ({ data }: Content) => {
   }
 
   return (
-    <Grid className="w-full flex flex-col gap-5 py-[2rem]">
-      <Grid className="w-full px-[2rem] flex items-start justify-between">
+    <Grid className="w-full flex flex-col gap-5 p-5">
+      <Grid className="w-full flex items-start justify-between">
         <Grid className="flex flex-col gap-3">
         <Typography className="p-0 bold text-xl md:3xl">{updatedData.title}</Typography>
         <Typography className="p-0">{localDate(data?.createdAt)}</Typography>
@@ -45,7 +45,7 @@ const News = ({ data }: Content) => {
           <Update data={updatedData} setUpdatedData={setUpdatedData} />
         )}
       </Grid>
-      <Grid className="w-full md:w-1/2 px-[2rem] h-[10rem]">
+      <Grid className="w-full md:w-1/2 h-[10rem]">
         <Grid className="w-full h-full relative">
         <Image src={updatedData.photo} alt="photo" fill />
         </Grid>

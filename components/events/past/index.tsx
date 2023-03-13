@@ -130,7 +130,7 @@ const ContentCard = ({ data, setUpdatedData }: ContentItem) => {
           </Grid>
           <Grid className="w-full flex justify-end">
             <Grid className="flex gap-4">
-              <Link href={`/events/past/${data._id}`}>
+              <Link className="no-underline" href={`/events/past/${data._id}`}>
                 <Button
                   fullWidth
                   className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"

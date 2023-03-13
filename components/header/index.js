@@ -341,7 +341,7 @@ const Navbar = () => {
                 <Brightness4Icon />
               </IconButton>
               <Link className="text-slate-200 " href="/login">
-                <button className="classic_btn bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600">
+                <button className="classic_btn bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600 text-inherit">
                   Login
                 </button>
               </Link>

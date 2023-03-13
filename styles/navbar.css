@@ -26,9 +26,6 @@ ul.main-menu {
   .menu-item {
     line-height: 23px;
   }
-  li {
-    list-style-type: none;
-  }
   .menu-item a {
     font-size: 15px;
     font-weight: 600;
@@ -37,6 +34,7 @@ ul.main-menu {
     display: block;
     margin: 10px 0;
     text-decoration: none;
+    color: inherit;
     cursor: pointer;
   }
   .menu-item.menu__qqqitem a {
@@ -95,6 +93,7 @@ ul.main-menu {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    list-style: none;
     width: 150px;
     left: -40px;
     top: 8.5vh;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Head from 'next/head'
 import Hero from '../components/home/hero'
 import Gallery from '../components/home/gallery'
@@ -11,6 +11,12 @@ import { getData } from '../utils/fetchData'
 
 
 const Page = ({props}: {props: any}) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  useEffect(()=> {
+     if (contentRef.current) {
+      contentRef.current.innerHTML = '<h1>hello</h1>'
+     }
+  })
   return (
     <React.Fragment>
       <Head>
@@ -20,7 +26,7 @@ const Page = ({props}: {props: any}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className='w-full max-w-full bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-slate-200'>
-       
+       {/* <div ref={contentRef}></div> */}
          <Hero contents={props.coverPhotos} />
          <Statistics/>
          <Subscription contents={props.subscription} />

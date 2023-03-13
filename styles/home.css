@@ -113,10 +113,6 @@
       width: 320px;
       max-width: 100%;
     }
-
-    .board > h1, p{
-        padding: 0 2em;
-    }
 }
 
 @media (min-width: 768px) {

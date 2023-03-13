@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
-
 const paymentSchema = new mongoose.Schema(
   {
     paymentId: Number,

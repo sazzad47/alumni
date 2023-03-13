@@ -50,52 +50,112 @@ const Footer = () => {
         <div className="md:flex">
           <div className="footer-col">
             <h4>website</h4>
-            <ul>
-              <li>
-                <Link href="/about/association">about us</Link>
+            <ul className="list-none p-0">
+              <li className="mb-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/about/association"
+                >
+                  About us
+                </Link>
               </li>
-              <li>
-                <Link href="/terms-&-conditions">Terms & Conditions</Link>
+              <li className="my-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/terms-&-conditions"
+                >
+                  Terms & Conditions
+                </Link>
               </li>
-              <li>
-                <Link href="/cookies">Cookies</Link>
+              <li className="my-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/cookies"
+                >
+                  Cookies
+                </Link>
               </li>
-              <li>
-                <Link href="/privacy-policy">Privacy policy</Link>
+              <li className="mt-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/privacy-policy"
+                >
+                  Privacy policy
+                </Link>
               </li>
             </ul>
           </div>
           <div className="footer-col">
             <h4>Browse</h4>
-            <ul>
-              <li>
-                <Link href="/activities">Activities</Link>
+            <ul className="list-none p-0">
+              <li className="mb-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/activities"
+                >
+                  Activities
+                </Link>
               </li>
-              <li>
-                <Link href="/news">News</Link>
+              <li className="my-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/news"
+                >
+                  News
+                </Link>
               </li>
-              <li>
-                <Link href="/events/past">Events</Link>
+              <li className="my-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/events/past"
+                >
+                  Events
+                </Link>
               </li>
-              <li>
-                <Link href="/gallery">Gallery</Link>
+              <li className="mt-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/gallery"
+                >
+                  Gallery
+                </Link>
               </li>
             </ul>
           </div>
           <div className="footer-col">
             <h4>quick links</h4>
-            <ul>
-              <li>
-                <Link href="/donate">Donate</Link>
+            <ul className="list-none p-0">
+              <li className="mb-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/donate"
+                >
+                  Donate
+                </Link>
               </li>
-              <li>
-                <Link href="/renew-membership">Renew Membership</Link>
+              <li className="my-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/renew-membership"
+                >
+                  Renew Membership
+                </Link>
               </li>
-              <li>
-                <Link href="/notice">Notice</Link>
+              <li className="my-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/notice"
+                >
+                  Notice
+                </Link>
               </li>
-              <li>
-                <Link href="/contact">Contact</Link>
+              <li className="mt-2">
+                <Link
+                  className="no-underline  text-inherit hover:opacity-[0.8]"
+                  href="/contact"
+                >
+                  Contact
+                </Link>
               </li>
             </ul>
           </div>
