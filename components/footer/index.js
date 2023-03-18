@@ -247,7 +247,7 @@ const Footer = () => {
         <hr className="w-full my-5" />
         <div className="w-full flex justify-center mt-5 text-sm">
           {"Copyright © "}
-          {new Date().getFullYear()} BTRI School Alumni Association{" "}
+          {new Date().getFullYear()} Sazzad Hossen{" "}
         </div>
       </div>
     </footer>
