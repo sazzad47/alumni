@@ -64,7 +64,7 @@ const Hero = () => {
             navigation
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log("slide change")}
-            autoplay={auth?.user?.role === "admin" ? false : true}
+            autoplay= {false}
             className="w-full h-full max-w-full"
           >
             {data?.map((item, i) => (
