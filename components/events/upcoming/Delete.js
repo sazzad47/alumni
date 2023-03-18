@@ -61,6 +61,7 @@ const DeleteDialog = ({ item, setData, handleClose }) => {
   const router = useRouter();
   const page = router.query.page || 1;
   const search = router.query.search || "all";
+  const past = router.pathname.includes('/past');
   const { state, dispatch } = useContext(Context);
   const { auth } = state;
   const [errorMessage, setErrorMessage] = useState([]);
@@ -70,7 +71,7 @@ const DeleteDialog = ({ item, setData, handleClose }) => {
     setLoading(true);
 
     const res = await deleteData(`admin/event/${item._id}`, auth.token);
-    const newData = await getData(`admin/event?search=${search}&page=${page}&limit=12`);
+    const newData = await getData(`admin/event?search=${search}&page=${page}&limit=12&past=${past}`);
     setData(newData.data)
     dispatch({
       type: GlobalTypes.EVENT_PAGE,

@@ -53,6 +53,7 @@ export default function Form({
   const router = useRouter();
   const page = router.query.page || 1;
   const search = router.query.search || "all";
+  const past = router.pathname.includes('/past');
   const { state, dispatch } = useContext(Context) as StoreProps;
   const { auth, loading } = state;
   const initialState: UserData = {
@@ -67,7 +68,6 @@ export default function Form({
   };
   const [userData, setUserData] = useState(initialState);
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
-  console.log('selectedate', selectedDate)
   const [members, setMembers] = useState<{ title: string }[]>([]);
   const {
     title,
@@ -130,9 +130,9 @@ export default function Form({
       { ...userData, photo: media ? media[0] : "", time: selectedDate },
       auth?.token
     );
-
+    console.log('res', res)
     const newData = await getData(
-      `admin/event?search=${search}&page=${page}&limit=12`
+      `admin/event?search=${search}&page=${page}&limit=12&past=${past}`
     );
     setUpdatedData(newData.data);
     dispatch({
