@@ -56,10 +56,10 @@ class APIfeatures {
 
 const upload = async (req, res) => {
   try {
-    console.log('req1', req)
-    const result = await auth(req, res);
-    if (result.role !== "admin")
-      return res.status(400).json({ err: "Authentication is not valid" });
+    // console.log('req1', req)
+    // const result = await auth(req, res);
+    // if (result.role !== "admin")
+    //   return res.status(400).json({ err: "Authentication is not valid" });
       console.log('req2', req);
     const {
       title,
