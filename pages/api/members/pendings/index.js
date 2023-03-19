@@ -26,7 +26,7 @@ export default async (req, res) => {
       };
       const sortFormatted = Boolean(sort) ? generateSort() : {};
       
-      const pendingMembers = await Users.find({status: 'pending'})
+      const pendingMembers = await Users.find({$and: [{status: 'pending'}, {membership: {$ne: 'none'}}]})
       .sort(sortFormatted)
       .skip(page * pageSize)
       .limit(pageSize);

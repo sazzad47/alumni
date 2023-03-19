@@ -54,11 +54,14 @@ const userSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "pending"
+      default: "pending",
     },
     membership: {
       type: String,
-      default: "none"
+      default: "none",
+    },
+    expireIn: {
+      type: Date,
     },
     role: {
       type: String,
@@ -82,7 +85,7 @@ const userSchema = new mongoose.Schema(
     cloud: {
       type: Array,
     },
-    payment: [{type: Schema.Types.ObjectId, ref: "payment"}]
+    payment: [{ type: Schema.Types.ObjectId, ref: "payment" }],
   },
   {
     timestamps: true,

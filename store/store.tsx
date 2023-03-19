@@ -26,7 +26,9 @@ const StoreProvider = ({children}: ProviderProps) => {
     const firstLogin = localStorage.getItem("firstLogin");
     if(firstLogin){
         getData('auth/accessToken').then(res => {
-            if(res.err) return localStorage.removeItem("firstLogin")
+            let currentTime = new Date().getTime();
+            let diff = res.user.expireIn - currentTime;
+            if (res.err || diff < 0) return localStorage.removeItem("firstLogin");
             dispatch({
               type: GlobalTypes.AUTH,
               payload: {

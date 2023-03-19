@@ -14,6 +14,7 @@ const auth = async (req, res) => {
     firstName: user.firstName,
     lastName: user.lastName,
     ssc_batch: user.ssc_batch,
+    phone: user.phone,
     placeOfBirth: user.placeOfBirth,
     dateOfBirth: user.dateOfBirth,
     currentLocation: user.currentLocation,
@@ -27,6 +28,7 @@ const auth = async (req, res) => {
     role: user.role,
     avatar: user.avatar,
     root: user.root,
+    expireIn: user.expireIn,
   };
 };
 

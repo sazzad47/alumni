@@ -51,6 +51,7 @@ export default function Login() {
     const res = await postData("auth/login", userData);
     dispatch({ type: GlobalTypes.LOADING, payload: false });
     if (res.err) return errorMessage.push(res.err) && showMessage();
+    
     dispatch({
       type: GlobalTypes.AUTH,
       payload: {
