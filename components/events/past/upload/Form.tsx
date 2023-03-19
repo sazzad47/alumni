@@ -124,7 +124,7 @@ export default function Form({
     let media;
     dispatch({ type: GlobalTypes.LOADING, payload: { loading: true } });
 
-    if (photo) media = await imageUpload([photo]);
+    // if (photo) media = await imageUpload([photo]);
     const res = await postData(
       "admin/event",
       { ...userData, photo: media ? media[0] : "", time: selectedDate },
