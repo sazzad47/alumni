@@ -43,7 +43,7 @@ const initPayment = async (req, res) => {
       success_url: `${baseUrl}/renew-membership?payment=successful`,
       fail_url: `${baseUrl}/renew-membership?payment=failed`,
       cancel_url: `${baseUrl}/renew-membership/register`,
-      ipn_url: `${baseUrl}/api/payment/success`,
+      ipn_url: `${baseUrl}/api/members/renew/success`,
       cus_name: `${firstName} ${lastName}`,
       cus_email: email,
       cus_phone: phone,
