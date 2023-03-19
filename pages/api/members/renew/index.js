@@ -56,6 +56,7 @@ const initPayment = async (req, res) => {
     let url;
     const sslcommer = new SSLCommerzPayment(storeID, storePassword, false); 
     await sslcommer.init(data).then((data) => {
+      console.log('ssl', data)
     if (data?.GatewayPageURL) {
       url = data?.GatewayPageURL
     } 

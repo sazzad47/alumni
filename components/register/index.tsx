@@ -17,7 +17,6 @@ import { Context, StoreProps } from "../../store/store";
 import { GlobalTypes } from "../../store/types";
 import { ThreeDots } from "react-loader-spinner";
 import { useRouter } from "next/router";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import Payment from "./payment";
 import Message from "./Message";
 import Overview from "./Overview";
@@ -37,7 +36,6 @@ export default function SignUp({
 }: {
   contents: SubscriptionProps[];
 }) {
-  const [data, setData] = useState<SubscriptionProps[]>(contents);
   const router = useRouter();
   const { state, dispatch } = useContext(Context) as StoreProps;
   const { auth, loading } = state;
@@ -64,23 +62,29 @@ export default function SignUp({
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    // const errMsg = validate(registerData);
-    // const showMessage = () => {
-    //   setErrorMessage(errMsg);
-    //   window.scrollTo({
-    //     top: 0,
-    //     behavior: "smooth",
-    //   });
-    // };
-    // if (errMsg.length !== 0) return showMessage();
+    const errMsg = validate(registerData);
+    const showMessage = () => {
+      setErrorMessage(errMsg);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    };
+    if (errMsg.length !== 0) return showMessage();
 
-    // dispatch({ type: GlobalTypes.LOADING, payload: true });
+    dispatch({ type: GlobalTypes.LOADING, payload: true });
 
-    // const res = await postData("auth/verifyEmail", registerData);
-    // dispatch({ type: GlobalTypes.LOADING, payload: false });
-    // if (res.err) return errMsg.push(res.err) && showMessage();
+    const res = await postData("auth/verifyEmail", registerData);
+    dispatch({ type: GlobalTypes.LOADING, payload: false });
+    if (res.err) return errMsg.push(res.err) && showMessage();
     sessionStorage.setItem("registerData", JSON.stringify(registerData));
-    router.push("/members/register?overview=true", undefined, { shallow: true });
+    if (res.warning)
+      return router.push("/members/register?overview=true", undefined, {
+        shallow: true,
+      });
+    router.push("/members/register?verify_email=true", undefined, {
+      shallow: true,
+    });
   };
   useEffect(() => {
     if (auth !== undefined) {
@@ -88,16 +92,15 @@ export default function SignUp({
     }
   }, []);
 
-
   const { overview, payment, verify_email } = router.query;
-  if ( payment ) {
-    return <Message payment= {payment} />;
-  } else if ( overview ) {
-    return <Overview/>
-  } else if ( verify_email ) {
-    return <VerifyEmail/>
+  if (payment) {
+    return <Message payment={payment} />;
+  } else if (overview) {
+    return <Overview />;
+  } else if (verify_email) {
+    return <VerifyEmail />;
   }
-  
+
   return (
     <Container
       component="main"

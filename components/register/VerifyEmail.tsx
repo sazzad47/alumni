@@ -46,7 +46,7 @@ export default function VerifyEmail() {
         dispatch({ type: GlobalTypes.LOADING, payload: false });
     }
     if (res.err) return showError();
-    router.push("/members/register/overview");
+    router.push("/members/register?overview=true", undefined, { shallow: true });
     dispatch({ type: GlobalTypes.LOADING, payload: false });
   };
  

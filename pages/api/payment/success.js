@@ -2,6 +2,7 @@ import connectDB from "../../../utils/connectDB";
 import Users from "../../../models/userModel";
 import Payment from "../../../models/payment";
 
+
 connectDB();
 
 export default async function updateDatabase(req, res) {

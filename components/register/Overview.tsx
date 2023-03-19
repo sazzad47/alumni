@@ -5,8 +5,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import Link from "next/link";
 import { Context, StoreProps } from "../../store/store";
 import { postData } from "../../utils/fetchData";
 import { GlobalTypes } from "../../store/types";
@@ -88,9 +86,8 @@ export default function OverView() {
       >
         <Avatar src="/logo.png" />
         <Grid className="flex items-center gap-2">
-          {/* <CheckCircleOutlineIcon/> */}
           <Typography component="h1" variant="h5">
-            Checkout
+            Payment
           </Typography>
         </Grid>
         <Typography className="p-0 text-sm text-zinc-800 dark:text-green-300">
@@ -142,7 +139,6 @@ export default function OverView() {
         <Box sx={{ mt: 3 }} className="w-full">
           <Button
             onClick={handleSubmit}
-            // disabled={!firstName || !lastName || !ssc_batch || !email || !membership || !amount}
             className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
             type="submit"
             fullWidth

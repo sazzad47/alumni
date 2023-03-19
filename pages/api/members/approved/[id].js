@@ -23,7 +23,6 @@ export default async (req, res) => {
 const getMember = async (req, res) => {
     try {
         const member = await Users.findOne({_id: req.query.id})
-        console.log('id', member)
       
       res.status(200).json({
         data: member,

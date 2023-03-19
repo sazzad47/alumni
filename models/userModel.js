@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema(
     },
     membership: {
       type: String,
-      default: "None"
+      default: "none"
     },
     role: {
       type: String,

@@ -16,11 +16,14 @@ export default async (req, res) => {
 
 const emailSend = async (req, res) => {
   try {
-   
-    let user = await Users.findOne({ email: req.body.email });
-    if (user)
-      return res.status(400).json({ err: "This email already exists." });
     const { email } = req.body;
+
+    const member = await Users.findOne({ email, membership: { $ne: 'none' } });
+    if (member)
+      return res.status(400).json({ err: "This email already exists." });
+    const incomplete = await Users.findOne({ email, membership: 'none' });
+    if (incomplete) 
+      return res.status(400).json({ warning: "Please complete the payment process."})
 
     let otpCode = Math.floor(Math.random() * 10000 + 1);
     otpCode = parseInt(otpCode);
