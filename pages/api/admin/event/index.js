@@ -5,8 +5,6 @@ import auth from "../../../../middleware/auth";
 import sendEmail from "../../../../utils/mail";
 
 connectDB();
-// const pastDate = new Date('2022-12-31');
-// const result = await db.collection('myCollection').find({ createdAt: { $lt: pastDate } }).toArray();
 
 export default async (req, res) => {
   switch (req.method) {
@@ -56,11 +54,9 @@ class APIfeatures {
 
 const upload = async (req, res) => {
   try {
-    console.log('req1')
     const result = await auth(req, res);
     if (result.role !== "admin")
       return res.status(400).json({ err: "Authentication is not valid" });
-      console.log('req2', req);
     const {
       title,
       shortDescription,
@@ -83,7 +79,6 @@ const upload = async (req, res) => {
     });
 
     await newContent.save();
-    console.log('req3', detailedPage)
 
     if (notify) {
       await Users.find({
@@ -120,7 +115,7 @@ const upload = async (req, res) => {
 export const getContent = async (req, res) => {
   try {
     const currentTime = new Date();
-    const past = req.query.past === 'true';
+    const past = req.query.past === "true";
     let timeQuery;
     if (!past) {
       timeQuery = { time: { $gt: currentTime } };

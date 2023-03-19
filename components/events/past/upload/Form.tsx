@@ -124,26 +124,27 @@ export default function Form({
     let media;
     dispatch({ type: GlobalTypes.LOADING, payload: { loading: true } });
 
-    // if (photo) media = await imageUpload([photo]);
-    const res = await postData(
-      "admin/event",
-      { ...userData, photo: media ? media[0] : "", time: selectedDate },
-      auth?.token
-    );
-    console.log('res', res)
-    const newData = await getData(
-      `admin/event?search=${search}&page=${page}&limit=12&past=${past}`
-    );
-    setUpdatedData(newData.data);
-    dispatch({
-      type: GlobalTypes.EVENT_PAGE,
-      payload: {
-        totalPage: newData.pageCount,
-        currentPage: newData.currentPage,
-      },
-    });
+    if (photo) media = await imageUpload([photo]);
+    // const res = await postData(
+    //   "admin/event",
+    //   { ...userData, photo: media ? media[0] : "", time: selectedDate },
+    //   auth?.token
+    // );
+    // console.log('res', res)
+    // const newData = await getData(
+    //   `admin/event?search=${search}&page=${page}&limit=12&past=${past}`
+    // );
+    // setUpdatedData(newData.data);
+    // dispatch({
+    //   type: GlobalTypes.EVENT_PAGE,
+    //   payload: {
+    //     totalPage: newData.pageCount,
+    //     currentPage: newData.currentPage,
+    //   },
+    // });
+    console.log('media', media)
     dispatch({ type: GlobalTypes.LOADING, payload: false });
-    if (res.err) return errorMessage.push(res.err) && showMessage();
+    // if (res.err) return errorMessage.push(res.err) && showMessage();
     handleCloseDialog();
     dispatch({
       type: GlobalTypes.NOTIFY,
@@ -208,7 +209,7 @@ export default function Form({
           sx={{ mt: 3 }}
         >
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <InputField
                 inputProps={{
                   type: "text",
@@ -295,7 +296,7 @@ export default function Form({
                   setFocused: setFocused,
                 }}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <Grid
                 onClick={handleChoosePhoto}
