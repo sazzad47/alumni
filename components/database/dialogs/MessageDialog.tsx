@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Grid, IconButton, Snackbar, TextField, Typography } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from "@mui/icons-material/Error";
-import { useRouter } from "next/router";
 import { UserData } from "../profile";
 import { Context, StoreProps } from "../../../store/store";
 import { GlobalTypes } from "../../../store/types";
@@ -12,7 +11,6 @@ import { ThreeDots } from "react-loader-spinner";
 
 const MessageDialog = ({ data, handleClose }: UserData) => {
   const { dispatch } = useContext(Context) as StoreProps;
-  const router = useRouter();
   const initState = { fullName: "", email: "", ssc_batch: "", message: "", userEmail: data.email };
   const [userData, setUserData] = useState<{
     fullName: string;

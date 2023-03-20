@@ -1,12 +1,14 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Dialog, Grid, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { Context, StoreProps } from "../../../store/store";
 import SearchBar from "./SearchBar";
 import dynamic from "next/dynamic";
 import Delete from "./Delete";
-import Link from "next/link";
 import { AiFillClockCircle } from "react-icons/ai";
 import { GoLocation } from "react-icons/go";
+import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
+import RestrictionMsg from "../RestrictionMsg";
 
 const Upload = dynamic(() => import("./upload"), { ssr: false });
 const Update = dynamic(() => import("./update"), { ssr: false });
@@ -46,10 +48,9 @@ const News = ({ data }: Content) => {
   const { state } = useContext(Context) as StoreProps;
   const { auth } = state;
 
-  useEffect(()=> {
+  useEffect(() => {
     setUpdatedData(data);
-  }, [data])
-
+  }, [data]);
 
   return (
     <Grid className="w-full flex flex-col gap-5">
@@ -71,9 +72,14 @@ const News = ({ data }: Content) => {
 };
 
 const ContentCard = ({ data, setUpdatedData }: ContentItem) => {
+  const router = useRouter();
+  const { systemTheme, theme } = useTheme();
+  const currentTheme = theme === "system" ? systemTheme : theme;
+  const [open, setOpen] = useState<boolean>(false);
   const { state } = useContext(Context) as StoreProps;
   const { auth } = state;
   const date = new Date(data.time);
+
   const formattedDate = date.toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
@@ -85,6 +91,10 @@ const ContentCard = ({ data, setUpdatedData }: ContentItem) => {
     hour12: true,
   });
   const formattedDayOfWeek = date.toLocaleString("en-US", { weekday: "long" });
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Grid className="w-full h-[15rem] bg-slate-300 dark:bg-zinc-700">
@@ -130,21 +140,43 @@ const ContentCard = ({ data, setUpdatedData }: ContentItem) => {
           </Grid>
           <Grid className="w-full flex justify-end">
             <Grid className="flex gap-4">
-              <Link className="no-underline" href={`/events/past/${data._id}`}>
-                <Button
-                  fullWidth
-                  className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
-                >
-                  Details
-                </Button>
-              </Link>
               <Button
-                onClick={() => window.location.replace(data.redirectionLink)}
+                fullWidth
+                onClick={() =>
+                  auth?.token
+                    ? router.push(`/events/past/${data._id}`)
+                    : setOpen(true)
+                }
+                className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
+              >
+                Details
+              </Button>
+              <Button
+                onClick={() =>
+                  auth?.token
+                    ? window.location.replace(data.redirectionLink)
+                    : setOpen(true)
+                }
                 fullWidth
                 className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
               >
                 Join
               </Button>
+              <Dialog
+                sx={{
+                  "& .MuiDialog-paper": {
+                    backgroundColor:
+                      currentTheme === "dark" ? "#474849" : "#fff",
+                    width: "25rem",
+                    minHeight: "12rem",
+                  },
+                }}
+                onClose={handleClose}
+                aria-labelledby="customized-dialog-title"
+                open={open}
+              >
+                <RestrictionMsg handleClose={handleClose} />
+              </Dialog>
             </Grid>
           </Grid>
         </Grid>
