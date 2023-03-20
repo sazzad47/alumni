@@ -151,17 +151,6 @@ const ContentCard = ({ data, setUpdatedData }: ContentItem) => {
               >
                 Details
               </Button>
-              <Button
-                onClick={() =>
-                  auth?.token
-                    ? window.location.replace(data.redirectionLink)
-                    : setOpen(true)
-                }
-                fullWidth
-                className="normal-case text-slate-200 bg-green-700 hover:bg-green-800 dark:bg-stone-500 dark:hover:bg-stone-600"
-              >
-                Join
-              </Button>
               <Dialog
                 sx={{
                   "& .MuiDialog-paper": {
